@@ -1,0 +1,174 @@
+
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta Data -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Title -->
+    <title>Contact Us - NatesCustom3D</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/icon" href="../assets/logo/favicon.png" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600|Rufina:400,700" rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/animate.css">
+    <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/bootsnav.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-default bootsnav navbar-sticky navbar-scrollspy" data-minus-value-desktop="70"
+        data-minus-value-mobile="55" data-speed="1000">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-menu">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html">Nates Custom 3D Shop</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-menu">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="index.html#home">Home</a></li>
+                    <li><a href="warehouse.html">3D Warehouse</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="admin-login.html">Admin</a></li>
+                    <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+                    <li><button onclick="logout()" class="btn btn-danger">Logout</button></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-content">
+        <section id="contact">
+            <div class="container mt-5">
+                <div style="height: 20px;"></div>
+                <h6 class="text-center">Welcome to the Contact Page</h6>
+                <p class="text-center">Here you can ask questions or submit prints you want to be printed.</p>
+
+                <form id="contactForm" class="mt-4">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="number">Phone Number</label>
+                        <input type="tel" class="form-control" id="number" placeholder="Enter your phone number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="description" rows="5" placeholder="Describe your request" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+                <div id="message" class="mt-3"></div>
+
+                <div class="text-center mt-5">
+                    <a href="index.html" class="btn btn-secondary">Back to Home</a>
+                </div>
+            </div>
+        </section>
+    </div> <!-- End of .main-content -->
+        <!-- Blank Space -->
+        <div style="height: 80px;"></div>
+        <div style="height: 80px;"></div>
+        <div style="height: 80px;"></div>
+        <div style="height: 80px;"></div>
+        <div style="height: 80px;"></div>
+        <div style="height: 80px;"></div>
+        <div style="height: 80px;"></div>
+        <div style="height: 80px;"></div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-top">
+                <h2>Contact Us</h2>
+                <p>Email: npeterson1004@gmail.com</p>
+                <p>Phone: +1 (320) 266-1791</p>
+            </div>
+        </div>
+    </footer>
+    <!-- JavaScript -->
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/owl.carousel.min.js"></script>
+    <script src="../assets/js/bootsnav.js"></script>
+    <script src="../assets/js/custom.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/cart.js"></script>
+
+
+   
+
+
+
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+    
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const number = document.getElementById("number").value;
+            const description = document.getElementById("description").value;
+    
+            const requestData = { name, email, number, description };
+    
+            try {
+                const response = await fetch("http://localhost:5000/api/contact", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(requestData)
+                });
+    
+                const data = await response.json();
+                document.getElementById("message").innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+    
+                if (response.ok) {
+                    this.reset();
+                }
+            } catch (error) {
+                console.error("Error submitting contact request:", error);
+                document.getElementById("message").innerHTML = `<div class="alert alert-danger">❌ Failed to submit request.</div>`;
+            }
+        });
+    </script>
+        
+    
+    <script>
+const token = localStorage.getItem("token") || localStorage.getItem("adminToken");
+
+if (!token) {
+    window.location.href = "login.html";
+}          
+    </script>
+
+</body>
+
+</html>
+
+
+
+
+

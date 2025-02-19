@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Meta Data -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Title -->
+    <title>NatesCustom3D</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/icon" href="../assets/logo/favicon.png" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600|Rufina:400,700" rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/animate.css">
+    <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/bootsnav.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+
+
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-default bootsnav navbar-sticky navbar-scrollspy" data-minus-value-desktop="70"
+    data-minus-value-mobile="55" data-speed="1000">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html">Nates Custom 3D Shop</a>
+                <p id="admin-message"></p>
+
+
+
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-menu">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="index.html">Home</a></li>
+                    <li><a href="index.html#featured-prints">Featured Prints</a></li>
+                    <li><a href="warehouse.html">3D Warehouse</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+                    <li><button onclick="logout()" class="btn btn-danger">Logout</button></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container mt-5">
+        <div style="height: 20px;"></div>
+        <h6 class="text-center">Admin Dashboard</h6>
+    
+        <!-- Tabs Navigation -->
+        <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="add-item-tab" data-toggle="tab" href="#add-item" role="tab" aria-controls="add-item" aria-selected="true">Add New Item</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="view-contacts-tab" data-toggle="tab" href="#view-contacts" role="tab" aria-controls="view-contacts" aria-selected="false">View Contacts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="view-orders-tab" data-toggle="tab" href="#view-orders" role="tab" aria-controls="view-orders" aria-selected="false">View Orders</a>
+            </li>
+        </ul>
+    
+        <!-- Tabs Content (All tabs must be inside this div) -->
+        <div class="tab-content mt-4" id="adminTabsContent">
+    
+            <!-- Add Item Tab -->
+            <div class="tab-pane fade" id="add-item" role="tabpanel" aria-labelledby="add-item-tab">
+                <form id="addProductForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="name">Item Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="description" name="description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <input type="number" class="form-control" id="price" name="price" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="stock">Stock</label>
+                        <input type="number" class="form-control" id="stock" name="stock" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Upload Image</label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Item</button>
+                </form>
+                <div id="message" class="mt-3"></div>
+            </div>
+    
+            <!-- View Contacts Tab -->
+<div class="tab-pane fade" id="view-contacts" role="tabpanel" aria-labelledby="view-contacts-tab">
+    <h3>Submitted Contacts</h3>
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Description</th>
+                <th>Date Submitted</th>
+            </tr>
+        </thead>
+        <tbody id="contactsContainer">
+            <!-- Contacts will be dynamically loaded here -->
+        </tbody>
+    </table>
+</div>
+
+    
+            <!-- View Orders Tab -->
+            <div class="tab-pane fade" id="view-orders" role="tabpanel" aria-labelledby="view-orders-tab">
+                <h3>All Orders</h3>
+                <table class="table table-bordered mt-3">
+                    <thead>
+                        <tr>
+                            <th>User Email</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                            <th>Order Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersContainer">
+                        <!-- Orders will be dynamically loaded here -->
+                    </tbody>
+                </table>
+            </div>
+    
+        </div> <!-- End of .tab-content -->
+    </div> <!-- End of .container -->
+    
+    
+    
+
+
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/cart.js"></script>
+    <script src="../assets/js/admin-dashboard.js"></script>
+   
+
+
+<!-- Ensure Bootstrap Tabs Work -->
+<script>
+    $(document).ready(function () {
+        $('#adminTabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+    });
+</script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const token = localStorage.getItem("adminToken");
+            console.log("Checking Admin Token:", token);
+            if (!token) {
+                console.log("No admin token found. Redirecting to login.");
+                window.location.href = "admin-login.html";
+            }
+        });
+
+        async function checkAdminAuth() {
+            const token = localStorage.getItem("adminToken");
+            console.log("Admin Token:", token);
+
+            if (!token) {
+                console.log("No admin token found. Redirecting to login.");
+                window.location.href = "admin-login.html";
+                return;
+            }
+
+            try {
+                const res = await fetch('http://localhost:5000/api/admin/dashboard', {
+                    method: 'GET',
+                    headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" }
+                });
+
+                if (!res.ok) {
+                    throw new Error("Unauthorized");
+                }
+
+                const data = await res.json();
+                console.log("Dashboard Data:", data);
+                document.getElementById('admin-message').textContent = data.message;
+            } catch (error) {
+                console.error("Admin auth error:", error);
+                localStorage.removeItem("adminToken");
+                window.location.href = "admin-login.html";
+            }
+        }
+
+        checkAdminAuth();
+    </script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta Data -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Title -->
+    <title>NatesCustom3D</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/icon" href="../assets/logo/favicon.png" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600|Rufina:400,700" rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/animate.css">
+    <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/bootsnav.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-default bootsnav navbar-sticky navbar-scrollspy" data-minus-value-desktop="70"
+        data-minus-value-mobile="55" data-speed="1000">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-menu">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html">Nates Custom 3D Shop</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-menu">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="#home">Home</a></li>
+                    <li><a href="#featured-prints">Featured Prints</a></li>
+                    <li><a href="warehouse.html">3D Warehouse</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="admin-login.html">Admin</a></li>
+                    <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+                    <li><button onclick="logout()" class="btn btn-danger">Logout</button></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Welcome Hero -->
+    <div class="main-content">
+    <section id="home" class="welcome-hero">
+        <div class="container">
+            <div class="welcome-hero-txt">
+                <h2>Get Your Desired Custom 3D Prints</h2>
+                <p>Click the contact button to answer any questions or order a custom print.</p>
+                <button class="welcome-btn" onclick="window.location.href='contact.html'">Contact Us</button>
+                <h2> &emsp;</h2>
+                <p class="mt-4">Find prints online and send us the link or file, and we will reach back with a quote to print.</p>
+                <button class="welcome-btn" onclick="window.location.href='find-prints.html'">Find Prints</button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Blank Space -->
+    <div style="height: 80px;"></div>
+
+    <!-- Featured Prints -->
+    <section id="featured-prints">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Prints</h2>
+            </div>
+            <div id="imageContainer" class="row">
+                <!-- Items dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Blank Space -->
+    <div style="height: 80px;"></div>
+</div>
+
+<!-- Footer -->
+<footer id="contact" class="footer">
+    <div class="container-fluid">  <!-- Change container to container-fluid -->
+        <div class="footer-top text-center">
+            <h2>Contact Us</h2>
+            <p>Email: npeterson1004@gmail.com</p>
+            <p>Phone: +1 (320) 266-1791</p>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- JavaScript -->
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/owl.carousel.min.js"></script>
+    <script src="../assets/js/bootsnav.js"></script>
+    <script src="../assets/js/custom.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/cart.js"></script>
+
+
+    <script>
+        async function fetchFeaturedProducts() {
+            try {
+                const response = await fetch("http://localhost:5000/api/products/featured");
+                const products = await response.json();
+        
+                const imageContainer = document.getElementById("imageContainer");
+                if (!imageContainer) {
+                    console.error("Error: 'imageContainer' not found.");
+                    return;
+                }
+        
+                imageContainer.innerHTML = ""; // Clear existing content
+        
+                if (products.length === 0) {
+                    imageContainer.innerHTML = '<p class="text-center">No featured products available.</p>';
+                    return;
+                }
+        
+                products.forEach(product => {
+                    const productCard = `
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="http://localhost:5000${product.image}" class="card-img-top" alt="${product.name}" style="max-width: 100%; height: auto;">
+                                <div class="card-body">
+                                    <h7 class="card-title">${product.name}</h7>
+                                    <p class="card-text">${product.description}</p>
+                                    <p class="card-text">$${product.price}</p>
+                                    <button class="btn btn-primary" onclick="addToCart('${product.name}', ${product.price}, 'http://localhost:5000${product.image}')">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    imageContainer.innerHTML += productCard;
+                });
+        
+            } catch (error) {
+                console.error("Error fetching featured products:", error);
+                imageContainer.innerHTML = '<p class="text-center text-danger">Failed to load featured products.</p>';
+            }
+        }
+        
+        // Call function when the page loads
+        fetchFeaturedProducts();
+    </script>
+    
+
+
+
+
+
+
+
+    
+    <script>
+const token = localStorage.getItem("token") || localStorage.getItem("adminToken");
+
+if (!token) {
+    window.location.href = "login.html";
+}          
+    </script>
+
+</body>
+
+</html>
