@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     loadCart();
 });
-const API_BASE_URL = "https://custom3d-backend.onrender.com"; // Replace with your Render backend URL
+import { API_BASE_URL } from "./config.js";
 // Load Cart from Local Storage
 function loadCart() {
     let userEmail = localStorage.getItem("userEmail");

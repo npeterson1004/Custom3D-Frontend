@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://custom3d-backend.onrender.com"; // Replace with your Render backend URL
+import { API_BASE_URL } from "./config.js";
 
 document.getElementById("registerForm")?.addEventListener("submit", async function (e) {
     e.preventDefault();

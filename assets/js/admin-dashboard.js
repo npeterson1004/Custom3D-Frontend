@@ -1,5 +1,5 @@
 //admin-dashboard.js
-const API_BASE_URL = "https://custom3d-backend.onrender.com";
+import { API_BASE_URL } from "./config.js";
 document.addEventListener("DOMContentLoaded", function () {
     const token = localStorage.getItem("adminToken");
     console.log("Checking Admin Token on Page Load:", token);

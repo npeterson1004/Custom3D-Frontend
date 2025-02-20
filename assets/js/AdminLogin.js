@@ -1,6 +1,6 @@
 
 
-const API_BASE_URL = "https://custom3d-backend.onrender.com";
+import { API_BASE_URL } from "./config.js";
 document.getElementById("adminLoginForm").addEventListener("submit", async function (event) {
     event.preventDefault();
 
