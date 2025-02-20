@@ -1,6 +1,6 @@
 
 
-
+const API_BASE_URL = "https://custom3d-backend.onrender.com";
 document.getElementById("adminLoginForm").addEventListener("submit", async function (event) {
     event.preventDefault();
 
@@ -10,7 +10,7 @@ document.getElementById("adminLoginForm").addEventListener("submit", async funct
     console.log("Attempting Admin Login with:", { email, password });
 
     try {
-        const response = await fetch("https://delicate-yeot-77f124.netlify.app/api/admin/login", { 
+        const response = await fetch(`${API_BASE_URL}/api/admin/login`, { 
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password })
@@ -29,9 +29,13 @@ document.getElementById("adminLoginForm").addEventListener("submit", async funct
         }
 
         // ✅ Store token
-        localStorage.setItem("adminToken", data.token); 
-        console.log("Stored Token in localStorage:", localStorage.getItem("adminToken"));
-
+        if (data.token) {
+            localStorage.setItem("adminToken", data.token);
+            window.location.href = "admin-dashboard.html";
+        } else {
+            console.error("❌ No token received.");
+        }
+        
         // ✅ Confirm before redirecting
         if (localStorage.getItem("adminToken")) {
             console.log("Redirecting to Admin Dashboard...");

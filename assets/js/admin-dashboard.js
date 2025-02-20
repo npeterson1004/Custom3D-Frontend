@@ -1,6 +1,5 @@
 //admin-dashboard.js
-
-
+const API_BASE_URL = "https://custom3d-backend.onrender.com";
 document.addEventListener("DOMContentLoaded", function () {
     const token = localStorage.getItem("adminToken");
     console.log("Checking Admin Token on Page Load:", token);
@@ -21,7 +20,7 @@ async function loadDashboard() {
             return;
         }
 
-        const res = await fetch("https://delicate-yeot-77f124.netlify.app/api/admin/dashboard", {
+        const res = await fetch(`${API_BASE_URL}/api/admin/dashboard`, {
             method: "GET",
             headers: { 
                 "Authorization": `Bearer ${token}`,
@@ -55,10 +54,8 @@ document.addEventListener("DOMContentLoaded", loadDashboard);
 
 
 
-
 async function checkAdminAuth() {
     const token = localStorage.getItem("adminToken");
-    console.log("Admin Token Being Sent:", token);
 
     if (!token) {
         console.log("No admin token found. Redirecting to login.");
@@ -67,32 +64,26 @@ async function checkAdminAuth() {
     }
 
     try {
-        const res = await fetch("https://delicate-yeot-77f124.netlify.app/api/admin/dashboard", {
+        const response = await fetch(`${API_BASE_URL}/api/admin/verify`, { // ✅ Correct API Path
             method: "GET",
-            headers: { 
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
+            headers: {
+                "Authorization": `Bearer ${token}`
             }
         });
 
-        if (res.status === 401 || res.status === 403) {
-            console.error("Unauthorized: Redirecting to login.");
+        if (!response.ok) {
             localStorage.removeItem("adminToken");
-            window.location.href = "admin-login.html";
-            return;
+            window.location.href = "admin-login.html"; // Redirect if token is invalid
         }
-
-        const data = await res.json();
-        console.log("✅ Dashboard Data:", data);
     } catch (error) {
-        console.error("Admin auth error:", error);
-        localStorage.removeItem("adminToken");
+        console.error("Error verifying admin login:", error);
         window.location.href = "admin-login.html";
     }
 }
 
+// Run admin authentication check when the page loads
+document.addEventListener("DOMContentLoaded", checkAdminAuth);
 
-checkAdminAuth();
 
 
 document.getElementById("addProductForm").addEventListener("submit", async function (e) {
@@ -106,7 +97,7 @@ document.getElementById("addProductForm").addEventListener("submit", async funct
     }
 
     try {
-        const response = await fetch("https://delicate-yeot-77f124.netlify.app/api/products", {
+        const response = await fetch(`${API_BASE_URL}/api/products`, {
             method: "POST",
             body: formData
         });
@@ -125,7 +116,7 @@ document.getElementById("addProductForm").addEventListener("submit", async funct
 
 async function loadContacts() {
     try {
-        const response = await fetch("https://delicate-yeot-77f124.netlify.app/api/contact");
+        const response = await fetch(`${API_BASE_URL}/api/contact`);
 
         if (!response.ok) {
             throw new Error("Failed to fetch contacts.");
@@ -167,7 +158,7 @@ document.getElementById("view-contacts-tab").addEventListener("click", loadConta
 
 async function fetchOrders() {
     try {
-        const response = await fetch("https://delicate-yeot-77f124.netlify.app/api/orders");
+        const response = await fetch(`${API_BASE_URL}/api/orders`);
         const orders = await response.json();
 
         const ordersContainer = document.getElementById("ordersContainer");
@@ -205,9 +196,19 @@ function sanitize(input) {
 document.getElementById("view-contacts-tab").addEventListener("click", loadContacts);
 
 
-function logout() {
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+async function logout() {
+    const token = localStorage.getItem("adminToken");
+
+    if (token) {
+        await fetch(`${API_BASE_URL}/api/auth/logout`, {
+            method: "POST",
+            headers: { "Authorization": `Bearer ${token}` }
+        });
+    }
+
+    localStorage.removeItem("adminToken");
     window.location.href = "admin-login.html";
 }
+
 
 loadDashboard();

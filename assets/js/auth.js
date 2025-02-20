@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://custom3d-backend.onrender.com"; // Replace with your Render backend URL
+
 document.getElementById("registerForm")?.addEventListener("submit", async function (e) {
     e.preventDefault();
 
@@ -6,7 +8,7 @@ document.getElementById("registerForm")?.addEventListener("submit", async functi
     const password = document.getElementById("password").value;
 
     try {
-        const response = await fetch("https://delicate-yeot-77f124.netlify.app/api/auth/register", {
+        const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, email, password })
@@ -30,7 +32,7 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
     const password = document.getElementById("password").value;
 
     try {
-        const response = await fetch("https://delicate-yeot-77f124.netlify.app", {
+        const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password })
@@ -52,10 +54,34 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
 
 
 
-window.logout = function () {
-    localStorage.removeItem("token"); // Remove JWT token
-    localStorage.removeItem("userEmail"); // ✅ Remove stored email
-    window.location.href = "login.html"; // Redirect to login page
-};
 
 
+async function checkLoginStatus() {
+    const token = localStorage.getItem("token") || localStorage.getItem("adminToken");
+
+    if (!token) {
+        window.location.href = "login.html"; // Redirect only if no token
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/auth/verify`, { // ✅ Correct API Path
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("adminToken");
+            window.location.href = "login.html"; // Redirect if token is invalid
+        }
+    } catch (error) {
+        console.error("Error verifying login:", error);
+        window.location.href = "login.html";
+    }
+}
+
+// Run login check when the page loads
+document.addEventListener("DOMContentLoaded", checkLoginStatus);

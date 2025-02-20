@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     loadCart();
 });
-
+const API_BASE_URL = "https://custom3d-backend.onrender.com"; // Replace with your Render backend URL
 // Load Cart from Local Storage
 function loadCart() {
     let userEmail = localStorage.getItem("userEmail");
@@ -187,7 +187,7 @@ async function sendOrder() {
     };
 
     try {
-        const response = await fetch("https://delicate-yeot-77f124.netlify.app/api/orders", {
+        const response = await fetch(`${API_BASE_URL}/api/orders`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -202,7 +202,9 @@ async function sendOrder() {
         console.log("✅ Order sent successfully:", orderDetails);
 
         // ✅ Clear only the user's cart after successful order placement
-        localStorage.removeItem(`cart_${userEmail}`);
+        if (response.ok) {
+            localStorage.removeItem(`cart_${userEmail}`);
+        }
         loadCart(); // Update UI
         alert("Your order has been placed successfully!");
 
