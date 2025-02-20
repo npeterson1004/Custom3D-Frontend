@@ -6,7 +6,7 @@ document.getElementById("registerForm")?.addEventListener("submit", async functi
     const password = document.getElementById("password").value;
 
     try {
-        const response = await fetch("https://custom3d-backend.onrender.com/api/auth/register", {
+        const response = await fetch("https://delicate-yeot-77f124.netlify.app/api/auth/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, email, password })
@@ -30,7 +30,7 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
     const password = document.getElementById("password").value;
 
     try {
-        const response = await fetch("https://custom3d-backend.onrender.com", {
+        const response = await fetch("https://delicate-yeot-77f124.netlify.app", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password })

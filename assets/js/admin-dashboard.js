@@ -21,7 +21,7 @@ async function loadDashboard() {
             return;
         }
 
-        const res = await fetch("https://custom3d-backend.onrender.com/api/admin/dashboard", {
+        const res = await fetch("https://delicate-yeot-77f124.netlify.app/api/admin/dashboard", {
             method: "GET",
             headers: { 
                 "Authorization": `Bearer ${token}`,
@@ -67,7 +67,7 @@ async function checkAdminAuth() {
     }
 
     try {
-        const res = await fetch("https://custom3d-backend.onrender.com/api/admin/dashboard", {
+        const res = await fetch("https://delicate-yeot-77f124.netlify.app/api/admin/dashboard", {
             method: "GET",
             headers: { 
                 "Authorization": `Bearer ${token}`,
@@ -106,7 +106,7 @@ document.getElementById("addProductForm").addEventListener("submit", async funct
     }
 
     try {
-        const response = await fetch("https://custom3d-backend.onrender.com/api/products", {
+        const response = await fetch("https://delicate-yeot-77f124.netlify.app/api/products", {
             method: "POST",
             body: formData
         });
@@ -125,7 +125,7 @@ document.getElementById("addProductForm").addEventListener("submit", async funct
 
 async function loadContacts() {
     try {
-        const response = await fetch("https://custom3d-backend.onrender.com/api/contact");
+        const response = await fetch("https://delicate-yeot-77f124.netlify.app/api/contact");
 
         if (!response.ok) {
             throw new Error("Failed to fetch contacts.");
@@ -167,7 +167,7 @@ document.getElementById("view-contacts-tab").addEventListener("click", loadConta
 
 async function fetchOrders() {
     try {
-        const response = await fetch("https://custom3d-backend.onrender.com/api/orders");
+        const response = await fetch("https://delicate-yeot-77f124.netlify.app/api/orders");
         const orders = await response.json();
 
         const ordersContainer = document.getElementById("ordersContainer");

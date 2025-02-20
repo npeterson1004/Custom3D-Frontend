@@ -10,7 +10,7 @@ document.getElementById("adminLoginForm").addEventListener("submit", async funct
     console.log("Attempting Admin Login with:", { email, password });
 
     try {
-        const response = await fetch("https://custom3d-backend.onrender.com/api/admin/login", { 
+        const response = await fetch("https://delicate-yeot-77f124.netlify.app/api/admin/login", { 
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password })
