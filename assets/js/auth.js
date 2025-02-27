@@ -1,3 +1,5 @@
+//auth.js
+
 import { API_BASE_URL } from "./config.js";
 
 document.getElementById("registerForm")?.addEventListener("submit", async function (e) {
