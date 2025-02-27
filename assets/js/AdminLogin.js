@@ -38,17 +38,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // ✅ Store token BEFORE redirecting
             localStorage.setItem("adminToken", data.token);
-            
-            // ✅ Verify token storage before redirecting
-            if (!localStorage.getItem("adminToken")) {
-                console.error("🚨 Token was NOT stored in localStorage!");
-                return;
-            }
 
-            console.log("✅ Token stored successfully. Redirecting...");
+            // ✅ Delay redirect until token is confirmed
             setTimeout(() => {
-                window.location.href = "admin-dashboard.html"; 
-            }, 500); // ✅ Add a short delay before redirecting
+                if (!localStorage.getItem("adminToken")) {
+                    console.error("🚨 Token was NOT stored in localStorage!");
+                    return;
+                }
+                
+                console.log("✅ Token stored successfully. Redirecting...");
+                window.location.href = "admin-dashboard.html";
+            }, 500); // ✅ Short delay before redirect
 
         } catch (error) {
             console.error("❌ Login Error:", error);

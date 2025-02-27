@@ -59,34 +59,33 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
 
 
 async function checkLoginStatus() {
-    const token = localStorage.getItem("token") || localStorage.getItem("adminToken");
+    setTimeout(() => { // ✅ Wait for token storage
+        const token = localStorage.getItem("token") || localStorage.getItem("adminToken");
 
-    if (!token) {
-        console.warn("⚠️ No authentication token found. User not logged in.");
-        return; // Avoids unnecessary redirection loop
-    }
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        });
-
-        if (!response.ok) {
-            console.warn("⚠️ Token invalid. Redirecting to login.");
-            localStorage.removeItem("token");
-            localStorage.removeItem("adminToken");
-            window.location.href = "login.html";
+        if (!token) {
+            console.warn("⚠️ No authentication token found. User not logged in.");
+            return; // Avoids unnecessary redirection loop
         }
-    } catch (error) {
-        console.error("Error verifying login:", error);
-    }
+
+        fetch(`${API_BASE_URL}/api/auth/verify`, {
+            method: "GET",
+            headers: { "Authorization": `Bearer ${token}` }
+        })
+        .then(response => {
+            if (!response.ok) {
+                console.warn("⚠️ Token invalid. Redirecting to login.");
+                localStorage.removeItem("token");
+                localStorage.removeItem("adminToken");
+                window.location.href = "login.html";
+            }
+        })
+        .catch(error => console.error("Error verifying login:", error));
+    }, 500); // ✅ Short delay before checking token
 }
 
 // Run login check when the page loads
 document.addEventListener("DOMContentLoaded", checkLoginStatus);
+
 
 
 
@@ -104,9 +103,7 @@ async function logout() {
     if (token) {
         await fetch(`${API_BASE_URL}/api/auth/logout`, { // ✅ Backend logout request
             method: "POST",
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
+            headers: { "Authorization": `Bearer ${token}` }
         });
     }
 
@@ -116,7 +113,7 @@ async function logout() {
     console.log("✅ Redirecting to login page...");
     setTimeout(() => {
         window.location.href = "login.html";
-    }, 500); // ✅ Add a short delay before redirecting
+    }, 500); // ✅ Short delay before redirecting
 }
 
 
