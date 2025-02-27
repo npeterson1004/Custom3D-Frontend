@@ -41,16 +41,32 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
         });
 
         const data = await response.json();
-        if (response.ok) {
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("userEmail", data.user.email); // ✅ Fix: Store user email from response
-            console.log("✅ User email stored in localStorage:", data.user.email); // Debugging
-            window.location.href = "index.html"; // Redirect to home page
-        } else {
-            document.getElementById("message").innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+        if (!response.ok) {
+            throw new Error(data.message || "Login failed!");
         }
+
+        console.log("✅ Login Successful! Storing Token...", data);
+
+        // ✅ Store token BEFORE redirecting
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userEmail", data.user.email);
+
+        setTimeout(() => {
+            const storedToken = localStorage.getItem("token");
+            console.log("🔍 Checking Stored Token:", storedToken);
+
+            if (!storedToken) {
+                console.error("🚨 Token was NOT stored in localStorage!");
+                return;
+            }
+
+            console.log("✅ Token stored successfully. Redirecting...");
+            window.location.href = "index.html"; 
+        }, 500); // ✅ Delay to ensure token is stored
+
     } catch (error) {
-        console.error("Login error:", error);
+        console.error("❌ Login Error:", error);
+        document.getElementById("message").innerHTML = `<div class="alert alert-danger">${error.message}</div>`;
     }
 });
 
@@ -58,9 +74,12 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
 
 
 
+
 async function checkLoginStatus() {
-    setTimeout(() => { // ✅ Wait for token storage
+    setTimeout(() => { // ✅ Delay check to ensure storage is updated
         const token = localStorage.getItem("token") || localStorage.getItem("adminToken");
+
+        console.log("🔍 Retrieved Token:", token); // ✅ Debugging
 
         if (!token) {
             console.warn("⚠️ No authentication token found. User not logged in.");
