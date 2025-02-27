@@ -101,97 +101,33 @@
 </footer>
 
 
-    <!-- JavaScript -->
-    <script type="module" src="../assets/js/config.js"></script>
-    <script type="module" src="../assets/js/auth.js"></script>
-    <script type="module" src="../assets/js/cart.js"></script>
-    <script type="module" src="../assets/js/custom.js"></script>
-    <script src="../assets/js/jquery.js"></script>
-    <script src="../assets/js/bootstrap.min.js"></script>
-    <script type="module" src="../assets/js/owl.carousel.min.js"></script>
-    <script type="module" src="../assets/js/bootsnav.js"></script>
+<!-- ✅ Load config.js FIRST -->
+<script type="module" src="../assets/js/config.js"></script>
+
+<!-- ✅ Load Feature Scripts -->
+<script type="module" src="../assets/js/Home.js"></script>
+<script type="module" src="../assets/js/auth.js"></script>
+<script type="module" src="../assets/js/cart.js"></script>
+<script type="module" src="../assets/js/custom.js"></script>
+
+<!-- ✅ Load jQuery & Bootstrap (WITHOUT "module") -->
+<script src="../assets/js/jquery.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+
+<!-- ✅ Load other UI scripts -->
+<script src="../assets/js/owl.carousel.min.js"></script>
+<script src="../assets/js/bootsnav.js"></script>
 
 
 
 
 
-    <script>
 
-
-async function fetchFeaturedProducts() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/products/featured`);
-        const products = await response.json();
-
-        const imageContainer = document.getElementById("imageContainer");
-        if (!imageContainer) {
-            console.error("Error: 'imageContainer' not found.");
-            return;
-        }
-
-        imageContainer.innerHTML = ""; // Clear existing content
-
-        if (products.length === 0) {
-            imageContainer.innerHTML = '<p class="text-center">No featured products available.</p>';
-            return;
-        }
-
-        products.forEach(product => {
-            const productCard = `
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <img src="${API_BASE_URL}${product.image}" class="card-img-top" alt="${product.name}" style="max-width: 100%; height: auto;">
-                        <div class="card-body">
-                            <h7 class="card-title">${product.name}</h7>
-                            <p class="card-text">${product.description}</p>
-                            <p class="card-text">$${product.price}</p>
-                            <button class="btn btn-primary" onclick="addToCart('${product.name}', ${product.price}, '${API_BASE_URL}${product.image}')">Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            imageContainer.innerHTML += productCard;
-        });
-
-    } catch (error) {
-        console.error("Error fetching featured products:", error);
-        imageContainer.innerHTML = '<p class="text-center text-danger">Failed to load featured products.</p>';
-    }
-}
-
-// Call function when the page loads
-fetchFeaturedProducts();
-
-    </script>
+   
     
 
 
-    <script>
-async function logout() {
-    let userEmail = localStorage.getItem("userEmail");
 
-    if (userEmail) {
-        localStorage.removeItem(`cart_${userEmail}`);
-    }
-
-    const token = localStorage.getItem("token") || localStorage.getItem("adminToken");
-
-    if (token) {
-        await fetch(`${API_BASE_URL}/api/auth/logout`, { // ✅ Backend logout request
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        });
-    }
-
-    localStorage.removeItem("token");
-    localStorage.removeItem("adminToken");
-    localStorage.removeItem("userEmail");
-    window.location.href = "login.html";
-}
-
-    </script>
 
 </body>
 

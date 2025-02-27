@@ -85,3 +85,30 @@ async function checkLoginStatus() {
 
 // Run login check when the page loads
 document.addEventListener("DOMContentLoaded", checkLoginStatus);
+
+
+
+async function logout() {
+    let userEmail = localStorage.getItem("userEmail");
+
+    if (userEmail) {
+        localStorage.removeItem(`cart_${userEmail}`);
+    }
+
+    const token = localStorage.getItem("token") || localStorage.getItem("adminToken");
+
+    if (token) {
+        await fetch(`${API_BASE_URL}/api/auth/logout`, { // ✅ Backend logout request
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+    }
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("adminToken");
+    localStorage.removeItem("userEmail");
+    window.location.href = "login.html";
+}
+
