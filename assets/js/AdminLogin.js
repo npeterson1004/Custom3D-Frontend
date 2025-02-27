@@ -1,11 +1,11 @@
 //adminLogin.js
-import { API_BASE_URL } from "./config.js";  
+import { API_BASE_URL } from "./config.js";
 
 document.addEventListener("DOMContentLoaded", function () {
     console.log("✅ DOM fully loaded, attaching event listener...");
 
     const adminLoginForm = document.getElementById("adminLoginForm");
-    
+
     if (!adminLoginForm) {
         console.error("🚨 adminLoginForm NOT FOUND!");
         return;
@@ -19,6 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const password = document.getElementById("password").value;
 
         try {
+            console.log("📢 Sending Login Request to:", `${API_BASE_URL}/api/admin/login`);
+
             const response = await fetch(`${API_BASE_URL}/api/admin/login`, { 
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -32,9 +34,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 throw new Error(data.message || "Login failed!");
             }
 
-            console.log("✅ Login Successful!", data);
+            console.log("✅ Login Successful! Storing Token...", data);
+
+            // ✅ Store token BEFORE redirecting
             localStorage.setItem("adminToken", data.token);
-            window.location.href = "admin-dashboard.html"; 
+            
+            // ✅ Verify token storage before redirecting
+            if (!localStorage.getItem("adminToken")) {
+                console.error("🚨 Token was NOT stored in localStorage!");
+                return;
+            }
+
+            console.log("✅ Token stored successfully. Redirecting...");
+            setTimeout(() => {
+                window.location.href = "admin-dashboard.html"; 
+            }, 500); // ✅ Add a short delay before redirecting
 
         } catch (error) {
             console.error("❌ Login Error:", error);

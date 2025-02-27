@@ -91,6 +91,8 @@ document.addEventListener("DOMContentLoaded", checkLoginStatus);
 
 
 async function logout() {
+    console.log("🔍 Logging out...");
+
     let userEmail = localStorage.getItem("userEmail");
 
     if (userEmail) {
@@ -108,9 +110,13 @@ async function logout() {
         });
     }
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("adminToken");
-    localStorage.removeItem("userEmail");
-    window.location.href = "login.html";
+    console.log("✅ Removing all stored data...");
+    localStorage.clear();
+
+    console.log("✅ Redirecting to login page...");
+    setTimeout(() => {
+        window.location.href = "login.html";
+    }, 500); // ✅ Add a short delay before redirecting
 }
+
 

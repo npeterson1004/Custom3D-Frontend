@@ -1,14 +1,14 @@
 // cart.js - Handles cart functionality
 document.addEventListener("DOMContentLoaded", function () {
-    let userEmail = localStorage.getItem("userEmail");
-
-    if (!userEmail) {
-        console.warn("⚠️ No user email found. Skipping cart load.");
-        return; // Prevents execution if user is not logged in
+    const cartContainer = document.getElementById("cart-items");
+    if (!cartContainer) {
+        console.warn("⚠️ Cart element not found. Skipping cart update.");
+        return; // ✅ Exit script if cart does not exist
     }
 
     loadCart();
 });
+
 
 
 

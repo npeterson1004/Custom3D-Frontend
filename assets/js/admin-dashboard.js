@@ -1,14 +1,22 @@
 //admin-dashboard.js
 import { API_BASE_URL } from "./config.js";
-document.addEventListener("DOMContentLoaded", function () {
-    const token = localStorage.getItem("adminToken");
-    console.log("Checking Admin Token on Page Load:", token);
 
-    if (!token) {
-        console.log("No admin token found. Redirecting to login.");
-        window.location.href = "admin-login.html";
-    }
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("🔍 Checking Admin Token on Page Load...");
+    
+    setTimeout(() => {  // ✅ Short delay to allow localStorage to update
+        const token = localStorage.getItem("adminToken");
+        console.log("🔍 Retrieved Admin Token:", token);
+
+        if (!token) {
+            console.log("🚨 No admin token found. Redirecting to login.");
+            window.location.href = "admin-login.html";
+        } else {
+            loadDashboard();
+        }
+    }, 300);
 });
+
 
 
 async function loadDashboard() {
