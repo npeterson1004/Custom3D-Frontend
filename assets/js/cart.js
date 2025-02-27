@@ -1,7 +1,17 @@
 // cart.js - Handles cart functionality
 document.addEventListener("DOMContentLoaded", function () {
+    let userEmail = localStorage.getItem("userEmail");
+
+    if (!userEmail) {
+        console.warn("⚠️ No user email found. Skipping cart load.");
+        return; // Prevents execution if user is not logged in
+    }
+
     loadCart();
 });
+
+
+
 import { API_BASE_URL } from "./config.js";
 // Load Cart from Local Storage
 function loadCart() {
@@ -11,8 +21,13 @@ function loadCart() {
         return;
     }
 
-    let cart = JSON.parse(localStorage.getItem(`cart_${userEmail}`)) || [];
     const cartItemsContainer = document.getElementById("cart-items");
+    if (!cartItemsContainer) {
+        console.warn("⚠️ Cart element not found. Skipping cart update.");
+        return;
+    }
+
+    let cart = JSON.parse(localStorage.getItem(`cart_${userEmail}`)) || [];
     const cartTotal = document.getElementById("cart-total");
     const cartCountElements = document.querySelectorAll("#cart-count");
 
@@ -20,8 +35,6 @@ function loadCart() {
     cartCountElements.forEach(cartCount => {
         cartCount.innerText = cart.length;
     });
-
-    if (!cartItemsContainer) return;
 
     cartItemsContainer.innerHTML = "";
     let total = 0;
@@ -34,20 +47,19 @@ function loadCart() {
             total += itemTotal;
 
             cartItemsContainer.innerHTML += `
-    <tr>
-        <td><img src="${item.image}" width="50" alt="${item.name}"></td>
-        <td>${item.name}</td>
-        <td>$${item.price.toFixed(2)}</td>
-        <td>
-            <input type="number" value="${item.quantity}" min="1" 
-                onchange="updateQuantity(${index}, this.value)" 
-                style="color: white; background-color: #333; text-align: center; width: 60px;">
-        </td>
-        <td>$${itemTotal.toFixed(2)}</td>
-        <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
-    </tr>
-`;
-
+                <tr>
+                    <td><img src="${item.image}" width="50" alt="${item.name}"></td>
+                    <td>${item.name}</td>
+                    <td>$${item.price.toFixed(2)}</td>
+                    <td>
+                        <input type="number" value="${item.quantity}" min="1" 
+                            onchange="updateQuantity(${index}, this.value)" 
+                            style="color: white; background-color: #333; text-align: center; width: 60px;">
+                    </td>
+                    <td>$${itemTotal.toFixed(2)}</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
+                </tr>
+            `;
         });
     }
 
@@ -55,6 +67,7 @@ function loadCart() {
         cartTotal.innerText = total.toFixed(2);
     }
 }
+
 
 // Add Item to Cart
 function addToCart(name, price, image) {

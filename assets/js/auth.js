@@ -60,12 +60,12 @@ async function checkLoginStatus() {
     const token = localStorage.getItem("token") || localStorage.getItem("adminToken");
 
     if (!token) {
-        window.location.href = "login.html"; // Redirect only if no token
-        return;
+        console.warn("⚠️ No authentication token found. User not logged in.");
+        return; // Avoids unnecessary redirection loop
     }
 
     try {
-        const response = await fetch(`${API_BASE_URL}/api/auth/verify`, { // ✅ Correct API Path
+        const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -73,13 +73,13 @@ async function checkLoginStatus() {
         });
 
         if (!response.ok) {
+            console.warn("⚠️ Token invalid. Redirecting to login.");
             localStorage.removeItem("token");
             localStorage.removeItem("adminToken");
-            window.location.href = "login.html"; // Redirect if token is invalid
+            window.location.href = "login.html";
         }
     } catch (error) {
         console.error("Error verifying login:", error);
-        window.location.href = "login.html";
     }
 }
 
