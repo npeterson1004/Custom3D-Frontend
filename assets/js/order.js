@@ -43,9 +43,12 @@ function loadCart() {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
 
+        // ✅ FIXED: Ensure Cloudinary URLs are used correctly
+        const imageUrl = item.image.startsWith("http") ? item.image : `${API_BASE_URL}${item.image}`;
+
         const row = `
             <tr>
-                <td><img src="${item.image}" alt="${item.name}" style="width: 50px;"></td>
+                <td><img src="${imageUrl}" alt="${item.name}" style="width: 50px;"></td>
                 <td>${item.name}</td>
                 <td>$${item.price.toFixed(2)}</td>
                 <td>
@@ -60,6 +63,7 @@ function loadCart() {
 
     cartTotal.textContent = total.toFixed(2);
 }
+
 
 // ✅ Add Item to Cart
 function addToCart(name, price, image) {
