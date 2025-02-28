@@ -50,10 +50,8 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
         localStorage.setItem("token", data.token);
         localStorage.setItem("userEmail", data.user.email);
 
-        // ✅ Delay to confirm token storage
         setTimeout(() => {
             const storedToken = localStorage.getItem("token");
-            console.log("🔍 Confirming Stored Token Before Redirect:", storedToken);
 
             if (!storedToken) {
                 console.error("🚨 Token was NOT stored! Aborting redirect.");
@@ -61,20 +59,14 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
             }
 
             console.log("✅ Token stored successfully. Redirecting...");
-            window.location.href = "index.html"; // Change to appropriate destination
+            window.location.href = "index.html"; // Redirect to homepage after login
 
-        }, 500); // ✅ Short delay before checking token storage
-
+        }, 500);
     } catch (error) {
         console.error("❌ Login Error:", error);
         document.getElementById("message").innerHTML = `<div class="alert alert-danger">${error.message}</div>`;
     }
 });
-
-
-
-
-
 
 async function checkLoginStatus() {
     setTimeout(async () => {
@@ -83,8 +75,7 @@ async function checkLoginStatus() {
         console.log("🔍 Checking Retrieved Token:", token);
 
         if (!token) {
-            console.warn("⚠️ No authentication token found. Redirecting to login.");
-            window.location.href = "login.html";
+            document.getElementById("auth-error")?.innerHTML = `<div class="alert alert-warning">Please log in to continue.</div>`;
             return;
         }
 
@@ -95,26 +86,26 @@ async function checkLoginStatus() {
             });
 
             if (!response.ok) {
-                console.warn("🚨 Token verification failed. Logging out...");
+                const errorMsg = await response.json();
+                console.warn("🚨 Token verification failed:", errorMsg.message);
+                document.getElementById("auth-error")?.innerHTML = `<div class="alert alert-danger">${errorMsg.message}</div>`;
                 localStorage.removeItem("token");
                 localStorage.removeItem("adminToken");
-                window.location.href = "login.html";
                 return;
             }
 
             console.log("✅ Token Verified. User is logged in.");
         } catch (error) {
             console.error("❌ Error verifying login:", error);
+            document.getElementById("auth-error")?.innerHTML = `<div class="alert alert-danger">Authentication error. Try again.</div>`;
             localStorage.removeItem("token");
             localStorage.removeItem("adminToken");
-            window.location.href = "login.html";
         }
-    }, 500); // ✅ Short delay before checking token
+    }, 500);
 }
 
-
-// Run login check when the page loads
 document.addEventListener("DOMContentLoaded", checkLoginStatus);
+
 
 
 
