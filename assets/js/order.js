@@ -37,8 +37,15 @@ async function sendOrder() {
         if (response.ok) {
             alert("✅ Order placed successfully!");
             localStorage.removeItem("cart");
-            updateCartCount(); // ✅ Reset cart count after placing order
-            loadCart();
+
+            // ✅ Ensure updateCartCount() is available before calling it
+            if (typeof updateCartCount === "function") {
+                updateCartCount(); // ✅ Reset cart count after placing order
+            } else {
+                console.warn("⚠️ updateCartCount is not available.");
+            }
+
+            loadCart(); // ✅ Refresh UI
         } else {
             alert(`❌ Error: ${result.error}`);
         }

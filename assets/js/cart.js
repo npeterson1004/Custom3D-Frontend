@@ -125,6 +125,22 @@ function removeFromCart(index) {
     loadCart();
 }
 
+// ✅ Function to update the cart count
+function updateCartCount() {
+    let userEmail = localStorage.getItem("userEmail");
+    let cart = JSON.parse(localStorage.getItem(`cart_${userEmail}`)) || [];
+    const cartCountElement = document.getElementById("cart-count");
+
+    if (cartCountElement) {
+        cartCountElement.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    }
+}
+
+// ✅ Make updateCartCount globally accessible
+window.updateCartCount = updateCartCount;
+
+
+
 // ✅ Update Quantity in Cart
 function updateQuantity(index, quantity) {
     let userEmail = localStorage.getItem("userEmail");
