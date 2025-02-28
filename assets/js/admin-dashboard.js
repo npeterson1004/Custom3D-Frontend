@@ -178,11 +178,30 @@ document.getElementById("view-contacts-tab").addEventListener("click", loadConta
 
 async function fetchOrders() {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/orders`);
-        const orders = await response.json();
+        const token = localStorage.getItem("adminToken");
 
+        if (!token) {
+            console.error("🚨 No admin token found. Redirecting...");
+            return window.location.href = "admin-login.html";
+        }
+
+        const response = await fetch(`${API_BASE_URL}/api/orders`, {
+            method: "GET",
+            headers: { "Authorization": `Bearer ${token}` }
+        });
+
+        if (!response.ok) {
+            throw new Error("⚠️ Failed to fetch orders. Check authentication.");
+        }
+
+        const orders = await response.json();
         const ordersContainer = document.getElementById("ordersContainer");
-        ordersContainer.innerHTML = ""; // Clear existing content
+        ordersContainer.innerHTML = ""; // Clear previous entries
+
+        if (orders.length === 0) {
+            ordersContainer.innerHTML = '<tr><td colspan="4" class="text-center">No orders available.</td></tr>';
+            return;
+        }
 
         orders.forEach(order => {
             const orderRow = `
@@ -197,12 +216,12 @@ async function fetchOrders() {
         });
 
     } catch (error) {
-        console.error("Error fetching orders:", error);
-        document.getElementById("ordersContainer").innerHTML = '<tr><td colspan="4" class="text-center text-danger">Failed to load orders.</td></tr>';
+        console.error("❌ Error fetching orders:", error);
+        document.getElementById("ordersContainer").innerHTML = '<tr><td colspan="4" class="text-center text-danger">⚠️ Failed to load orders.</td></tr>';
     }
 }
 
-// Load orders when the admin page loads
+// ✅ Load orders when the admin page loads
 document.addEventListener("DOMContentLoaded", fetchOrders);
 
 
