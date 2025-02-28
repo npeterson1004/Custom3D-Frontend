@@ -1,6 +1,10 @@
 // cart.js - Handles cart functionality
 
 import { API_BASE_URL } from "./config.js";
+// ✅ Attach Global Event Listeners
+window.addToCart = addToCart;
+window.removeFromCart = removeFromCart;
+window.updateQuantity = updateQuantity;
 
 document.addEventListener("DOMContentLoaded", function () {
     const cartContainer = document.getElementById("cart-items");
@@ -15,20 +19,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
-// Load Cart from Local Storage
+// ✅ Load Cart from Local Storage
 function loadCart() {
     let userEmail = localStorage.getItem("userEmail");
-    if (!userEmail) {
-        console.warn("⚠️ No user email found. Please log in.");
-        return;
-    }
+    if (!userEmail) return;
 
     const cartItemsContainer = document.getElementById("cart-items");
-    if (!cartItemsContainer) {
-        console.warn("⚠️ Cart element not found. Skipping cart update.");
-        return;
-    }
+    if (!cartItemsContainer) return;
 
     let cart = JSON.parse(localStorage.getItem(`cart_${userEmail}`)) || [];
     const cartTotal = document.getElementById("cart-total");
@@ -36,7 +33,7 @@ function loadCart() {
 
     // ✅ Update cart count across all pages
     cartCountElements.forEach(cartCount => {
-        cartCount.innerText = cart.length;
+        cartCount.innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
     });
 
     cartItemsContainer.innerHTML = "";
@@ -49,32 +46,25 @@ function loadCart() {
             let itemTotal = item.price * item.quantity;
             total += itemTotal;
 
-            // ✅ FIX: Ensure Cloudinary URLs are used correctly
+            // ✅ Ensure image URL is formatted correctly
             let imageUrl = item.image;
-
-            // ✅ If the image URL is missing "https://", add it
             if (imageUrl.startsWith("//")) {
                 imageUrl = `https:${imageUrl}`;
             }
-
-            // ✅ If the image URL is not from Cloudinary (does not start with "http"), prepend API_BASE_URL
-            if (!imageUrl.startsWith("http")) {
+            if (!imageUrl.startsWith("http") && !imageUrl.includes("cloudinary.com")) {
                 imageUrl = `${API_BASE_URL}${imageUrl}`;
             }
-
-            // ✅ Log the final image URL for debugging
-            console.log(`📸 Image URL for ${item.name}: ${imageUrl}`);
 
             cartItemsContainer.innerHTML += `
                 <tr>
                     <td><img src="${imageUrl}" width="50" alt="${item.name}"></td>
                     <td>${item.name}</td>
                     <td>$${item.price.toFixed(2)}</td>
-                <td>
-                    <input type="number" class="order-quantity" value="${item.quantity}" min="1" 
-                    onchange="updateQuantity(${index}, this.value)" 
-                    style="color: black; background-color: white; text-align: center; width: 60px;">
-                </td>
+                    <td>
+                        <input type="number" value="${item.quantity}" min="1" 
+                            onchange="updateQuantity(${index}, this.value)" 
+                            class="cart-quantity-input">
+                    </td>
                     <td>$${itemTotal.toFixed(2)}</td>
                     <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
                 </tr>
@@ -88,30 +78,33 @@ function loadCart() {
 }
 
 
-
-// Add Item to Cart
+// ✅ Add Item to Cart
 function addToCart(name, price, image) {
     let userEmail = localStorage.getItem("userEmail");
     if (!userEmail) {
-        alert("You must log in to add items to the cart.");
+        alert("⚠️ You must log in to add items to the cart.");
         return;
     }
 
     let cart = JSON.parse(localStorage.getItem(`cart_${userEmail}`)) || [];
 
+    // ✅ Ensure Cloudinary URLs are stored correctly
+    let fixedImage = image.startsWith("http") ? image : `${API_BASE_URL}${image}`;
+
     let existingItem = cart.find(item => item.name === name);
     if (existingItem) {
-        existingItem.quantity++;
+        existingItem.quantity += 1;
     } else {
-        cart.push({ name, price, image, quantity: 1 });
+        cart.push({ name, price, image: fixedImage, quantity: 1 });
     }
 
     localStorage.setItem(`cart_${userEmail}`, JSON.stringify(cart));
-    loadCart(); // Update UI
-    showNotification(`${name} has been added to your cart!`);
+    showNotification(`${name} added to cart!`);
+    loadCart();
 }
 
-// Remove Item from Cart
+
+// ✅ Remove Item from Cart
 function removeFromCart(index) {
     let userEmail = localStorage.getItem("userEmail");
     if (!userEmail) return;
@@ -122,7 +115,7 @@ function removeFromCart(index) {
     loadCart();
 }
 
-// Update Quantity
+// ✅ Update Quantity in Cart
 function updateQuantity(index, quantity) {
     let userEmail = localStorage.getItem("userEmail");
     if (!userEmail) return;
@@ -195,57 +188,6 @@ document.head.appendChild(styles);
 
 
 
-async function sendOrder() {
-    let userEmail = localStorage.getItem("userEmail");
-    
-    if (!userEmail) {
-        alert("Error: No user email found. Please log in first.");
-        return;
-    }
 
-    let cart = JSON.parse(localStorage.getItem(`cart_${userEmail}`)) || [];
-
-    if (cart.length === 0) {
-        alert("Your cart is empty!");
-        return;
-    }
-
-    console.log("📢 userEmail from localStorage:", userEmail); // Debugging
-
-    const orderDetails = {
-        userEmail: userEmail.trim(), // Ensure email is not empty
-        items: cart,
-        totalAmount: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
-        orderDate: new Date().toISOString()
-    };
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/orders`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(orderDetails)
-        });
-
-        if (!response.ok) {
-            throw new Error("Failed to send order.");
-        }
-
-        console.log("✅ Order sent successfully:", orderDetails);
-
-        // ✅ Clear only the user's cart after successful order placement
-        if (response.ok) {
-            localStorage.removeItem(`cart_${userEmail}`);
-        }
-        loadCart(); // Update UI
-        alert("Your order has been placed successfully!");
-
-    } catch (error) {
-        console.error("Error sending order:", error);
-        alert("Failed to place order. Please try again.");
-    }
-}
-
-
-
+// ✅ Load cart when the page is ready
+document.addEventListener("DOMContentLoaded", loadCart);
