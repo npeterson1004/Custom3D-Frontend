@@ -83,16 +83,27 @@ async function getAuthToken() {
             const data = await response.json();
             console.log("🔍 Token Response from Backend:", data); // ✅ Debugging
 
-            if (response.ok && data.token) { // ✅ Ensure token is actually returned
-                token = data.token;
-                localStorage.setItem("token", token);
+            if (response.ok && data.token) {
+                console.log("✅ Storing retrieved token:", data.token);
+                localStorage.setItem("token", data.token);
+                return data.token;
             }
+            
         } catch (error) {
             console.error("❌ Error retrieving token from cookies:", error);
         }
     }
 
-    return token;
+    const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
+const expiry = decodedToken.exp * 1000; // Convert to milliseconds
+
+if (Date.now() >= expiry) {
+    console.warn("🚨 Token Expired! Clearing localStorage.");
+    localStorage.removeItem("token");
+    return null;
+}
+
+return token;
 }
 
 
@@ -117,8 +128,13 @@ async function checkLoginStatus() {
         try {
             const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
                 method: "GET",
-                headers: { "Authorization": `Bearer ${token}` }
+                headers: {
+                    "Authorization": token ? `Bearer ${token}` : "",
+                    "Content-Type": "application/json"
+                },
+                credentials: "include"
             });
+            
 
             const data = await response.json();
             if (!response.ok) {
