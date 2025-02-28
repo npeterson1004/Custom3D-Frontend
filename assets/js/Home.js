@@ -26,7 +26,7 @@ async function fetchFeaturedProducts() {
             const productCard = `
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                        <img src="${API_BASE_URL}${product.image}" class="card-img-top" alt="${product.name}" style="max-width: 100%; height: auto;">
+                        <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" class="card-img-top" alt="${product.name}" style="max-width: 100%; height: auto;">
                         <div class="card-body">
                             <h7 class="card-title">${product.name}</h7>
                             <p class="card-text">${product.description}</p>
