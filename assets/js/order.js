@@ -1,14 +1,23 @@
-import { API_BASE_URL } from "./config.js"; // ✅ Ensure correct API base URL
+//order.js
+import { API_BASE_URL } from "./config.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     loadCart();
 });
+
+// ✅ Ensure addToCart is globally accessible
+window.addToCart = addToCart;
+window.sendOrder = sendOrder;
+window.updateQuantity = updateQuantity;
+window.removeFromCart = removeFromCart;
 
 // ✅ Load Cart Items from Local Storage
 function loadCart() {
     const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
     const cartTable = document.getElementById("cart-items");
     const cartTotal = document.getElementById("cart-total");
+
+    if (!cartTable || !cartTotal) return; // Ensure elements exist
 
     cartTable.innerHTML = "";
     let total = 0;
@@ -53,6 +62,7 @@ function addToCart(name, price, image) {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
+    alert(`${name} added to cart!`);
     loadCart();
 }
 
@@ -119,9 +129,3 @@ async function sendOrder() {
         alert("❌ Failed to place order.");
     }
 }
-
-// ✅ Make functions globally accessible
-window.addToCart = addToCart;
-window.sendOrder = sendOrder;
-window.updateQuantity = updateQuantity;
-window.removeFromCart = removeFromCart;
