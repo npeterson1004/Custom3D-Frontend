@@ -13,7 +13,8 @@ document.getElementById("registerForm")?.addEventListener("submit", async functi
         const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, email, password })
+            body: JSON.stringify({ username, email, password }),
+            credentials: "include"
         });
 
         const data = await response.json();
@@ -37,7 +38,8 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
         const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ email, password }),
+            credentials: "include"
         });
 
         const data = await response.json();
@@ -68,17 +70,43 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
     }
 });
 
+async function getAuthToken() {
+    let token = localStorage.getItem("token") || localStorage.getItem("adminToken");
+
+    if (!token) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
+                method: "GET",
+                credentials: "include",
+            });
+
+            const data = await response.json();
+            console.log("🔍 Token Response from Backend:", data); // ✅ Debugging
+
+            if (response.ok && data.token) { // ✅ Ensure token is actually returned
+                token = data.token;
+                localStorage.setItem("token", token);
+            }
+        } catch (error) {
+            console.error("❌ Error retrieving token from cookies:", error);
+        }
+    }
+
+    return token;
+}
+
+
+
+
+
 async function checkLoginStatus() {
     setTimeout(async () => {
-        const token = localStorage.getItem("token") || localStorage.getItem("adminToken");
+        const token = await getAuthToken();  // ✅ Fetch token properly
 
         console.log("🔍 Checking Retrieved Token:", token);
 
         if (!token) {
-            const authErrorElement = document.getElementById("auth-error");
-            if (authErrorElement) {
-                authErrorElement.innerHTML = `<div class="alert alert-warning">Please log in to continue.</div>`;
-            }
+            document.getElementById("auth-error")?.innerHTML = `<div class="alert alert-warning">Please log in to continue.</div>`;
             return;
         }
 
@@ -88,14 +116,10 @@ async function checkLoginStatus() {
                 headers: { "Authorization": `Bearer ${token}` }
             });
 
-            const data = await response.json();  // ✅ Ensure response is parsed only once
-
-            if (!response.ok) {  // ✅ Proper comparison
+            const data = await response.json();
+            if (!response.ok) {
                 console.warn("🚨 Token verification failed:", data.message);
-                const authErrorElement = document.getElementById("auth-error");
-                if (authErrorElement) {
-                    authErrorElement.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
-                }
+                document.getElementById("auth-error")?.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
                 localStorage.removeItem("token");
                 localStorage.removeItem("adminToken");
                 return;
@@ -104,10 +128,7 @@ async function checkLoginStatus() {
             console.log("✅ Token Verified. User is logged in.");
         } catch (error) {
             console.error("❌ Error verifying login:", error);
-            const authErrorElement = document.getElementById("auth-error");
-            if (authErrorElement) {
-                authErrorElement.innerHTML = `<div class="alert alert-danger">Authentication error. Try again.</div>`;
-            }
+            document.getElementById("auth-error")?.innerHTML = `<div class="alert alert-danger">Authentication error. Try again.</div>`;
             localStorage.removeItem("token");
             localStorage.removeItem("adminToken");
         }
@@ -136,7 +157,8 @@ async function logout() {
     if (token) {
         await fetch(`${API_BASE_URL}/api/auth/logout`, { // ✅ Backend logout request
             method: "POST",
-            headers: { "Authorization": `Bearer ${token}` }
+            headers: { "Authorization": `Bearer ${token}` },
+            credentials: "include" // ✅ Ensures cookies are cleared
         });
     }
 
@@ -148,5 +170,6 @@ async function logout() {
         window.location.href = "login.html";
     }, 500); // ✅ Short delay before redirecting
 }
+
 
 

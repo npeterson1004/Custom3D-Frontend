@@ -24,7 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const response = await fetch(`${API_BASE_URL}/api/admin/login`, { 
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ email, password }),
+                credentials: "include"
             });
 
             console.log("✅ Sent request to backend");
@@ -41,16 +42,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
             setTimeout(() => {
                 const storedToken = localStorage.getItem("adminToken");
-                console.log("🔍 Checking Stored Token Before Redirect:", storedToken);
-
+            
                 if (!storedToken) {
-                    console.error("🚨 Token was NOT stored! Aborting redirect.");
-                    return;
+                    console.error("🚨 Token was NOT stored! Checking response token...");
+                    if (data.token) {
+                        localStorage.setItem("adminToken", data.token);
+                        console.log("✅ Token stored successfully after backup check.");
+                    } else {
+                        console.error("🚨 No token received! Aborting redirect.");
+                        return;
+                    }
                 }
-
-                console.log("✅ Token stored successfully. Redirecting...");
-                window.location.href = "admin-dashboard.html"; // Redirect to admin dashboard
-            }, 500); // ✅ Short delay before checking token storage
+            
+                console.log("✅ Redirecting to admin dashboard...");
+                window.location.href = "admin-dashboard.html";
+            }, 500);
+            
+            
 
         } catch (error) {
             console.error("❌ Login Error:", error);
