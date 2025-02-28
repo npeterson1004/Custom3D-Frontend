@@ -45,7 +45,7 @@ function loadCart() {
         cart.forEach((item, index) => {
             let itemTotal = item.price * item.quantity;
             total += itemTotal;
-
+/*
             // ✅ FIX: Ensure Cloudinary URLs are used correctly
             let imageUrl = item.image;
 
@@ -63,10 +63,10 @@ function loadCart() {
 
             // ✅ Log the final image URL for debugging
             console.log(`📸 Image URL for ${item.name}: ${imageUrl}`);
-
+*/
             cartItemsContainer.innerHTML += `
                 <tr>
-                    <td><img src="${imageUrl}" width="50" alt="${item.name}"></td>
+                    <td> alt="${item.name}"></td>
                     <td>${item.name}</td>
                     <td>$${item.price.toFixed(2)}</td>
                     <td>
