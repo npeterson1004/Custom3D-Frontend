@@ -1,16 +1,20 @@
-document.addEventListener("DOMContentLoaded", async function () {
-    const warehouseContainer = document.getElementById("warehouseContainer");
+// warehouse.js
+import { API_BASE_URL } from "./config.js"; // ✅ Ensure correct import
 
+document.addEventListener("DOMContentLoaded", fetchWarehouseProducts);
+
+async function fetchWarehouseProducts() {
     try {
-        const response = await fetch("https://custom3d-backend.onrender.com/api/products");
+        const response = await fetch(`${API_BASE_URL}/api/products`);
         const products = await response.json();
 
+        const warehouseContainer = document.getElementById("warehouseContainer");
         if (!warehouseContainer) {
             console.error("Error: 'warehouseContainer' element not found.");
             return;
         }
 
-        warehouseContainer.innerHTML = "";
+        warehouseContainer.innerHTML = ""; // Clear existing content
 
         if (products.length === 0) {
             warehouseContainer.innerHTML = '<p class="text-center">No products available.</p>';
@@ -21,11 +25,12 @@ document.addEventListener("DOMContentLoaded", async function () {
             const productCard = `
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                        <img src="https://custom3d-backend.onrender.com${product.image}" class="card-img-top" alt="${product.name}">
+                        <img src="${API_BASE_URL}${product.image}" class="card-img-top" alt="${product.name}" style="max-width: 100%; height: auto;">
                         <div class="card-body">
                             <h5 class="card-title">${product.name}</h5>
                             <p class="card-text">${product.description}</p>
                             <p class="text-muted">$${product.price}</p>
+                            <button class="btn btn-primary" onclick="addToCart('${product.name}', ${product.price}, '${API_BASE_URL}${product.image}')">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -35,6 +40,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     } catch (error) {
         console.error("❌ Error fetching warehouse products:", error);
-        warehouseContainer.innerHTML = '<p class="text-center text-danger">Failed to load products.</p>';
+        document.getElementById("warehouseContainer").innerHTML = '<p class="text-center text-danger">Failed to load products.</p>';
     }
-});
+}

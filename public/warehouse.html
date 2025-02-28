@@ -1,24 +1,16 @@
-
-<!-- index.html -->
+<!-- warehouse.html -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <!-- Meta Data -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Title -->
     <title>NatesCustom3D</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/icon" href="../assets/logo/favicon.png" />
-
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600|Rufina:400,700" rel="stylesheet">
-<!-- FontAwesome for cart icon -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
@@ -28,15 +20,11 @@
     <link rel="stylesheet" href="../assets/css/bootsnav.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/responsive.css">
-
 </head>
 
 <body>
     <!-- Navigation -->
-     
-   
-    <nav class="navbar navbar-default bootsnav navbar-sticky navbar-scrollspy" data-minus-value-desktop="70"
-        data-minus-value-mobile="55" data-speed="1000">
+    <nav class="navbar navbar-default bootsnav navbar-sticky navbar-scrollspy">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-menu">
@@ -57,32 +45,28 @@
             </div>
         </div>
     </nav>
-    
 
- <!-- Main Content Wrapper -->
- <div class="main-content">
-    <section id="warehouse">
-        <div class="container mt-5">
-            <h2 class="text-center">3D Print Warehouse</h2>
-            <p class="text-center">Browse all available prints</p>
+    <!-- Main Content Wrapper -->
+    <div class="main-content">
+        <section id="warehouse">
+            <div class="container mt-5">
+                <h2 class="text-center">3D Print Warehouse</h2>
+                <p class="text-center">Browse all available prints</p>
+                <div id="warehouseContainer" class="row"></div>
+            </div>
+        </section>
+    </div>
 
-            <div id="warehouseContainer" class="row">
-                <!-- Items will be dynamically loaded here -->
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-top text-center">
+                <h2>Contact Us</h2>
+                <p>Email: npeterson1004@gmail.com</p>
+                <p>Phone: +1 (320) 266-1791</p>
             </div>
         </div>
-    </section>
-</div> <!-- End of .main-content -->
-
-<!-- Footer -->
-<footer id="contact">
-    <div class="container">
-        <div class="footer-top text-center">
-            <h2>Contact Us</h2>
-            <p>Email: npeterson1004@gmail.com</p>
-            <p>Phone: +1 (320) 266-1791</p>
-        </div>
-    </div>
-</footer>
+    </footer>
 
     <!-- JavaScript -->
     <script type="module" src="../assets/js/config.js"></script>
@@ -93,66 +77,6 @@
     <script type="module" src="../assets/js/custom.js"></script>
     <script type="module" src="../assets/js/auth.js"></script>
     <script type="module" src="../assets/js/cart.js"></script>
-
-
-   
-    <script>
-        async function fetchWarehouseProducts() {
-            try {
-                const response = await fetch("http://localhost:5000/api/products");
-                const products = await response.json();
-        
-                const warehouseContainer = document.getElementById("warehouseContainer");
-                if (!warehouseContainer) {
-                    console.error("Error: 'warehouseContainer' element not found.");
-                    return;
-                }
-        
-                warehouseContainer.innerHTML = ""; // Clear existing content
-        
-                if (products.length === 0) {
-                    warehouseContainer.innerHTML = '<p class="text-center">No products available.</p>';
-                    return;
-                }
-        
-                products.forEach(product => {
-                    const productCard = `
-                        <div class="col-md-4">
-                            <div class="card mb-4 shadow-sm">
-                                <img src="http://localhost:5000${product.image}" class="card-img-top" alt="${product.name}" style="max-width: 100%; height: auto;">
-                                <div class="card-body">
-                                    <h7 class="card-title">${product.name}</h7>
-                                    <p class="card-text">${product.description}</p>
-                                    <p class="card-text">$${product.price}</p>
-                                    <button class="btn btn-primary" onclick="addToCart('${product.name}', ${product.price}, 'http://localhost:5000${product.image}')">Add to Cart</button>
-                                     <!-- Blank Space -->
-                                    <div style="height: 80px;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    warehouseContainer.innerHTML += productCard;
-                });
-        
-            } catch (error) {
-                console.error("❌ Error fetching warehouse products:", error);
-                warehouseContainer.innerHTML = '<p class="text-center text-danger">Failed to load products.</p>';
-            }
-        }
-        
-        // Load products when the page loads
-        fetchWarehouseProducts();
-        </script>
-        
-    
-    <script>
-const token = localStorage.getItem("token") || localStorage.getItem("adminToken");
-
-if (!token) {
-    window.location.href = "login.html";
-}          
-    </script>
-
+    <script type="module" src="../assets/js/warehouse.js"></script> <!-- ✅ Added warehouse.js -->
 </body>
-
 </html>
