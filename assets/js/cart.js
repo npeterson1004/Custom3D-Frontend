@@ -70,11 +70,11 @@ function loadCart() {
                     <td><img src="${imageUrl}" width="50" alt="${item.name}"></td>
                     <td>${item.name}</td>
                     <td>$${item.price.toFixed(2)}</td>
-                    <td>
-                        <input type="number"  class="order-quantity" value="${item.quantity}" min="1" 
-                            onchange="updateQuantity(${index}, this.value)" 
-                            style="color: black; background-color: white; text-align: center; width: 60px;">
-                    </td>
+                <td>
+                    <input type="number" class="order-quantity" value="${item.quantity}" min="1" 
+                    onchange="updateQuantity(${index}, this.value)" 
+                    style="color: black; background-color: white; text-align: center; width: 60px;">
+                </td>
                     <td>$${itemTotal.toFixed(2)}</td>
                     <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
                 </tr>
