@@ -174,40 +174,6 @@
     });
 </script>
 
-    <script>
 
-
-        async function checkAdminAuth() {
-            const token = localStorage.getItem("adminToken");
-            console.log("Admin Token:", token);
-
-            if (!token) {
-                console.log("No admin token found. Redirecting to login.");
-                window.location.href = "admin-login.html";
-                return;
-            }
-
-            try {
-                const res = await fetch(`${API_BASE_URL}/api/admin/dashboard`, {
-                    method: 'GET',
-                    headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" }
-                });
-
-                if (!res.ok) {
-                    throw new Error("Unauthorized");
-                }
-
-                const data = await res.json();
-                console.log("Dashboard Data:", data);
-                document.getElementById('admin-message').textContent = data.message;
-            } catch (error) {
-                console.error("Admin auth error:", error);
-                localStorage.removeItem("adminToken");
-                window.location.href = "admin-login.html";
-            }
-        }
-
-        checkAdminAuth();
-    </script>
 </body>
 </html>
