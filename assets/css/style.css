@@ -24,6 +24,18 @@ font-family: 'Rufina', serif;
 11. Contact
 ==========================================*/
 
+
+
+.order-quantity {
+    color: #050505;  /* Black color */
+    font-weight: bold;
+    background-color: #ffffff; /* White background */
+    padding: 3px 6px; /* Add padding to improve visibility */
+    border-radius: 4px; /* Optional: Add rounded corners */
+    display: inline-block; /* Ensure styling applies correctly */
+}
+
+
 /*-------------------------------------
 		1.General css (Reset code)
 --------------------------------------*/

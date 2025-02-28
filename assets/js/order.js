@@ -3,13 +3,24 @@ import { API_BASE_URL } from "./config.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     loadCart();
+    updateCartCount(); // ✅ Ensure cart count updates on page load
 });
 
-// ✅ Ensure addToCart is globally accessible
+// ✅ Ensure functions are globally accessible
 window.addToCart = addToCart;
 window.sendOrder = sendOrder;
 window.updateQuantity = updateQuantity;
 window.removeFromCart = removeFromCart;
+
+// ✅ Function to update the cart icon number
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartCountElement = document.getElementById("cart-count");
+
+    if (cartCountElement) {
+        cartCountElement.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    }
+}
 
 // ✅ Load Cart Items from Local Storage
 function loadCart() {
@@ -17,7 +28,7 @@ function loadCart() {
     const cartTable = document.getElementById("cart-items");
     const cartTotal = document.getElementById("cart-total");
 
-    if (!cartTable || !cartTotal) return; // Ensure elements exist
+    if (!cartTable || !cartTotal) return;
 
     cartTable.innerHTML = "";
     let total = 0;
@@ -63,6 +74,7 @@ function addToCart(name, price, image) {
 
     localStorage.setItem("cart", JSON.stringify(cart));
     alert(`${name} added to cart!`);
+    updateCartCount(); // ✅ Update cart icon number
     loadCart();
 }
 
@@ -73,6 +85,7 @@ function updateQuantity(index, quantity) {
         cart[index].quantity = parseInt(quantity);
     }
     localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount(); // ✅ Update cart count after quantity change
     loadCart();
 }
 
@@ -81,6 +94,7 @@ function removeFromCart(index) {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     cart.splice(index, 1);
     localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount(); // ✅ Update cart count after removal
     loadCart();
 }
 
@@ -120,6 +134,7 @@ async function sendOrder() {
         if (response.ok) {
             alert("✅ Order placed successfully!");
             localStorage.removeItem("cart");
+            updateCartCount(); // ✅ Reset cart count after placing order
             loadCart();
         } else {
             alert(`❌ Error: ${result.error}`);

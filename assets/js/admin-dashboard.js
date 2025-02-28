@@ -207,7 +207,11 @@ async function fetchOrders() {
             const orderRow = `
                 <tr>
                     <td>${order.userEmail}</td>
-                    <td>${order.items.map(item => `${item.quantity}x ${item.name}`).join(", ")}</td>
+                    <td>
+                        ${order.items.map(item => 
+                            `<span class="order-quantity">${item.quantity}</span> x ${item.name}`
+                        ).join(", ")}
+                    </td>
                     <td>$${order.totalAmount.toFixed(2)}</td>
                     <td>${new Date(order.orderDate).toLocaleString()}</td>
                 </tr>
