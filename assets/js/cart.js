@@ -66,11 +66,11 @@ function loadCart() {
 */
             cartItemsContainer.innerHTML += `
                 <tr>
-                    <td> alt="${item.name}"></td>
+                    <td> ${item.name}</td>
                     <td>${item.name}</td>
                     <td>$${item.price.toFixed(2)}</td>
                     <td>
-                        <input type="number" value="${item.quantity}" min="1" 
+                        <input type="number" color="black" value="${item.quantity}" min="1" 
                             onchange="updateQuantity(${index}, this.value)" 
                             class="cart-quantity-input">
                     </td>
