@@ -26,14 +26,16 @@ font-family: 'Rufina', serif;
 
 
 
-.order-quantity {
-    color: #050505;  /* Black color */
+#contactForm .order-quantity {
+    color: #000 !important;  /* ✅ Ensures black text */
     font-weight: bold;
-    background-color: #ffffff; /* White background */
-    padding: 3px 6px; /* Add padding to improve visibility */
-    border-radius: 4px; /* Optional: Add rounded corners */
-    display: inline-block; /* Ensure styling applies correctly */
+    background-color: #ffffff !important; /* ✅ Forces white background */
+    padding: 3px 6px; /* Keeps spacing */
+    border-radius: 4px; /* Optional rounded edges */
+    display: inline-block; /* ✅ Ensures proper styling */
+    border: 1px solid #ccc; /* ✅ Add a border for better visibility */
 }
+
 
 
 /*-------------------------------------
