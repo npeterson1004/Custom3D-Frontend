@@ -106,7 +106,11 @@ async function checkLoginStatus() {
         console.log("🔍 Checking Retrieved Token:", token);
 
         if (!token) {
-            document.getElementById("auth-error")?.innerHTML = `<div class="alert alert-warning">Please log in to continue.</div>`;
+            const authErrorElement = document.getElementById("auth-error");
+            if (authErrorElement) {
+                authErrorElement.innerHTML = `<div class="alert alert-warning">Please log in to continue.</div>`;
+            }
+
             return;
         }
 
@@ -119,7 +123,10 @@ async function checkLoginStatus() {
             const data = await response.json();
             if (!response.ok) {
                 console.warn("🚨 Token verification failed:", data.message);
-                document.getElementById("auth-error")?.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+                const authErrorElement = document.getElementById("auth-error");
+            if (authErrorElement) {
+               authErrorElement.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+            }
                 localStorage.removeItem("token");
                 localStorage.removeItem("adminToken");
                 return;
@@ -128,7 +135,10 @@ async function checkLoginStatus() {
             console.log("✅ Token Verified. User is logged in.");
         } catch (error) {
             console.error("❌ Error verifying login:", error);
-            document.getElementById("auth-error")?.innerHTML = `<div class="alert alert-danger">Authentication error. Try again.</div>`;
+            const authErrorElement = document.getElementById("auth-error");
+            if (authErrorElement) {
+                authErrorElement.innerHTML = `<div class="alert alert-danger">Authentication error. Try again.</div>`;
+            }
             localStorage.removeItem("token");
             localStorage.removeItem("adminToken");
         }
