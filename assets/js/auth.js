@@ -85,10 +85,11 @@ async function checkLoginStatus() {
                 headers: { "Authorization": `Bearer ${token}` }
             });
 
+            const data = await response.json();  // ✅ Ensure response is parsed only once
+
             if (!response.ok) {
-                const errorMsg = await response.json();
-                console.warn("🚨 Token verification failed:", errorMsg.message);
-                document.getElementById("auth-error")?.innerHTML = `<div class="alert alert-danger">${errorMsg.message}</div>`;
+                console.warn("🚨 Token verification failed:", data.message);
+                document.getElementById("auth-error")?.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
                 localStorage.removeItem("token");
                 localStorage.removeItem("adminToken");
                 return;
@@ -103,6 +104,7 @@ async function checkLoginStatus() {
         }
     }, 500);
 }
+
 
 document.addEventListener("DOMContentLoaded", checkLoginStatus);
 
