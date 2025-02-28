@@ -46,14 +46,23 @@ function loadCart() {
             let itemTotal = item.price * item.quantity;
             total += itemTotal;
 
-            // ✅ Ensure image URL is formatted correctly
+            // ✅ FIX: Ensure Cloudinary URLs are used correctly
             let imageUrl = item.image;
+
+            // ✅ If the image URL starts with "//", prepend "https:"
             if (imageUrl.startsWith("//")) {
                 imageUrl = `https:${imageUrl}`;
             }
-            if (!imageUrl.startsWith("http") && !imageUrl.includes("cloudinary.com")) {
-                imageUrl = `${API_BASE_URL}${imageUrl}`;
+
+            // ✅ If the image URL is from Cloudinary, do NOT add API_BASE_URL
+            if (imageUrl.includes("cloudinary.com")) {
+                imageUrl = imageUrl.replace("https//", "https://"); // Fix missing colon if needed
+            } else if (!imageUrl.startsWith("http")) {
+                imageUrl = `${API_BASE_URL}${imageUrl}`; // ✅ Only apply API_BASE_URL to local images
             }
+
+            // ✅ Log the final image URL for debugging
+            console.log(`📸 Image URL for ${item.name}: ${imageUrl}`);
 
             cartItemsContainer.innerHTML += `
                 <tr>
@@ -76,6 +85,7 @@ function loadCart() {
         cartTotal.innerText = total.toFixed(2);
     }
 }
+
 
 
 // ✅ Add Item to Cart
@@ -137,7 +147,6 @@ window.logout = function () {
     localStorage.removeItem("userEmail");
     window.location.href = "login.html";
 };
-
 
 
 
