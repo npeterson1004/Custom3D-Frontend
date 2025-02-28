@@ -78,7 +78,7 @@
     
             <!-- Add Item Tab -->
             <div class="tab-pane fade" id="add-item" role="tabpanel" aria-labelledby="add-item-tab">
-                <form id="addProductForm" enctype="multipart/form-data">
+                <form id="addProductForm" method="POST" action="https://custom3d-backend.onrender.com/api/products" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="name">Item Name</label>
                         <input type="text" class="form-control" id="name" name="name" required>
