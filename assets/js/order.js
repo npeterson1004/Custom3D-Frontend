@@ -54,6 +54,9 @@ function loadCart() {
         // ✅ Ensure no duplicate "https//" issues
         imageUrl = imageUrl.replace("https//", "https://");
 
+        // ✅ Log the final image URL for debugging
+        console.log(`Image URL for item ${item.name}: ${imageUrl}`);
+
         const row = `
             <tr>
                 <td><img src="${imageUrl}" alt="${item.name}" style="width: 50px;"></td>
@@ -71,6 +74,7 @@ function loadCart() {
 
     cartTotal.textContent = total.toFixed(2);
 }
+
 
 
 
