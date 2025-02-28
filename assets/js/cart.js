@@ -67,17 +67,17 @@ function loadCart() {
 */
             cartItemsContainer.innerHTML += `
                 <tr>
-                    <td> ${item.name}</td>
-                    <td>${item.name}</td>
-                    <td>$${item.price.toFixed(2)}</td>
-                    <td>
-                        <input type="number" color="black" value="${item.quantity}" min="1" 
-                            onchange="updateQuantity(${index}, this.value)" 
-                            class="cart-quantity-input">
-                    </td>
-                    <td>$${itemTotal.toFixed(2)}</td>
-                    <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
-                </tr>
+        <td> ${item.name}</td>
+        <td>${item.name}</td>
+        <td>$${item.price.toFixed(2)}</td>
+        <td>
+            <input type="number" value="${item.quantity}" min="1" 
+                onchange="updateQuantity(${index}, this.value)" 
+                class="cart-quantity-input">
+        </td>
+        <td>$${itemTotal.toFixed(2)}</td>
+        <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
+    </tr>
             `;
         });
     }
@@ -110,9 +110,14 @@ function addToCart(name, price, image) {
     }
 
     localStorage.setItem(`cart_${userEmail}`, JSON.stringify(cart));
+
+    // ✅ Update cart count immediately after adding an item
+    updateCartCount();
+
     showNotification(`${name} added to cart!`);
     loadCart();
 }
+
 
 
 // ✅ Remove Item from Cart
@@ -126,19 +131,24 @@ function removeFromCart(index) {
     loadCart();
 }
 
-// ✅ Function to update the cart count
+// ✅ Function to update the cart count across all pages
 function updateCartCount() {
     let userEmail = localStorage.getItem("userEmail");
-    let cart = JSON.parse(localStorage.getItem(`cart_${userEmail}`)) || [];
-    const cartCountElement = document.getElementById("cart-count");
+    if (!userEmail) return;
 
-    if (cartCountElement) {
-        cartCountElement.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-    }
+    let cart = JSON.parse(localStorage.getItem(`cart_${userEmail}`)) || [];
+    const cartCountElements = document.querySelectorAll("#cart-count");
+
+    cartCountElements.forEach(cartCount => {
+        cartCount.innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
+    });
 }
 
 // ✅ Make updateCartCount globally accessible
 window.updateCartCount = updateCartCount;
+
+// ✅ Run updateCartCount when the page loads
+document.addEventListener("DOMContentLoaded", updateCartCount);
 
 
 

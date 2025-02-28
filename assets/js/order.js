@@ -11,7 +11,6 @@ async function sendOrder() {
         return;
     }
 
-    // ✅ Retrieve cart using user-specific key
     let cart = JSON.parse(localStorage.getItem(`cart_${userEmail}`)) || [];
 
     if (cart.length === 0) {
@@ -41,6 +40,14 @@ async function sendOrder() {
 
         // ✅ Clear only this user's cart
         localStorage.removeItem(`cart_${userEmail}`);
+
+        // ✅ Ensure updateCartCount() exists before calling it
+        if (typeof updateCartCount === "function") {
+            updateCartCount();
+        } else {
+            console.warn("⚠️ updateCartCount is not available.");
+        }
+
         loadCart();
 
     } catch (error) {
