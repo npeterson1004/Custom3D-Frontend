@@ -36,20 +36,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
             console.log("✅ Login Successful! Storing Token...", data);
 
+            // ✅ Store token BEFORE redirecting
             localStorage.setItem("adminToken", data.token);
 
             setTimeout(() => {
                 const storedToken = localStorage.getItem("adminToken");
-                console.log("🔍 Checking Stored Token:", storedToken);
+                console.log("🔍 Checking Stored Token Before Redirect:", storedToken);
 
                 if (!storedToken) {
-                    console.error("🚨 Token was NOT stored in localStorage!");
+                    console.error("🚨 Token was NOT stored! Aborting redirect.");
                     return;
                 }
 
                 console.log("✅ Token stored successfully. Redirecting...");
-                window.location.href = "admin-dashboard.html";
-            }, 500); // ✅ Delay to ensure token is stored
+                window.location.href = "admin-dashboard.html"; // Redirect to admin dashboard
+            }, 500); // ✅ Short delay before checking token storage
 
         } catch (error) {
             console.error("❌ Login Error:", error);

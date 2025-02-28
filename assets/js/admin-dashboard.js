@@ -12,11 +12,47 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("🚨 No admin token found. Redirecting to login.");
             window.location.href = "admin-login.html";
         } else {
-            loadDashboard();
+            checkAdminAuth(); // ✅ Verify token before loading dashboard
         }
     }, 300);
 });
 
+
+async function checkAdminAuth() {
+    setTimeout(async () => {  
+        const token = localStorage.getItem("adminToken");
+
+        console.log("🔍 Checking Admin Token:", token);
+
+        if (!token) {
+            console.log("🚨 No admin token found. Redirecting...");
+            return window.location.href = "admin-login.html";
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
+                method: "GET",
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+
+            if (!response.ok) {
+                console.error("🚨 Token verification failed. Redirecting...");
+                localStorage.removeItem("adminToken");
+                return window.location.href = "admin-login.html";
+            }
+
+            console.log("✅ Admin Verified. Proceeding to Dashboard...");
+            
+            // ✅ Load dashboard only after verification
+            loadDashboard(); 
+
+        } catch (error) {
+            console.error("❌ Admin verification failed:", error);
+            localStorage.removeItem("adminToken");
+            window.location.href = "admin-login.html";
+        }
+    }, 500);
+}
 
 
 async function loadDashboard() {
@@ -44,7 +80,6 @@ async function loadDashboard() {
         }
 
         console.log("✅ Dashboard Data Received:", await res.json());
-        // 🚀 No UI updates anymore!
 
     } catch (error) {
         console.error("Dashboard Load Error:", error);
@@ -52,52 +87,6 @@ async function loadDashboard() {
         window.location.href = "admin-login.html";
     }
 }
-
-document.addEventListener("DOMContentLoaded", loadDashboard);
-
-
-
-//document.addEventListener("DOMContentLoaded", loadDashboard);
-
-
-
-
-async function checkAdminAuth() {
-    setTimeout(async () => {  // ✅ Short delay to allow storage updates
-        const token = localStorage.getItem("adminToken");
-
-        console.log("🔍 Checking Admin Token:", token);
-
-        if (!token) {
-            console.log("🚨 No admin token found. Redirecting...");
-            return window.location.href = "admin-login.html";
-        }
-
-        try {
-            const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
-                method: "GET",
-                headers: { "Authorization": `Bearer ${token}` }
-            });
-
-            if (!response.ok) {
-                console.error("🚨 Token verification failed. Redirecting...");
-                localStorage.removeItem("adminToken");
-                return window.location.href = "admin-login.html";
-            }
-
-            console.log("✅ Admin Verified. Proceeding to Dashboard...");
-
-        } catch (error) {
-            console.error("❌ Admin verification failed:", error);
-            localStorage.removeItem("adminToken");
-            window.location.href = "admin-login.html";
-        }
-    }, 500); // ✅ Short delay before checking token
-}
-
-
-// Run admin authentication check when the page loads
-document.addEventListener("DOMContentLoaded", checkAdminAuth);
 
 
 

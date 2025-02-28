@@ -47,22 +47,23 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
 
         console.log("✅ Login Successful! Storing Token...", data);
 
-        // ✅ Store token BEFORE redirecting
         localStorage.setItem("token", data.token);
         localStorage.setItem("userEmail", data.user.email);
 
+        // ✅ Delay to confirm token storage
         setTimeout(() => {
             const storedToken = localStorage.getItem("token");
-            console.log("🔍 Checking Stored Token:", storedToken);
+            console.log("🔍 Confirming Stored Token Before Redirect:", storedToken);
 
             if (!storedToken) {
-                console.error("🚨 Token was NOT stored in localStorage!");
+                console.error("🚨 Token was NOT stored! Aborting redirect.");
                 return;
             }
 
             console.log("✅ Token stored successfully. Redirecting...");
-            window.location.href = "index.html"; 
-        }, 500); // ✅ Delay to ensure token is stored
+            window.location.href = "index.html"; // Change to appropriate destination
+
+        }, 500); // ✅ Short delay before checking token storage
 
     } catch (error) {
         console.error("❌ Login Error:", error);
@@ -74,8 +75,9 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
 
 
 
+
 async function checkLoginStatus() {
-    setTimeout(async () => {  
+    setTimeout(async () => {
         const token = localStorage.getItem("token") || localStorage.getItem("adminToken");
 
         console.log("🔍 Checking Retrieved Token:", token);
@@ -93,7 +95,7 @@ async function checkLoginStatus() {
             });
 
             if (!response.ok) {
-                console.error("🚨 Token verification failed. Logging out...");
+                console.warn("🚨 Token verification failed. Logging out...");
                 localStorage.removeItem("token");
                 localStorage.removeItem("adminToken");
                 window.location.href = "login.html";
@@ -107,7 +109,7 @@ async function checkLoginStatus() {
             localStorage.removeItem("adminToken");
             window.location.href = "login.html";
         }
-    }, 500);
+    }, 500); // ✅ Short delay before checking token
 }
 
 
