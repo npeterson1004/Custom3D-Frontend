@@ -127,10 +127,20 @@ const response = await fetch(`${API_BASE_URL}/api/products`, {
 
 async function loadContacts() {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/contact`);
+        const token = localStorage.getItem("adminToken");
+
+        if (!token) {
+            console.error("🚨 No admin token found. Redirecting...");
+            return window.location.href = "admin-login.html";
+        }
+
+        const response = await fetch(`${API_BASE_URL}/api/contact`, {
+            method: "GET",
+            headers: { "Authorization": `Bearer ${token}` }
+        });
 
         if (!response.ok) {
-            throw new Error("Failed to fetch contacts.");
+            throw new Error("⚠️ Failed to fetch contacts. Check authentication.");
         }
 
         const contacts = await response.json();
@@ -155,15 +165,14 @@ async function loadContacts() {
         });
 
     } catch (error) {
-        console.error("Error loading contacts:", error);
-        document.getElementById("contactsContainer").innerHTML = '<tr><td colspan="5" class="text-center text-danger">Failed to load contacts.</td></tr>';
+        console.error("❌ Error loading contacts:", error);
+        document.getElementById("contactsContainer").innerHTML = '<tr><td colspan="5" class="text-center text-danger">⚠️ Failed to load contacts.</td></tr>';
     }
 }
 
-
-
-// Load contacts when the "View Contacts" tab is clicked
+// ✅ Load contacts when the "View Contacts" tab is clicked
 document.getElementById("view-contacts-tab").addEventListener("click", loadContacts);
+
 
 
 
