@@ -102,10 +102,16 @@ document.getElementById("addProductForm").addEventListener("submit", async funct
     }
 
     try {
-        const response = await fetch(`${API_BASE_URL}/api/products`, {
-            method: "POST",
-            body: formData
-        });
+        const token = localStorage.getItem("adminToken");
+
+const response = await fetch(`${API_BASE_URL}/api/products`, {
+    method: "POST",
+    headers: { 
+        "Authorization": `Bearer ${token}`
+    },
+    body: formData
+});
+
 
         const result = await response.json();
         document.getElementById("message").textContent = result.message;
