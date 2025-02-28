@@ -5,6 +5,7 @@ import { API_BASE_URL } from "./config.js";
 window.addToCart = addToCart;
 window.removeFromCart = removeFromCart;
 window.updateQuantity = updateQuantity;
+window.loadCart = loadCart;
 
 document.addEventListener("DOMContentLoaded", function () {
     const cartContainer = document.getElementById("cart-items");
