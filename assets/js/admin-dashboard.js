@@ -1,5 +1,5 @@
 //admin-dashboard.js
-import { API_BASE_URL } from "../config.js";
+import { API_BASE_URL } from "./config.js";
 
 document.addEventListener("DOMContentLoaded", function () {
     console.log("🔍 Checking Admin Token on Page Load...");
