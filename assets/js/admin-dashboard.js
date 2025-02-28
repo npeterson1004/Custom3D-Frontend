@@ -209,7 +209,7 @@ async function fetchOrders() {
                     <td>${order.userEmail}</td>
                     <td>
                         ${order.items.map(item => 
-                            `<span class="order-quantity">${item.quantity}</span> x ${item.name}`
+                            `<h8>${item.quantity}</h8> x ${item.name}`
                         ).join(", ")}
                     </td>
                     <td>$${order.totalAmount.toFixed(2)}</td>
