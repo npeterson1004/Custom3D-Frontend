@@ -1,4 +1,7 @@
 // cart.js - Handles cart functionality
+
+import { API_BASE_URL } from "./config.js";
+
 document.addEventListener("DOMContentLoaded", function () {
     const cartContainer = document.getElementById("cart-items");
     if (!cartContainer) {
@@ -12,61 +15,61 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-import { API_BASE_URL } from "./config.js";
+
 // Load Cart from Local Storage
 function loadCart() {
-    let userEmail = localStorage.getItem("userEmail");
-    if (!userEmail) {
-        console.warn("⚠️ No user email found. Please log in.");
-        return;
-    }
-
-    const cartItemsContainer = document.getElementById("cart-items");
-    if (!cartItemsContainer) {
-        console.warn("⚠️ Cart element not found. Skipping cart update.");
-        return;
-    }
-
-    let cart = JSON.parse(localStorage.getItem(`cart_${userEmail}`)) || [];
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartTable = document.getElementById("cart-items");
     const cartTotal = document.getElementById("cart-total");
-    const cartCountElements = document.querySelectorAll("#cart-count");
 
-    // ✅ Update cart count across all pages
-    cartCountElements.forEach(cartCount => {
-        cartCount.innerText = cart.length;
-    });
+    if (!cartTable || !cartTotal) return;
 
-    cartItemsContainer.innerHTML = "";
+    cartTable.innerHTML = "";
     let total = 0;
 
-    if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<tr><td colspan="6" class="text-center">Your cart is empty</td></tr>';
-    } else {
-        cart.forEach((item, index) => {
-            let itemTotal = item.price * item.quantity;
-            total += itemTotal;
-
-            cartItemsContainer.innerHTML += `
-                <tr>
-                    <td><img src="${item.image}" width="50" alt="${item.name}"></td>
-                    <td>${item.name}</td>
-                    <td>$${item.price.toFixed(2)}</td>
-                    <td>
-                        <input type="number" value="${item.quantity}" min="1" 
-                            onchange="updateQuantity(${index}, this.value)" 
-                            style="color: white; background-color: #333; text-align: center; width: 60px;">
-                    </td>
-                    <td>$${itemTotal.toFixed(2)}</td>
-                    <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
-                </tr>
-            `;
-        });
+    if (cartItems.length === 0) {
+        cartTable.innerHTML = '<tr><td colspan="6" class="text-center">Your cart is empty.</td></tr>';
+        cartTotal.textContent = "0.00";
+        return;
     }
 
-    if (cartTotal) {
-        cartTotal.innerText = total.toFixed(2);
-    }
+    cartItems.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        // ✅ FIX: Correctly handle Cloudinary URLs
+        let imageUrl = item.image;
+
+        if (imageUrl.startsWith("//")) {
+            imageUrl = `https:${imageUrl}`;  // Fix missing protocol
+        }
+
+        // ✅ Ensure API_BASE_URL is only used for local images
+        if (!imageUrl.startsWith("http")) {
+            imageUrl = `${API_BASE_URL}${imageUrl}`;
+        }
+
+        // ✅ Log the final image URL for debugging
+        console.log(`📸 Image URL for ${item.name}: ${imageUrl}`);
+
+        const row = `
+            <tr>
+                <td><img src="${imageUrl}" alt="${item.name}" style="width: 50px;"></td>
+                <td>${item.name}</td>
+                <td>$${item.price.toFixed(2)}</td>
+                <td>
+                    <input type="number" min="1" value="${item.quantity}" onchange="updateQuantity(${index}, this.value)">
+                </td>
+                <td>$${itemTotal.toFixed(2)}</td>
+                <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
+            </tr>
+        `;
+        cartTable.innerHTML += row;
+    });
+
+    cartTotal.textContent = total.toFixed(2);
 }
+
 
 
 // Add Item to Cart
