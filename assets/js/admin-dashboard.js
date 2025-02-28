@@ -63,34 +63,42 @@ document.addEventListener("DOMContentLoaded", loadDashboard);
 
 
 async function checkAdminAuth() {
-    const token = localStorage.getItem("adminToken");
+    setTimeout(async () => {  // ✅ Short delay to allow storage updates
+        const token = localStorage.getItem("adminToken");
 
-    if (!token) {
-        console.log("No admin token found. Redirecting to login.");
-        window.location.href = "admin-login.html";
-        return;
-    }
+        console.log("🔍 Checking Admin Token:", token);
 
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/admin/verify`, { // ✅ Correct API Path
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        });
-
-        if (!response.ok) {
-            localStorage.removeItem("adminToken");
-            window.location.href = "admin-login.html"; // Redirect if token is invalid
+        if (!token) {
+            console.log("🚨 No admin token found. Redirecting...");
+            return window.location.href = "admin-login.html";
         }
-    } catch (error) {
-        console.error("Error verifying admin login:", error);
-        window.location.href = "admin-login.html";
-    }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
+                method: "GET",
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+
+            if (!response.ok) {
+                console.error("🚨 Token verification failed. Redirecting...");
+                localStorage.removeItem("adminToken");
+                return window.location.href = "admin-login.html";
+            }
+
+            console.log("✅ Admin Verified. Proceeding to Dashboard...");
+
+        } catch (error) {
+            console.error("❌ Admin verification failed:", error);
+            localStorage.removeItem("adminToken");
+            window.location.href = "admin-login.html";
+        }
+    }, 500); // ✅ Short delay before checking token
 }
+
 
 // Run admin authentication check when the page loads
 document.addEventListener("DOMContentLoaded", checkAdminAuth);
+
 
 
 
