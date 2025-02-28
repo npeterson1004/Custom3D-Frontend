@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 async function checkAdminAuth() {
-    setTimeout(async () => {  
+    setTimeout(async () => {
         const token = localStorage.getItem("adminToken");
 
         console.log("🔍 Checking Admin Token:", token);
@@ -30,20 +30,19 @@ async function checkAdminAuth() {
         }
 
         try {
-            const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
+            const response = await fetch(`${API_BASE_URL}/api/admin/dashboard`, {  // ✅ Correct admin verification endpoint
                 method: "GET",
                 headers: { "Authorization": `Bearer ${token}` }
             });
 
             if (!response.ok) {
-                console.error("🚨 Token verification failed. Redirecting...");
+                const errorMsg = await response.json();
+                console.error("🚨 Admin verification failed:", errorMsg.message);
                 localStorage.removeItem("adminToken");
                 return window.location.href = "admin-login.html";
             }
 
             console.log("✅ Admin Verified. Proceeding to Dashboard...");
-            
-            // ✅ Load dashboard only after verification
             loadDashboard(); 
 
         } catch (error) {
@@ -53,6 +52,7 @@ async function checkAdminAuth() {
         }
     }, 500);
 }
+
 
 
 async function loadDashboard() {
