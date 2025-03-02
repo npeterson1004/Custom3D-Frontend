@@ -56,7 +56,7 @@ font-family: 'Rufina', serif;
 /* ✅ Adjust Warehouse Items for Smaller Size */
 .warehouse-item {
     width: 28%; /* ✅ Reduced width from 30% to 28% for better spacing */
-    max-height: 350px; /* ✅ Limits height to prevent overflow */
+    max-height: 360px; /* ✅ Limits height to prevent overflow */
     padding: 12px;
     border: 3px solid #003366; /* ✅ Slightly thinner border */
     border-radius: 8px;
@@ -72,7 +72,7 @@ font-family: 'Rufina', serif;
 /* ✅ Adjust Image Size */
 .warehouse-img {
     max-width: 100%;
-    height: 160px; /* ✅ Reduced height to prevent long images */
+    height: 180px; /* ✅ Reduced height to prevent long images */
     object-fit: cover; /* ✅ Ensures consistent aspect ratio */
     border-radius: 6px;
 }
@@ -113,8 +113,85 @@ font-family: 'Rufina', serif;
 }
 
 
+/*-------------------------------------
+		1.Home Featured prints stlyes
+--------------------------------------*/
 
+/* ✅ Featured Prints Grid Layout */
+.featured-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* ✅ Center items */
+    gap: 25px; /* ✅ Add space between items */
+    padding: 20px 0;
+}
 
+/* ✅ Ensure Three Items Per Row */
+.featured-item {
+    width: 28%; /* ✅ Reduce width for spacing */
+    max-height: 360px; /* ✅ Prevent long items */
+    padding: 12px;
+    border: 3px solid #003366; /* ✅ Dark blue border */
+    border-radius: 8px;
+    background-color: #0a1f44; /* ✅ Darker background */
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* ✅ Ensure Proper Item Alignment */
+.featured-item:hover {
+    transform: scale(1.05);
+}
+
+/* ✅ Adjust Image Size */
+.featured-img {
+    max-width: 100%;
+    height: 180px; /* ✅ Smaller height for uniformity */
+    object-fit: cover; /* ✅ Maintain aspect ratio */
+    border-radius: 6px;
+}
+
+/* ✅ Reduce Text Size for Compactness */
+.featured-details h5 {
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.featured-details p {
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+/* ✅ Ensure Buttons are Styled */
+.add-to-cart-btn {
+    background-color: #0044cc;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 6px 12px;
+    transition: background 0.3s;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #002288;
+}
+
+/* ✅ Mobile Responsiveness */
+@media (max-width: 1024px) {
+    .featured-item {
+        width: 45%; /* ✅ Two per row on tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .featured-item {
+        width: 100%; /* ✅ One per row on small screens */
+    }
+}
 
 
 .order-quantity {
