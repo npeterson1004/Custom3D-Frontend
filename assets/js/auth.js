@@ -82,29 +82,45 @@ async function getAuthToken() {
             });
 
             const data = await response.json();
-            console.log("🔍 Token Response from Backend:", data); // ✅ Debugging
+            console.log("🔍 Token Response from Backend:", data);
 
             if (response.ok && data.token) {
                 console.log("✅ Storing retrieved token:", data.token);
                 localStorage.setItem("token", data.token);
                 return data.token;
+            } else {
+                console.warn("🚨 No valid token received from backend.");
+                return null;
             }
-            
         } catch (error) {
-            console.error("❌ Error retrieving token from cookies:", error);
+            console.error("❌ Error retrieving token from backend:", error);
+            return null;
         }
     }
 
-const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
-const expiry = decodedToken.exp * 1000; // Convert to milliseconds
+    // ✅ Ensure token is valid before decoding
+    if (!token || token === "null" || token === "undefined") {
+        console.warn("🚨 Invalid token detected. Clearing storage.");
+        localStorage.removeItem("token");
+        return null;
+    }
 
-if (Date.now() >= expiry) {
-    console.warn("🚨 Token Expired! Clearing localStorage.");
-    localStorage.removeItem("token");
-    return null;
-}
+    try {
+        const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
+        const expiry = decodedToken.exp * 1000; // Convert to milliseconds
 
-return token;
+        if (Date.now() >= expiry) {
+            console.warn("🚨 Token Expired! Clearing localStorage.");
+            localStorage.removeItem("token");
+            return null;
+        }
+
+        return token;
+    } catch (error) {
+        console.error("❌ Error decoding token:", error);
+        localStorage.removeItem("token"); // ✅ Remove corrupt token
+        return null;
+    }
 }
 
 
@@ -113,7 +129,7 @@ return token;
 
 async function checkLoginStatus() {
     setTimeout(async () => {
-        const token = await getAuthToken();  // ✅ Fetch token properly
+        const token = await getAuthToken();
 
         console.log("🔍 Checking Retrieved Token:", token);
 
@@ -122,7 +138,6 @@ async function checkLoginStatus() {
             if (authErrorElement) {
                 authErrorElement.innerHTML = `<div class="alert alert-warning">Please log in to continue.</div>`;
             }
-
             return;
         }
 
@@ -130,20 +145,15 @@ async function checkLoginStatus() {
             const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
                 method: "GET",
                 headers: {
-                    "Authorization": token ? `Bearer ${token}` : "",
+                    "Authorization": `Bearer ${token}`, // ✅ Ensure token is sent
                     "Content-Type": "application/json"
                 },
                 credentials: "include"
             });
-            
 
             const data = await response.json();
             if (!response.ok) {
                 console.warn("🚨 Token verification failed:", data.message);
-                const authErrorElement = document.getElementById("auth-error");
-            if (authErrorElement) {
-               authErrorElement.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
-            }
                 localStorage.removeItem("token");
                 localStorage.removeItem("adminToken");
                 return;
@@ -152,15 +162,12 @@ async function checkLoginStatus() {
             console.log("✅ Token Verified. User is logged in.");
         } catch (error) {
             console.error("❌ Error verifying login:", error);
-            const authErrorElement = document.getElementById("auth-error");
-            if (authErrorElement) {
-                authErrorElement.innerHTML = `<div class="alert alert-danger">Authentication error. Try again.</div>`;
-            }
             localStorage.removeItem("token");
             localStorage.removeItem("adminToken");
         }
     }, 500);
 }
+
 
 
 
