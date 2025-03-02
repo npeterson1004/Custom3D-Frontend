@@ -1,3 +1,4 @@
+//register.js
 import { API_BASE_URL } from "./config.js";
 
 document.getElementById("registerForm")?.addEventListener("submit", async function (e) {
@@ -6,7 +7,7 @@ document.getElementById("registerForm")?.addEventListener("submit", async functi
     const username = document.getElementById("username").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value; // ✅ Add confirm password field
+    const confirmPassword = document.getElementById("confirmPassword").value;
 
     if (password !== confirmPassword) {
         document.getElementById("message").innerHTML = `<div class="alert alert-danger">❌ Passwords do not match.</div>`;
@@ -17,7 +18,7 @@ document.getElementById("registerForm")?.addEventListener("submit", async functi
         const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, email, password }),
+            body: JSON.stringify({ username, email, password, confirmPassword }), // ✅ Send `confirmPassword`
             credentials: "include"
         });
 
@@ -25,7 +26,7 @@ document.getElementById("registerForm")?.addEventListener("submit", async functi
         document.getElementById("message").innerHTML = `<div class="alert alert-success">${data.message}</div>`;
 
         if (response.ok) {
-            window.location.href = "login.html"; // Redirect to login page after successful registration
+            window.location.href = "login.html"; // Redirect to login page after registration
         }
     } catch (error) {
         document.getElementById("message").innerHTML = `<div class="alert alert-danger">❌ Registration failed.</div>`;

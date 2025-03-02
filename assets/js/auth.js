@@ -28,6 +28,7 @@ document.getElementById("registerForm")?.addEventListener("submit", async functi
     }
 });
 
+
 document.getElementById("loginForm")?.addEventListener("submit", async function (e) {
     e.preventDefault();
 
