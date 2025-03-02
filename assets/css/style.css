@@ -52,14 +52,18 @@ font-family: 'Rufina', serif;
 .warehouse-item:hover {
     transform: scale(1.05);
 }
+/* ✅ Prevent Items from Extending Too Far */
+#warehouse {
+    padding-bottom: 80px; /* ✅ Extra space at the bottom */
+}
 
-/* ✅ Adjust Warehouse Items for Smaller Size */
+/* ✅ Increase Warehouse Item Size */
 .warehouse-item {
-    width: 28%; /* ✅ Reduced width from 30% to 28% for better spacing */
-    max-height: 360px; /* ✅ Limits height to prevent overflow */
-    padding: 12px;
-    border: 3px solid #003366; /* ✅ Slightly thinner border */
-    border-radius: 8px;
+    width: 32%; /* ⬆️ Increase width for larger items */
+    max-height: 420px; /* ⬆️ More height to show image */
+    padding: 16px; /* ⬆️ More padding for better spacing */
+    border: 4px solid #003366; /* ✅ Make the border slightly thicker */
+    border-radius: 10px;
     background-color: #0a1f44;
     color: white;
     text-align: center;
@@ -69,34 +73,29 @@ font-family: 'Rufina', serif;
     transition: transform 0.2s ease-in-out;
 }
 
-/* ✅ Adjust Image Size */
+/* ✅ Increase Image Size */
 .warehouse-img {
     max-width: 100%;
-    height: 180px; /* ✅ Reduced height to prevent long images */
+    height: 240px; /* ⬆️ Increased image height */
     object-fit: cover; /* ✅ Ensures consistent aspect ratio */
-    border-radius: 6px;
+    border-radius: 8px;
 }
 
-/* ✅ Prevent Items from Extending Too Far */
-#warehouse {
-    padding-bottom: 80px; /* ✅ Extra space at the bottom */
-}
-
-/* ✅ Reduce Text Size for Compactness */
+/* ✅ Adjust Text for Better Readability */
 .warehouse-details h5 {
-    font-size: 16px;
-    margin-bottom: 4px;
-}
-
-.warehouse-details p {
-    font-size: 14px;
+    font-size: 18px; /* ⬆️ Increase text size */
     margin-bottom: 6px;
 }
 
-/* ✅ Reduce Button Size */
+.warehouse-details p {
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+/* ✅ Increase Button Size */
 .add-to-cart-btn {
-    padding: 6px 12px;
-    font-size: 14px;
+    padding: 8px 14px; /* ⬆️ Slightly larger button */
+    font-size: 15px;
 }
 
 /* ✅ Responsive Adjustments */
@@ -104,13 +103,22 @@ font-family: 'Rufina', serif;
     .warehouse-item {
         width: 45%; /* ✅ Two per row on tablets */
     }
+
+    .warehouse-img {
+        height: 220px; /* ⬇️ Slightly smaller image on tablets */
+    }
 }
 
 @media (max-width: 768px) {
     .warehouse-item {
         width: 100%; /* ✅ One per row on small screens */
     }
+
+    .warehouse-img {
+        height: 200px; /* ⬇️ Adjust image height for small screens */
+    }
 }
+
 
 
 /* ✅ Warehouse Background - Dark to Light */
@@ -293,7 +301,114 @@ body {
     }
 }
 
+/*-------------------------------------
+		Mobile-Friendly Adjustments
+--------------------------------------*/
 
+
+/* ✅ Mobile-Friendly Adjustments */
+@media (max-width: 1024px) {
+    .container {
+        max-width: 95%;
+        padding: 0 10px;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .welcome-hero {
+        padding: 60px 15px;
+    }
+
+    .welcome-hero-txt h2 {
+        font-size: 26px;
+    }
+
+    .welcome-btn {
+        width: 180px;
+        height: 50px;
+        font-size: 14px;
+    }
+}
+
+/* ✅ Ensure Full Mobile Responsiveness */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    .navbar-toggle {
+        margin-top: 5px;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 0 5px;
+    }
+
+    .welcome-hero {
+        padding: 40px 10px;
+    }
+
+    .welcome-hero-txt h2 {
+        font-size: 22px;
+    }
+
+    .welcome-hero-txt p {
+        font-size: 14px;
+    }
+
+    .welcome-btn {
+        width: 160px;
+        height: 45px;
+        font-size: 13px;
+    }
+
+    /* ✅ Featured Prints Mobile Grid */
+    .featured-item {
+        width: 100%;
+        max-height: 300px;
+        font-size: 14px;
+    }
+
+    .featured-img {
+        height: 150px;
+    }
+
+    .featured-details h5 {
+        font-size: 14px;
+    }
+
+    .add-to-cart-btn {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+
+    /* ✅ Adjust Warehouse Grid */
+    .warehouse-item {
+        width: 100%;
+        max-height: 300px;
+    }
+
+    .warehouse-img {
+        height: 150px;
+    }
+
+    /* ✅ Footer Adjustments */
+    .footer {
+        padding: 10px 0;
+    }
+
+    .footer-top h2 {
+        font-size: 18px;
+    }
+
+    .footer-top p {
+        font-size: 14px;
+    }
+}
 
 
 /*-------------------------------------
@@ -326,8 +441,13 @@ body{
     background-color: rgba(20, 50, 120, 0.9); /* Darker base blue */
     background-image: linear-gradient(to bottom, rgba(10, 30, 100, 0.9), rgba(0, 123, 255, 0.3), rgba(0, 123, 255, 0.1)); /* Dark to light gradient */
     background-size: cover; /* ✅ Ensure it covers entire screen */
+    line-height: 1.6;
 }
-
+/* ✅ Ensure Full-Width on Mobile */
+.container {
+    max-width: 100%;
+    padding: 0 15px;
+}
 
 /* Ensure the body and html take up full height */
 html, body {
