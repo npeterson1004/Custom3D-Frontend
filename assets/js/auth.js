@@ -95,7 +95,7 @@ async function getAuthToken() {
         }
     }
 
-    const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
+const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
 const expiry = decodedToken.exp * 1000; // Convert to milliseconds
 
 if (Date.now() >= expiry) {

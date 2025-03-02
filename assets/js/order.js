@@ -29,8 +29,10 @@ async function sendOrder() {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`,
                 "Content-Type": "application/json"
             },
+            credentials: "include", // ✅ Ensures cookies/tokens are included
             body: JSON.stringify(orderData)
         });
+        
 
         if (!response.ok) {
             throw new Error("❌ Order failed to send.");
@@ -47,6 +49,7 @@ async function sendOrder() {
         } else {
             console.warn("⚠️ updateCartCount is not available.");
         }
+        
 
         loadCart();
 
