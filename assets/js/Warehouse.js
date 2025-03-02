@@ -42,35 +42,31 @@ async function fetchWarehouseProducts() {
     }
 }
 
-
 // Function to enlarge image when clicked
 function enlargeImage(imgSrc) {
+    // Remove any existing enlarged image
     let existingPopup = document.getElementById("popupImage");
-
-    // Remove any existing popup image before adding a new one
     if (existingPopup) {
         existingPopup.remove();
     }
 
-    // Create new enlarged image element
+    // Create a new image element
     let popupImg = document.createElement("img");
     popupImg.id = "popupImage";
     popupImg.classList.add("enlarged-img");
     popupImg.src = imgSrc;
 
-    // Ensure the image is visible
-    popupImg.style.display = "block";
-
     // Close image when clicked
     popupImg.onclick = function () {
         this.remove(); // ✅ Clicking the image closes it
-        document.body.classList.remove("no-scroll"); // ✅ Enable scrolling again
+        document.body.classList.remove("no-scroll"); // ✅ Restore scrolling
     };
 
-    // Prevent background scrolling
-    document.body.classList.add("no-scroll");
+    // Ensure page remains interactive
+    popupImg.style.pointerEvents = "auto"; // ✅ Prevents blocking interactions
 
-    // Append image to the body
+    // Append the image to the body
     document.body.appendChild(popupImg);
 }
+
 
