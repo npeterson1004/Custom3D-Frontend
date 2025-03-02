@@ -270,10 +270,10 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     background: url(../images/welcome-hero/welcome-banner.jpg) no-repeat center center/cover;
     min-height: 100vh; /* ✅ Full viewport height */
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* ✅ Moves text higher */
     justify-content: center;
     text-align: center;
-    padding: 10vh 5vw; /* ✅ More padding for better spacing */
+    padding: 12vh 5vw 0; /* ✅ More space at the top, less at the bottom */
 }
 
 /* ✅ Overlay Effect */
@@ -296,7 +296,6 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     z-index: 99;
 }
 
-/* ✅ Hero Text Container */
 .welcome-hero-txt {
     position: relative;
     z-index: 2;
@@ -305,36 +304,37 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     padding: 5vh 2vw;
 }
 
+/* ✅ Improve Heading Readability */
 .welcome-hero-txt h2 {
-    font-size: 48px; /* ✅ Large font for desktop */
+    font-size: 48px;
     font-weight: 700;
     text-transform: uppercase;
     color: #fff;
     margin-bottom: 15px; /* ✅ Adds spacing below each heading */
     line-height: 1.3; /* ✅ Improves readability */
     display: block;
-    white-space: normal; /* ✅ Allows text to wrap properly */
-    word-break: break-word; /* ✅ Prevents long words from causing overlap */
 }
 
-/* ✅ Ensure Heading Doesn't Stack on Mobile */
+/* ✅ Fix Stacking & Spacing Issues on Mobile */
 @media (max-width: 768px) {
     .welcome-hero {
-        min-height: 90vh; /* ✅ Adjust height for mobile */
-        padding: 12vh 5vw;
+        min-height: 80vh; /* ✅ Adjust height for mobile */
+        padding: 8vh 5vw 0; /* ✅ More top padding to move text higher */
     }
 
     .welcome-hero-txt {
-        max-width: 100%; /* ✅ Full width on mobile */
-        padding: 5vh 5vw;
+        max-width: 100%;
+        padding: 3vh 5vw;
     }
 
     .welcome-hero-txt h2 {
-        font-size: 28px; /* ✅ Adjusted font size for mobile */
-        line-height: 1.5; /* ✅ Better spacing */
-        margin-bottom: 12px; /* ✅ Adds spacing */
-        white-space: normal; /* ✅ Allows text wrapping */
-        text-align: center; /* ✅ Centers text on mobile */
+        font-size: 32px;
+        line-height: 1.5;
+        margin-bottom: 20px; /* ✅ More space between headings */
+    }
+
+    .welcome-hero-txt h2:first-child {
+        margin-bottom: 10px; /* ✅ Adds space between first & second heading */
     }
 
     .welcome-hero-txt p {
@@ -350,7 +350,6 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
         margin-top: 20px;
     }
 }
-
 
 /* ✅ Improve Button Styling */
 .welcome-btn {
@@ -530,11 +529,11 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 
 /* ✅ Increase Warehouse Item Size */
 .warehouse-item {
-    width: 32%; /* ⬆️ Increase width for larger items */
-    max-height: 420px; /* ⬆️ More height to show image */
-    padding: 16px; /* ⬆️ More padding for better spacing */
-    border: 4px solid #003366; /* ✅ Make the border slightly thicker */
-    border-radius: 10px;
+    width: 38%; /* ⬆️ Increased width for larger items */
+    max-height: 500px; /* ⬆️ More height to show image */
+    padding: 20px; /* ⬆️ More padding for better spacing */
+    border: 5px solid #003366; /* ✅ Thicker border for emphasis */
+    border-radius: 12px;
     background-color: #0a1f44;
     color: white;
     text-align: center;
@@ -547,26 +546,26 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 /* ✅ Increase Image Size */
 .warehouse-img {
     max-width: 100%;
-    height: 240px; /* ⬆️ Increased image height */
-    object-fit: cover; /* ✅ Ensures consistent aspect ratio */
-    border-radius: 8px;
+    height: 300px; /* ⬆️ Increased image height */
+    object-fit: cover;
+    border-radius: 10px;
 }
 
 /* ✅ Adjust Text for Better Readability */
 .warehouse-details h5 {
-    font-size: 18px; /* ⬆️ Increase text size */
-    margin-bottom: 6px;
+    font-size: 20px; /* ⬆️ Increase text size */
+    margin-bottom: 8px;
 }
 
 .warehouse-details p {
-    font-size: 15px;
-    margin-bottom: 8px;
+    font-size: 16px;
+    margin-bottom: 10px;
 }
 
 /* ✅ Increase Button Size */
 .add-to-cart-btn {
-    padding: 8px 14px; /* ⬆️ Slightly larger button */
-    font-size: 15px;
+    padding: 10px 16px; /* ⬆️ Slightly larger button */
+    font-size: 16px;
 }
 
 /* ✅ Responsive Adjustments */
@@ -576,7 +575,7 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     }
 
     .warehouse-img {
-        height: 220px; /* ⬇️ Slightly smaller image on tablets */
+        height: 260px; /* ⬇️ Slightly smaller image on tablets */
     }
 }
 
@@ -586,7 +585,7 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     }
 
     .warehouse-img {
-        height: 200px; /* ⬇️ Adjust image height for small screens */
+        height: 220px; /* ⬇️ Adjust image height for small screens */
     }
 }
 
@@ -622,15 +621,19 @@ body {
     gap: 30px; /* ✅ Slightly more spacing between items */
     padding: 20px 0;
 }
+/* ✅ Ensure Proper Item Alignment */
+.featured-item:hover {
+    transform: scale(1.07);
+}
 
 /* ✅ Increase Item Size */
 .featured-item {
-    width: 31%; /* ⬆️ Increased width for better visibility */
-    max-height: 400px; /* ⬆️ Slightly taller for better fit */
-    padding: 14px;
-    border: 4px solid #003366; /* ⬆️ Thicker border */
-    border-radius: 10px;
-    background-color: #0a1f44; /* ✅ Darker background */
+    width: 38%; /* ⬆️ Increased width */
+    max-height: 500px; /* ⬆️ Taller items */
+    padding: 20px;
+    border: 5px solid #003366;
+    border-radius: 12px;
+    background-color: #0a1f44;
     color: white;
     text-align: center;
     display: flex;
@@ -639,28 +642,23 @@ body {
     transition: transform 0.2s ease-in-out;
 }
 
-/* ✅ Ensure Proper Item Alignment */
-.featured-item:hover {
-    transform: scale(1.07);
-}
-
 /* ✅ Increase Image Size */
 .featured-img {
     max-width: 100%;
-    height: 210px; /* ⬆️ Increased height for better product visibility */
-    object-fit: cover; /* ✅ Maintain aspect ratio */
-    border-radius: 8px;
+    height: 300px; /* ⬆️ Larger product images */
+    object-fit: cover;
+    border-radius: 10px;
 }
 
 /* ✅ Increase Font Size */
 .featured-details h5 {
-    font-size: 18px; /* ⬆️ Slightly larger text */
-    margin-bottom: 5px;
+    font-size: 20px;
+    margin-bottom: 8px;
 }
 
 .featured-details p {
-    font-size: 15px; /* ⬆️ Slightly larger text */
-    margin-bottom: 8px;
+    font-size: 16px;
+    margin-bottom: 10px;
 }
 
 /* ✅ Ensure Buttons are Styled */
@@ -669,7 +667,8 @@ body {
     color: white;
     font-weight: bold;
     border-radius: 6px;
-    padding: 8px 14px; /* ⬆️ Larger button */
+    padding: 10px 16px;
+    font-size: 16px;
     transition: background 0.3s;
 }
 
@@ -677,16 +676,24 @@ body {
     background-color: #002288;
 }
 
-/* ✅ Mobile Responsiveness */
+/* ✅ Responsive Adjustments */
 @media (max-width: 1024px) {
     .featured-item {
         width: 48%; /* ✅ Two per row on tablets */
+    }
+
+    .featured-img {
+        height: 260px;
     }
 }
 
 @media (max-width: 768px) {
     .featured-item {
         width: 100%; /* ✅ One per row on small screens */
+    }
+
+    .featured-img {
+        height: 220px;
     }
 }
 
@@ -720,18 +727,6 @@ body {
     color: #0d0d0e;
     text-transform: capitalize;
 }
-.featured-mi-span{display: inline-block;margin:0 10px;}
-.featured-hp-span{display: inline-block;margin-right: 10px;}
-.featured-cars-txt{margin:21px 0 47px;}
-.featured-cars-txt h2 a{font-size: 16px;margin-bottom: 15px;}
-.featured-cars-txt h2 a span{text-transform: uppercase;}
-.featured-cars-txt h3{margin-bottom: 10px;}
-.featured-cars-txt h3,.featured-cars-txt p{font-size: 13px;}
-/*.single-featured-cars*/
-#featured-prints .card-text.text-muted {
-    color: #ffffff !important; /* Changes price text to white */
-}
-
 
 
 /*-------------------------------------
