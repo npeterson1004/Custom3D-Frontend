@@ -19,7 +19,7 @@ font-family: 'Rufina', serif;
 11. Contact
 ==========================================*/
 /*-------------------------------------
-		1.General css (Reset code)
+    1. General Styles (Reset, Typography, Layout)
 --------------------------------------*/
 *{
     padding: 0;
@@ -78,19 +78,6 @@ html, body {
     flex-direction: column;
 }
 
-/* Footer should stay at bottom */
-footer#contact {
-    background: rgba(0, 123, 255, 0.3);
-    color: #ffffff;
-    padding: 20px 0;
-    text-align: center;
-    width: 100%;
-    position: relative;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin-top: auto; /* Push footer down */
-}
 
 
 
@@ -191,8 +178,325 @@ button {background: transparent;border: 0;font-size: 16px;text-transform: capita
 .section-header p{color: #4e4ffa;text-transform: capitalize;margin-bottom:10px;}
 .section-header h2 span,.section-header p span{text-transform: lowercase;}
 
+
+
+
 /*-------------------------------------
-		1.Warehouse stlyes
+        2. Top-area
+--------------------------------------*/
+
+
+
+nav.navbar.bootsnav {
+    background-color: rgba(10, 30, 100, 0.9); /* Darker blue */
+    border-bottom: transparent;
+}
+/* ✅ Sticky Navbar when scrolled */
+.wrap-sticky nav.navbar.bootsnav.sticked {background-color: #000;box-shadow: 0 2px 5px rgba(0,0,0,.2);}
+
+/*.navbar-brand*/
+.navbar-header a.navbar-brand,.navbar-header a.navbar-brand:hover,.navbar-header a.navbar-brand:focus{
+    display: inline-block;
+    color: #f3f3f3;
+    font-size: 24px;
+    letter-spacing: 3px;
+    font-family: 'Rufina', serif;
+    font-weight: 700;
+    padding: 45px 0px;
+    text-transform:uppercase;
+}
+.navbar-header a.navbar-brand span{display: inline-block;color:#4e4ffa;text-transform:capitalize;}
+
+.wrap-sticky nav.navbar.bootsnav.sticked .navbar-header a.navbar-brand,.wrap-sticky nav.navbar.bootsnav.sticked .navbar-header a.navbar-brand:hover,.wrap-sticky nav.navbar.bootsnav.sticked .navbar-header a.navbar-brand:focus {padding:30px 0px;}
+/*.navbar-brand*/
+
+/*.nav li*/
+nav.navbar.bootsnav ul.nav > li > a {
+    color: #e3e8ec; /* Dark blue */
+    font-size: 16px;
+    font-weight: 500;
+    text-transform:uppercase;
+    -webkit-transition: 0.3s linear; 
+    -moz-transition: 0.3s linear; 
+    -ms-transition: 0.3s linear; 
+    -o-transition: 0.3s linear; 
+    transition: 0.3s linear;
+}
+nav.navbar.bootsnav ul.nav > li > a {padding: 48px 21px;}
+nav.navbar.bootsnav ul.nav > li > a:hover,nav.navbar.bootsnav ul.nav > li > a:focus{color:#0980f8;}
+nav.navbar.bootsnav ul.nav > li.active>a {color: #097cee;}
+
+nav.navbar.bootsnav ul.nav > li.dropdown > a.dropdown-toggle:after {
+    content: "";
+}
+nav.navbar.bootsnav ul.nav > li.dropdown span {
+    font-size: 8px;
+    margin-left: 15px;
+}
+.wrap-sticky nav.navbar.bootsnav.sticked ul.nav > li > a{padding:30px 25px;}
+/*.nav li*/
+
+/*.menu-ui-design*/
+.menu-ui-design{overflow-y:scroll;height: 350px;}
+.menu-ui-design::-webkit-scrollbar {
+    width:5px;
+}
+.menu-ui-design::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 8px #000;
+}
+.menu-ui-design::-webkit-scrollbar-thumb {
+  background-color: #4e4ffa;
+}
+/*.menu-ui-design*/
+
+/*.navbar-toggle */
+nav.navbar.bootsnav .navbar-toggle {
+    position: relative;
+    background-color: transparent;
+    border: 1px solid #06417c;
+    padding: 10px;
+    top: 0;
+}
+nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
+/*.navbar-toggle */
+
+/*-------------------------------------
+        3.  Welcome-hero
+--------------------------------------*/
+
+/* ✅ Welcome Hero Section */
+.welcome-hero {
+    position: relative;
+    background: url(../images/welcome-hero/welcome-banner.jpg) no-repeat center center/cover;
+    min-height: 100vh; /* ✅ Full viewport height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10vh 5vw; /* ✅ More padding for better spacing */
+}
+
+/* ✅ Overlay Effect */
+.welcome-hero:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(42, 45, 84, 0.6);
+    z-index: 1;
+}
+
+.header-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99;
+}
+
+/* ✅ Hero Text Container */
+.welcome-hero-txt {
+    position: relative;
+    z-index: 2;
+    max-width: 85%;
+    text-align: center;
+    padding: 5vh 2vw;
+}
+
+.welcome-hero-txt h2 {
+    font-size: 48px; /* ✅ Large font for desktop */
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 15px; /* ✅ Adds spacing below each heading */
+    line-height: 1.3; /* ✅ Improves readability */
+    display: block;
+    white-space: normal; /* ✅ Allows text to wrap properly */
+    word-break: break-word; /* ✅ Prevents long words from causing overlap */
+}
+
+/* ✅ Ensure Heading Doesn't Stack on Mobile */
+@media (max-width: 768px) {
+    .welcome-hero {
+        min-height: 90vh; /* ✅ Adjust height for mobile */
+        padding: 12vh 5vw;
+    }
+
+    .welcome-hero-txt {
+        max-width: 100%; /* ✅ Full width on mobile */
+        padding: 5vh 5vw;
+    }
+
+    .welcome-hero-txt h2 {
+        font-size: 28px; /* ✅ Adjusted font size for mobile */
+        line-height: 1.5; /* ✅ Better spacing */
+        margin-bottom: 12px; /* ✅ Adds spacing */
+        white-space: normal; /* ✅ Allows text wrapping */
+        text-align: center; /* ✅ Centers text on mobile */
+    }
+
+    .welcome-hero-txt p {
+        font-size: 16px;
+        padding: 0 15px;
+        margin-bottom: 15px; /* ✅ Adds space between paragraphs */
+    }
+
+    .welcome-btn {
+        width: 180px;
+        height: 50px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+}
+
+
+/* ✅ Improve Button Styling */
+.welcome-btn {
+    display: inline-block;
+    width: 230px;
+    height: 60px;
+    background: #4e4ffa;
+    color: #fff;
+    border-radius: 3px;
+    margin-top: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.welcome-btn:hover {
+    background: #0102fa;
+}
+
+
+
+
+
+
+/*-------------------------------------
+        4. Model-Search
+--------------------------------------*/
+.model-search-content .col-sm-12 {padding: 0;}
+.model-search-content {
+    padding: 40px 0;
+    background: #fff;
+    box-shadow:0 10px 40px 0px rgba(38,40,64,.2);
+    position: absolute;
+    bottom: -150px;
+    width: 100%;
+    border-radius: 3px;
+}
+
+/*.single-model-search*/
+.single-model-search{margin-bottom: 30px;}
+.single-model-search:last-child {margin-bottom: 0;}
+
+.single-model-search h2 {
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+    margin-bottom: 20px;
+}
+/*model-select-icon*/
+.model-select-icon{
+    position:relative;
+}
+.model-select-icon .form-control {
+    outline: 0!important;
+    box-shadow: none;
+    border: 1px solid #080808;
+    background: #f8f8f8;
+    height: 60px;
+}
+.model-select-icon select {
+    font-size: 16px;
+    color: #fafafc;
+    text-transform: capitalize;
+}
+.model-select-icon:after{
+    position: absolute;
+    content: "\f103";
+    right: 0px;
+    top: 0;
+    font-size: 10px;
+    color: #030303; 
+    background: #f8f8f8;
+    height: 60px;
+    line-height: 60px;
+    width: 50px;
+    text-align: center;
+    font-family: "Flaticon";
+    pointer-events: none;
+    border: transparent;
+}/*model-select-icon*/
+.welcome-btn.model-search-btn {
+    width: 160px;
+    margin-top: 80px;
+    margin-left: 53px;
+}
+
+/*.single-model-search*/
+
+/*-------------------------------------
+        5. Service 
+--------------------------------------*/
+.service { padding: 260px 0 87px;}
+
+.single-service-item{
+    text-align: center;
+    padding:55px 30px 60px;
+    border-radius: 3px;
+    margin-bottom: 30px;
+    border: 1px solid #dadfe9;
+    -webkit-transition: .3s linear; 
+    -moz-transition:.3s linear; 
+    -ms-transition:.3s linear; 
+    -o-transition:.3s linear;
+    transition: .3s linear;
+}
+
+.single-service-icon {
+    display: inline-block;
+    color: #f3f7fa;
+}
+.single-service-item h2 a {
+    font-size:20px;
+    margin: 35px 0 20px;
+}
+.single-service-item h2 a span {text-transform:  lowercase;}
+.single-service-item p {padding-bottom: 35px;text-transform: initial;position: relative;}
+.single-service-item p:before {
+    position: absolute;
+    content: "";
+    width: 20px;
+    height: 3px;
+    background: #3030ea;
+    bottom: 0;
+    left: 50%;
+    margin-left: -10px;
+}
+
+.single-service-icon [class^="flaticon-"]:before,.single-service-icon[class*=" flaticon-"]:before,.single-service-icon [class^="flaticon-"]:after,.single-service-icon [class*=" flaticon-"]:after {font-size:60px;}
+.single-service-item:hover .single-service-icon [class^="flaticon-"]:before,.single-service-item:hover .single-service-icon [class*=" flaticon-"]:before,.single-service-item:hover .single-service-icon [class^="flaticon-"]:after,.single-service-item:hover .single-service-icon [class*=" flaticon-"]:after {color:#fff;}
+
+
+.single-service-item:hover h2 a,.single-service-item:hover p{color: #fff;}
+.single-service-item:hover  p:before {background: #fff;}
+.single-service-item:hover{box-shadow: 0 12px 30px 0px rgba(0,1,193,.2);background: #4e4ffa;border: 1px solid #4e4ffa;}
+
+
+
+
+
+
+
+
+
+
+/*-------------------------------------
+    6. Warehouse Page Styles
 --------------------------------------*/
 
 .order-price {
@@ -303,8 +607,11 @@ body {
     padding-bottom: 100px; /* ✅ Add bottom spacing */
 }
 
+
+
+
 /*-------------------------------------
-		1.Home Featured prints stlyes
+		7. Featured prints Section (Home Page)
 --------------------------------------*/
 
 /* ✅ Featured Prints Grid Layout */
@@ -402,9 +709,51 @@ body {
 }
 
 
+/*.single-featured-cars*/
+.featured-img-box {
+    border: 1px solid #06286d;
+}
+
+.featured-model-info{padding:12px 7px;}
+.featured-model-info p {
+    font-size: 12px;
+    color: #0d0d0e;
+    text-transform: capitalize;
+}
+.featured-mi-span{display: inline-block;margin:0 10px;}
+.featured-hp-span{display: inline-block;margin-right: 10px;}
+.featured-cars-txt{margin:21px 0 47px;}
+.featured-cars-txt h2 a{font-size: 16px;margin-bottom: 15px;}
+.featured-cars-txt h2 a span{text-transform: uppercase;}
+.featured-cars-txt h3{margin-bottom: 10px;}
+.featured-cars-txt h3,.featured-cars-txt p{font-size: 13px;}
+/*.single-featured-cars*/
+#featured-prints .card-text.text-muted {
+    color: #ffffff !important; /* Changes price text to white */
+}
+
+
+
 /*-------------------------------------
-		1.footer
+    8. Cart & Order Styles
 --------------------------------------*/
+/* ✅ Fix cart count number */
+#cart-count {
+    color: #4e4ffa !important; /* ✅ White text */
+    font-weight: bold;
+    background-color: transparent !important; /* ✅ Keep transparent if inside the button */
+    padding: 3px 8px;
+    border-radius: 50%;
+    font-size: 14px;
+    display: inline-block;
+    min-width: 20px;
+    text-align: center;
+}
+
+/*-------------------------------------
+    9. Footer & Contact Section
+--------------------------------------*/
+
 /* ✅ Reduce Footer Height */
 .footer {
     background: #4d7ebf;
@@ -605,10 +954,11 @@ body {
 }
 
 
-
 /*-------------------------------------
-		Mobile-Friendly Adjustments
+    10. Mobile Responsiveness (All Sections)
 --------------------------------------*/
+
+
 
 
 /* ✅ Mobile-Friendly Adjustments */
@@ -718,238 +1068,11 @@ body {
 /* ✅ Responsive Heading Fix */
 
 
-/* section-header */
-
-/*=============Style css=========*/
 
 
 /*-------------------------------------
-        2. Top-area
+    11. Scroll to Top Button
 --------------------------------------*/
-
-
-
-nav.navbar.bootsnav {
-    background-color: rgba(10, 30, 100, 0.9); /* Darker blue */
-    border-bottom: transparent;
-}
-/* ✅ Sticky Navbar when scrolled */
-.wrap-sticky nav.navbar.bootsnav.sticked {background-color: #000;box-shadow: 0 2px 5px rgba(0,0,0,.2);}
-
-/*.navbar-brand*/
-.navbar-header a.navbar-brand,.navbar-header a.navbar-brand:hover,.navbar-header a.navbar-brand:focus{
-    display: inline-block;
-    color: #f3f3f3;
-    font-size: 24px;
-    letter-spacing: 3px;
-    font-family: 'Rufina', serif;
-    font-weight: 700;
-    padding: 45px 0px;
-    text-transform:uppercase;
-}
-.navbar-header a.navbar-brand span{display: inline-block;color:#4e4ffa;text-transform:capitalize;}
-
-.wrap-sticky nav.navbar.bootsnav.sticked .navbar-header a.navbar-brand,.wrap-sticky nav.navbar.bootsnav.sticked .navbar-header a.navbar-brand:hover,.wrap-sticky nav.navbar.bootsnav.sticked .navbar-header a.navbar-brand:focus {padding:30px 0px;}
-/*.navbar-brand*/
-
-/*.nav li*/
-nav.navbar.bootsnav ul.nav > li > a {
-    color: #e3e8ec; /* Dark blue */
-    font-size: 16px;
-    font-weight: 500;
-    text-transform:uppercase;
-    -webkit-transition: 0.3s linear; 
-    -moz-transition: 0.3s linear; 
-    -ms-transition: 0.3s linear; 
-    -o-transition: 0.3s linear; 
-    transition: 0.3s linear;
-}
-nav.navbar.bootsnav ul.nav > li > a {padding: 48px 21px;}
-nav.navbar.bootsnav ul.nav > li > a:hover,nav.navbar.bootsnav ul.nav > li > a:focus{color:#0980f8;}
-nav.navbar.bootsnav ul.nav > li.active>a {color: #097cee;}
-
-nav.navbar.bootsnav ul.nav > li.dropdown > a.dropdown-toggle:after {
-    content: "";
-}
-nav.navbar.bootsnav ul.nav > li.dropdown span {
-    font-size: 8px;
-    margin-left: 15px;
-}
-.wrap-sticky nav.navbar.bootsnav.sticked ul.nav > li > a{padding:30px 25px;}
-/*.nav li*/
-
-/*.menu-ui-design*/
-.menu-ui-design{overflow-y:scroll;height: 350px;}
-.menu-ui-design::-webkit-scrollbar {
-    width:5px;
-}
-.menu-ui-design::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 8px #000;
-}
-.menu-ui-design::-webkit-scrollbar-thumb {
-  background-color: #4e4ffa;
-}
-/*.menu-ui-design*/
-
-/*.navbar-toggle */
-nav.navbar.bootsnav .navbar-toggle {
-    position: relative;
-    background-color: transparent;
-    border: 1px solid #06417c;
-    padding: 10px;
-    top: 0;
-}
-nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
-/*.navbar-toggle */
-
-/*-------------------------------------
-        3.  Welcome-hero
---------------------------------------*/
-
-/* ✅ Welcome Hero Section */
-.welcome-hero {
-    position: relative;
-    background: url(../images/welcome-hero/welcome-banner.jpg) no-repeat center center/cover;
-    min-height: 100vh; /* ✅ Full viewport height */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 10vh 5vw; /* ✅ More padding for better spacing */
-}
-
-/* ✅ Overlay Effect */
-.welcome-hero:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(42, 45, 84, 0.6);
-    z-index: 1;
-}
-
-.header-area {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 99;
-}
-
-/* ✅ Hero Text Container */
-.welcome-hero-txt {
-    position: relative;
-    z-index: 2;
-    max-width: 85%;
-    text-align: center;
-    padding: 5vh 2vw;
-}
-
-/* ✅ Improve Heading Readability */
-.welcome-hero-txt h2 {
-    font-size: 48px; /* ✅ Large font for desktop */
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #fff;
-    margin-bottom: 15px; /* ✅ Adds spacing below each heading */
-    line-height: 1.3; /* ✅ Improves readability */
-    display: block;
-}
-
-/* ✅ Ensure Heading Doesn't Stack on Mobile */
-@media (max-width: 768px) {
-    .welcome-hero {
-        min-height: 90vh; /* ✅ Adjust height for mobile */
-        padding: 15vh 5vw;
-    }
-
-    .welcome-hero-txt {
-        max-width: 100%; /* ✅ Full width on mobile */
-        padding: 5vh 5vw;
-    }
-
-    .welcome-hero-txt h2 {
-        font-size: 32px; /* ✅ Adjusted font size for mobile */
-        line-height: 1.5; /* ✅ Better spacing */
-        margin-bottom: 12px; /* ✅ Adds spacing */
-    }
-
-    .welcome-hero-txt p {
-        font-size: 18px;
-        padding: 0 15px;
-        margin-bottom: 15px; /* ✅ Adds space between paragraphs */
-    }
-
-    .welcome-btn {
-        width: 180px;
-        height: 50px;
-        font-size: 16px;
-        margin-top: 20px;
-    }
-}
-
-/* ✅ Improve Button Styling */
-.welcome-btn {
-    display: inline-block;
-    width: 230px;
-    height: 60px;
-    background: #4e4ffa;
-    color: #fff;
-    border-radius: 3px;
-    margin-top: 30px;
-    font-size: 18px;
-    font-weight: bold;
-    transition: background 0.3s;
-}
-
-.welcome-btn:hover {
-    background: #0102fa;
-}
-
-
-
-
-/*-------------------------------------
-        7. Featured-prints
---------------------------------------*/
-
-/*.single-featured-cars*/
-.featured-img-box {
-    border: 1px solid #06286d;
-}
-
-.featured-model-info{padding:12px 7px;}
-.featured-model-info p {
-    font-size: 12px;
-    color: #0d0d0e;
-    text-transform: capitalize;
-}
-.featured-mi-span{display: inline-block;margin:0 10px;}
-.featured-hp-span{display: inline-block;margin-right: 10px;}
-.featured-cars-txt{margin:21px 0 47px;}
-.featured-cars-txt h2 a{font-size: 16px;margin-bottom: 15px;}
-.featured-cars-txt h2 a span{text-transform: uppercase;}
-.featured-cars-txt h3{margin-bottom: 10px;}
-.featured-cars-txt h3,.featured-cars-txt p{font-size: 13px;}
-/*.single-featured-cars*/
-#featured-prints .card-text.text-muted {
-    color: #ffffff !important; /* Changes price text to white */
-}
-
-
-
-
-
-
-
-
-
-
-/*===============================
-    Scroll Top
-===============================*/
 #scroll-Top  .return-to-top {
     position: fixed;
     right: 30px;
@@ -997,9 +1120,8 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 }
 
 /*-------------------------------------
-        upload images
+    12. Image Upload Styles
 --------------------------------------*/
-
 
 .uploaded-img-container {
     padding: 10px;
@@ -1013,139 +1135,6 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
-
-/*-------------------------------------
-        Cart styles
---------------------------------------*/
-
-
-
-/* ✅ Fix cart count number */
-#cart-count {
-    color: #4e4ffa !important; /* ✅ White text */
-    font-weight: bold;
-    background-color: transparent !important; /* ✅ Keep transparent if inside the button */
-    padding: 3px 8px;
-    border-radius: 50%;
-    font-size: 14px;
-    display: inline-block;
-    min-width: 20px;
-    text-align: center;
-}
-
-/*-------------------------------------
-        4. Model-Search
---------------------------------------*/
-.model-search-content .col-sm-12 {padding: 0;}
-.model-search-content {
-    padding: 40px 0;
-    background: #fff;
-    box-shadow:0 10px 40px 0px rgba(38,40,64,.2);
-    position: absolute;
-    bottom: -150px;
-    width: 100%;
-    border-radius: 3px;
-}
-
-/*.single-model-search*/
-.single-model-search{margin-bottom: 30px;}
-.single-model-search:last-child {margin-bottom: 0;}
-
-.single-model-search h2 {
-    font-size: 16px;
-    font-weight: 400;
-    text-transform: capitalize;
-    margin-bottom: 20px;
-}
-/*model-select-icon*/
-.model-select-icon{
-    position:relative;
-}
-.model-select-icon .form-control {
-    outline: 0!important;
-    box-shadow: none;
-    border: 1px solid #080808;
-    background: #f8f8f8;
-    height: 60px;
-}
-.model-select-icon select {
-    font-size: 16px;
-    color: #fafafc;
-    text-transform: capitalize;
-}
-.model-select-icon:after{
-    position: absolute;
-    content: "\f103";
-    right: 0px;
-    top: 0;
-    font-size: 10px;
-    color: #030303; 
-    background: #f8f8f8;
-    height: 60px;
-    line-height: 60px;
-    width: 50px;
-    text-align: center;
-    font-family: "Flaticon";
-    pointer-events: none;
-    border: transparent;
-}/*model-select-icon*/
-.welcome-btn.model-search-btn {
-    width: 160px;
-    margin-top: 80px;
-    margin-left: 53px;
-}
-
-/*.single-model-search*/
-
-/*-------------------------------------
-        5. Service 
---------------------------------------*/
-.service { padding: 260px 0 87px;}
-
-.single-service-item{
-    text-align: center;
-    padding:55px 30px 60px;
-    border-radius: 3px;
-    margin-bottom: 30px;
-    border: 1px solid #dadfe9;
-    -webkit-transition: .3s linear; 
-    -moz-transition:.3s linear; 
-    -ms-transition:.3s linear; 
-    -o-transition:.3s linear;
-    transition: .3s linear;
-}
-
-.single-service-icon {
-    display: inline-block;
-    color: #f3f7fa;
-}
-.single-service-item h2 a {
-    font-size:20px;
-    margin: 35px 0 20px;
-}
-.single-service-item h2 a span {text-transform:  lowercase;}
-.single-service-item p {padding-bottom: 35px;text-transform: initial;position: relative;}
-.single-service-item p:before {
-    position: absolute;
-    content: "";
-    width: 20px;
-    height: 3px;
-    background: #3030ea;
-    bottom: 0;
-    left: 50%;
-    margin-left: -10px;
-}
-
-.single-service-icon [class^="flaticon-"]:before,.single-service-icon[class*=" flaticon-"]:before,.single-service-icon [class^="flaticon-"]:after,.single-service-icon [class*=" flaticon-"]:after {font-size:60px;}
-.single-service-item:hover .single-service-icon [class^="flaticon-"]:before,.single-service-item:hover .single-service-icon [class*=" flaticon-"]:before,.single-service-item:hover .single-service-icon [class^="flaticon-"]:after,.single-service-item:hover .single-service-icon [class*=" flaticon-"]:after {color:#fff;}
-
-
-.single-service-item:hover h2 a,.single-service-item:hover p{color: #fff;}
-.single-service-item:hover  p:before {background: #fff;}
-.single-service-item:hover{box-shadow: 0 12px 30px 0px rgba(0,1,193,.2);background: #4e4ffa;border: 1px solid #4e4ffa;}
-
-
 
 
 
