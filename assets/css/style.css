@@ -527,26 +527,8 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     padding-bottom: 80px; /* ✅ Extra space at the bottom */
 }
 
-/* ✅ Adjust Text for Readability */
-.warehouse-details h5 {
-    font-size: 17px;
-    margin-bottom: 6px;
-}
-
-.warehouse-details p {
-    font-size: 15px;
-    margin-bottom: 6px;
-}
 
 
-/* ✅ Fix Image Sizing */
-.warehouse-img {
-    width: 100%;
-    height: auto;
-    max-height: 250px;
-    object-fit: contain; /* ✅ Ensures full image is visible */
-    border-radius: 6px;
-}
 
 /* ✅ Ensure images fit perfectly without extra space */
 .warehouse-img, .featured-img {
@@ -556,9 +538,17 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     object-fit: cover; /* ✅ Ensures the image covers space without distortion */
     border-radius: 6px;
 }
+/* ✅ Warehouse Image Optimization */
+.warehouse-img {
+    width: 100%;
+    height: auto;
+    max-height: 400px; /* ✅ Adjusted to better fit larger images */
+    object-fit: contain; /* ✅ Ensures the full image is visible without cropping */
+    border-radius: 6px;
+}
 
-/* ✅ Improve Grid Layout Responsiveness */
-.warehouse-grid, .featured-grid {
+/* ✅ Improve Warehouse Grid Layout */
+.warehouse-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center; /* ✅ Centers items on mobile */
@@ -567,10 +557,10 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     width: 100%;
 }
 
-/* ✅ Make Items Stretch Across the Screen */
-.warehouse-item, .featured-item {
-    flex: 1 1 calc(100% - 20px); /* ✅ Full width on mobile with minimal gap */
-    max-width: 100%; /* ✅ Prevents unwanted margins */
+/* ✅ Ensure Items Fill Screen Properly */
+.warehouse-item {
+    flex: 1 1 calc(100% - 20px); /* ✅ Full width on mobile */
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -585,21 +575,21 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 
 /* ✅ Adjust for Tablets */
 @media (min-width: 768px) {
-    .warehouse-item, .featured-item {
+    .warehouse-item {
         flex: 1 1 calc(50% - 15px); /* ✅ Two items per row on tablets */
         max-width: calc(50% - 15px);
     }
 }
 
-/* ✅ Adjust for Larger Screens */
+/* ✅ Adjust for Desktops */
 @media (min-width: 1024px) {
-    .warehouse-item, .featured-item {
-        flex: 1 1 calc(33.333% - 15px); /* ✅ Three items per row on desktops */
+    .warehouse-item {
+        flex: 1 1 calc(33.333% - 15px); /* ✅ Three items per row on larger screens */
         max-width: calc(33.333% - 15px);
     }
 }
 
-/* ✅ Remove extra margins & padding on mobile */
+/* ✅ Remove Extra Margins & Padding on Mobile */
 body {
     margin: 0;
     padding: 0;
@@ -608,11 +598,26 @@ body {
     background-size: cover;
 }
 
-/* ✅ Ensure buttons fit properly */
+/* ✅ Ensure buttons fit well */
 .add-to-cart-btn {
     padding: 8px 14px;
     font-size: 16px;
 }
+
+/* ✅ Improve Readability */
+.warehouse-details h5 {
+    font-size: 18px;
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.warehouse-details p {
+    font-size: 16px;
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+
 
 /* ✅ Ensure #warehouse section fully blends */
 #warehouse {
@@ -640,8 +645,8 @@ body {
 .featured-img {
     width: 100%;
     height: auto;
-    max-height: 400px; /* ✅ Adjusted for larger images */
-    object-fit: cover; /* ✅ Ensures the image fills space without distortion */
+    max-height: 400px; /* ✅ Adjusted to better fit larger images */
+    object-fit: contain; /* ✅ Ensures the full image is visible without cropping */
     border-radius: 6px;
 }
 
