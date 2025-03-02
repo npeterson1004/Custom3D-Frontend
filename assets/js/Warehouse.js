@@ -43,20 +43,26 @@ async function fetchWarehouseProducts() {
 }
 
 
-// Function to enlarge image on click
+// Function to enlarge image when clicked
 function enlargeImage(imgSrc) {
     let popupImg = document.getElementById("popupImage");
 
+    // If popup image doesn't exist, create it
     if (!popupImg) {
         popupImg = document.createElement("img");
         popupImg.id = "popupImage";
         popupImg.classList.add("enlarged-img");
+
+        // Close image on click
         popupImg.onclick = function () {
-            this.remove(); // Click image to close
+            this.remove(); // ✅ Clicking the image will close it
         };
+
         document.body.appendChild(popupImg);
     }
 
+    // Set the image source and show it
     popupImg.src = imgSrc;
-    popupImg.classList.add("active");
+    popupImg.style.display = "block"; // ✅ Ensures visibility
 }
+
