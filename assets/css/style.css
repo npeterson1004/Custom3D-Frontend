@@ -682,7 +682,7 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 5vh 2vw;
+    padding: 10vh 5vw; /* ✅ More padding for better spacing */
 }
 
 /* ✅ Overlay Effect */
@@ -697,15 +697,12 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     z-index: 1;
 }
 
-.header-area{position: absolute;top:0;left:0;width: 100%;z-index: 99;}
-
-
-/* ✅ Paragraph Styling */
-.welcome-hero-txt p {
-    font-size: 20px;
-    max-width: 700px;
-    margin: 0 auto;
-    color: #fff;
+.header-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99;
 }
 
 /* ✅ Hero Text Container */
@@ -723,41 +720,44 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     font-weight: 700;
     text-transform: uppercase;
     color: #fff;
-    margin-bottom: 10px; /* ✅ Adds spacing below each heading */
+    margin-bottom: 15px; /* ✅ Adds spacing below each heading */
     line-height: 1.3; /* ✅ Improves readability */
+    display: block;
 }
 
 /* ✅ Ensure Heading Doesn't Stack on Mobile */
 @media (max-width: 768px) {
     .welcome-hero {
         min-height: 90vh; /* ✅ Adjust height for mobile */
-        padding: 10vh 5vw;
+        padding: 15vh 5vw;
     }
 
     .welcome-hero-txt {
         max-width: 100%; /* ✅ Full width on mobile */
-        padding: 3vh 5vw;
+        padding: 5vh 5vw;
     }
 
     .welcome-hero-txt h2 {
-        font-size: 28px; /* ✅ Smaller text for mobile */
-        margin-bottom: 8px; /* ✅ Adds more spacing */
-        line-height: 1.4;
+        font-size: 32px; /* ✅ Adjusted font size for mobile */
+        line-height: 1.5; /* ✅ Better spacing */
+        margin-bottom: 12px; /* ✅ Adds spacing */
     }
 
     .welcome-hero-txt p {
-        font-size: 16px;
+        font-size: 18px;
         padding: 0 15px;
+        margin-bottom: 15px; /* ✅ Adds space between paragraphs */
     }
 
     .welcome-btn {
         width: 180px;
         height: 50px;
-        font-size: 14px;
+        font-size: 16px;
         margin-top: 20px;
     }
 }
 
+/* ✅ Improve Button Styling */
 .welcome-btn {
     display: inline-block;
     width: 230px;
@@ -765,17 +765,16 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     background: #4e4ffa;
     color: #fff;
     border-radius: 3px;
-    margin-top: 55px;
-    -webkit-transition: .3s linear; 
-    -moz-transition:.3s linear; 
-    -ms-transition:.3s linear; 
-    -o-transition:.3s linear;
-    transition: .3s linear;
+    margin-top: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background 0.3s;
 }
-.welcome-btn:hover{
+
+.welcome-btn:hover {
     background: #0102fa;
 }
-/*.welcome-hero-txt*/
+
 
 /*-------------------------------------
         4. Model-Search
