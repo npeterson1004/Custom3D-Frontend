@@ -526,39 +526,6 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 #warehouse {
     padding-bottom: 80px; /* ✅ Extra space at the bottom */
 }
-/* ✅ Warehouse Grid Layout */
-.warehouse-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* ✅ Dynamic sizing */
-    gap: 15px; /* ✅ Less space between items */
-    padding: 20px;
-    justify-content: center;
-    align-items: stretch;
-}
-
-/* ✅ Ensure Items Fill Available Space */
-.warehouse-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* ✅ Center content */
-    justify-content: space-between;
-    width: 100%; /* ✅ Use full grid space */
-    max-width: 320px; /* ✅ Prevents excessive width */
-    padding: 12px;
-    border: 3px solid #003366;
-    border-radius: 8px;
-    background-color: #0a1f44;
-    color: white;
-    transition: transform 0.2s ease-in-out;
-}
-
-/* ✅ Fix Image Sizing */
-.warehouse-img {
-    width: 100%; /* ✅ Full width */
-    max-height: 250px; /* ✅ Keeps images proportional */
-    object-fit: contain; /* ✅ Ensures full image is visible */
-    border-radius: 6px;
-}
 
 /* ✅ Adjust Text for Readability */
 .warehouse-details h5 {
@@ -577,22 +544,53 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     font-size: 15px;
 }
 
+
+
+
+/* ✅ Improved Warehouse Grid Layout */
+.warehouse-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* ✅ Ensures items fit across the full width */
+    gap: 10px; /* ✅ Less space between items */
+    padding: 20px;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%; /* ✅ Ensures full width usage */
+}
+
+/* ✅ Ensure Items Fill Available Space */
+.warehouse-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%; /* ✅ Use full grid space */
+    padding: 10px;
+    border: 3px solid #003366;
+    border-radius: 8px;
+    background-color: #0a1f44;
+    color: white;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* ✅ Fix Image Sizing */
+.warehouse-img {
+    width: 100%; /* ✅ No extra margins */
+    max-height: 260px; /* ✅ Keeps images proportional */
+    object-fit: contain; /* ✅ Ensures full image is visible without cropping */
+    border-radius: 6px;
+}
+
 /* ✅ Responsive Adjustments */
 @media (max-width: 1024px) {
     .warehouse-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-    .warehouse-item {
-        max-width: 280px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
 }
 
 @media (max-width: 768px) {
     .warehouse-grid {
-        grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
-    }
-    .warehouse-item {
-        max-width: 100%;
+        grid-template-columns: 1fr; /* ✅ Ensures full width usage */
     }
 }
 
@@ -620,21 +618,24 @@ body {
 --------------------------------------*/
 
 
-/* ✅ Featured Prints Grid Layout */
-.featured-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* ✅ Dynamic sizing */
-    gap: 15px;
-    padding: 20px;
-    justify-content: center;
-    align-items: stretch;
-}
+
 
 /* ✅ Ensure Proper Item Alignment */
 .featured-item:hover {
     transform: scale(1.07);
 }
 
+
+/* ✅ Improved Featured Prints Grid */
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* ✅ Full width items */
+    gap: 10px;
+    padding: 20px;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+}
 
 /* ✅ Ensure Items Fill Available Space */
 .featured-item {
@@ -643,8 +644,7 @@ body {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    max-width: 320px;
-    padding: 12px;
+    padding: 10px;
     border: 3px solid #003366;
     border-radius: 8px;
     background-color: #0a1f44;
@@ -655,9 +655,22 @@ body {
 /* ✅ Fix Image Sizing */
 .featured-img {
     width: 100%;
-    max-height: 250px;
+    max-height: 260px;
     object-fit: contain;
     border-radius: 6px;
+}
+
+/* ✅ Responsive Adjustments */
+@media (max-width: 1024px) {
+    .featured-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .featured-grid {
+        grid-template-columns: 1fr; /* ✅ Ensures full width usage */
+    }
 }
 
 /* ✅ Adjust Text for Better Readability */
@@ -686,25 +699,6 @@ body {
 
 .add-to-cart-btn:hover {
     background-color: #002288;
-}
-
-/* ✅ Responsive Adjustments */
-@media (max-width: 1024px) {
-    .featured-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-    .featured-item {
-        max-width: 280px;
-    }
-}
-
-@media (max-width: 768px) {
-    .featured-grid {
-        grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
-    }
-    .featured-item {
-        max-width: 100%;
-    }
 }
 
 .order-quantity {
