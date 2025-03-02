@@ -549,10 +549,11 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     background: none !important; /* ✅ Prevents black background */
 }
 
-/* ✅ Ensure image starts hidden */
+/* ✅ Hide Image Initially */
 #popupImage {
     display: none;
 }
+
 
 /* ✅ Show image when active */
 #popupImage.active {
