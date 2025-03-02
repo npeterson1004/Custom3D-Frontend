@@ -26,7 +26,7 @@ async function fetchFeaturedProducts() {
                 <div class="featured-item">
                     <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" class="featured-img" alt="${product.name}">
                     <div class="featured-details">
-                        <h5>${product.name}</h5>
+                        <h7>${product.name}</h7>
                         <p>${product.description}</p>
                         <p class="order-price">$${product.price}</p>
                         <button class="btn btn-primary add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price}, '${API_BASE_URL}${product.image}')">Add to Cart</button>

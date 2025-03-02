@@ -26,7 +26,7 @@ async function fetchWarehouseProducts() {
                 <div class="warehouse-item">
                     <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" class="warehouse-img" alt="${product.name}">
                     <div class="warehouse-details">
-                        <h5>${product.name}</h5>
+                        <h7>${product.name}</h7>
                         <p>${product.description}</p>
                         <p class="order-price">$${product.price}</p>
                         <button class="btn btn-primary add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price}, '${API_BASE_URL}${product.image}')">Add to Cart</button>
