@@ -672,71 +672,87 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 /*-------------------------------------
         3.  Welcome-hero
 --------------------------------------*/
+/* ✅ Welcome Hero Adjustments */
 .welcome-hero {
     position: relative;
-    background:url(../images/welcome-hero/welcome-banner.jpg)no-repeat;
-    background-position: center;
-    background-size: cover;
-    z-index: 1;
+    background: url(../images/welcome-hero/welcome-banner.jpg) no-repeat center center/cover;
+    min-height: 100vh; /* ✅ Ensure full viewport height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
+
+/* ✅ Overlay Effect */
 .welcome-hero:before {
-    position: absolute;
     content: "";
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(42,45,84,.60);
+    background: rgba(42, 45, 84, 0.6);
+    z-index: 1;
 }
+
 .header-area{position: absolute;top:0;left:0;width: 100%;z-index: 99;}
 
-/*.welcome-hero-txt */
-.welcome-hero-txt{text-align: center;padding:290px 0 372px;}
 
+/* ✅ Hero Text Container */
+.welcome-hero-txt {
+    position: relative;
+    z-index: 2;
+    max-width: 85%;
+    text-align: center;
+    padding: 5vh 2vw; /* ✅ Responsive padding */
+}
+
+/* ✅ Improve Heading for Different Screens */
+.welcome-hero-txt h2 {
+    font-size: 48px; /* ✅ Larger font for desktop */
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 15px;
+    line-height: 1.3; /* ✅ Proper line spacing */
+}
+
+/* ✅ Paragraph Styling */
+.welcome-hero-txt p {
+    font-size: 20px;
+    max-width: 700px;
+    margin: 0 auto;
+    color: #fff;
+}
+
+/* ✅ Adjust for Mobile Screens */
+@media (max-width: 768px) {
+    .welcome-hero {
+        min-height: 90vh; /* ✅ Ensure it fits mobile screens */
+        padding: 5vh 10px;
+    }
+
+    .welcome-hero-txt {
+        padding: 3vh 5vw;
+        max-width: 100%; /* ✅ Allow full width */
+    }
 
     .welcome-hero-txt h2 {
-        font-size: 42px;
-        font-weight: 700;
-        text-transform: uppercase;
-        color: #fff;
-        margin-bottom: 20px;
-        line-height: 1.4; /* ✅ Increase line height for spacing */
+        font-size: 28px; /* ✅ Reduce font size */
+        line-height: 1.5;
     }
-    
-    /* ✅ Adjust for Mobile Screens */
-    @media (max-width: 768px) {
-        .welcome-hero-txt h2 {
-            font-size: 26px; /* ✅ Reduce font size for smaller screens */
-            line-height: 1.5; /* ✅ More spacing */
-            padding: 0 10px; /* ✅ Add some padding */
-        }
-    
-        .welcome-hero-txt p {
-            font-size: 14px;
-            padding: 0 10px;
-        }
-    
-        .welcome-hero {
-            padding: 50px 15px; /* ✅ Adjust padding for mobile */
-            text-align: center;
-        }
-    
-        .welcome-btn {
-            width: 180px;
-            height: 50px;
-            font-size: 14px;
-        }
+
+    .welcome-hero-txt p {
+        font-size: 16px;
+        padding: 0 15px;
     }
-    
 
-
-.welcome-hero-txt p {
-    font-size: 18px;
-    text-transform: initial;
-    color: #fff;
-    font-weight: 500;
-    max-width: 735px;
-    margin: 0 auto;
+    .welcome-btn {
+        width: 160px;
+        height: 45px;
+        font-size: 14px;
+        margin-top: 30px;
+    }
 }
 .welcome-btn {
     display: inline-block;
