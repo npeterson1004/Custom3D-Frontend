@@ -29,7 +29,7 @@ async function fetchWarehouseProducts() {
                         <div class="card-body">
                             <h5 class="card-title">${product.name}</h5>
                             <p class="card-text">${product.description}</p>
-                            <p class="text-muted">$${product.price}</p>
+                            <p class="order-quantity">$${product.price}</p>
                             <button class="btn btn-primary" onclick="addToCart('${product.name}', ${product.price}, '${API_BASE_URL}${product.image}')">Add to Cart</button>
                         </div>
                     </div>
