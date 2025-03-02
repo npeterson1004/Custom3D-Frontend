@@ -516,15 +516,6 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 }
 
 
-/* ✅ Warehouse Grid Layout */
-.warehouse-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px; /* ✅ Slightly smaller gap for better spacing */
-    padding: 20px 0;
-    align-items: stretch;
-}
 
 /* ✅ Make Items Stretch Evenly */
 .warehouse-item:hover {
@@ -534,14 +525,22 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 #warehouse {
     padding-bottom: 80px; /* ✅ Extra space at the bottom */
 }
-
-/* ✅ Warehouse Item - Optimized Size */
+/* ✅ Warehouse Grid Layout */
+.warehouse-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* ✅ Adjust spacing between items */
+    padding: 20px;
+    align-items: stretch;
+}
+/* ✅ Ensure Items Fill Available Space */
 .warehouse-item {
-    width: 34%; /* ✅ Slightly bigger but still fits 3 per row */
-    max-height: 450px; /* ✅ Increased height for better proportion */
-    padding: 14px; /* ✅ Adjusted padding */
+    width: 32%; /* ✅ Prevents extra white space */
+    max-height: 450px; /* ✅ Ensure taller images fit */
+    padding: 10px; /* ✅ Reduce padding to remove excess space */
     border: 3px solid #003366;
-    border-radius: 10px;
+    border-radius: 8px;
     background-color: #0a1f44;
     color: white;
     text-align: center;
@@ -551,13 +550,13 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     transition: transform 0.2s ease-in-out;
 }
 
-/* ✅ Warehouse Image - Full Visibility */
+/* ✅ Fix Image Sizing */
 .warehouse-img {
-    max-width: 100%;
-    height: 260px; /* ✅ Increased image height */
-    object-fit: contain; /* ✅ Ensures full product visibility */
-    border-radius: 8px;
-    background-color: white; /* ✅ Adds contrast to make images clear */
+    width: 100%; /* ✅ Makes sure it fills the entire box */
+    height: auto; /* ✅ Ensures full image visibility */
+    max-height: 250px; /* ✅ Limits stretching */
+    object-fit: contain; /* ✅ Ensures full image is visible */
+    border-radius: 6px;
 }
 
 /* ✅ Adjust Text for Readability */
@@ -580,21 +579,21 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 /* ✅ Responsive Adjustments */
 @media (max-width: 1024px) {
     .warehouse-item {
-        width: 45%; /* ✅ Two per row on tablets */
+        width: 48%;
     }
 
     .warehouse-img {
-        height: 220px; /* ✅ Adjusted for smaller screens */
+        max-height: 220px;
     }
 }
 
 @media (max-width: 768px) {
     .warehouse-item {
-        width: 100%; /* ✅ One per row on small screens */
+        width: 100%;
     }
 
     .warehouse-img {
-        height: 200px;
+        max-height: 200px;
     }
 }
 
@@ -623,13 +622,13 @@ body {
 --------------------------------------*/
 
 
-/* ✅ Featured Prints Grid */
+/* ✅ Featured Prints Grid Layout */
 .featured-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
-    padding: 20px 0;
+    padding: 20px;
 }
 /* ✅ Ensure Proper Item Alignment */
 .featured-item:hover {
@@ -637,13 +636,13 @@ body {
 }
 
 
-/* ✅ Featured Item - Optimized Size */
+/* ✅ Increase Item Size */
 .featured-item {
-    width: 34%; /* ✅ Slightly bigger */
+    width: 32%; /* ✅ Prevents extra white space */
     max-height: 450px;
-    padding: 14px;
+    padding: 10px;
     border: 3px solid #003366;
-    border-radius: 10px;
+    border-radius: 8px;
     background-color: #0a1f44;
     color: white;
     text-align: center;
@@ -653,13 +652,13 @@ body {
     transition: transform 0.2s ease-in-out;
 }
 
-/* ✅ Featured Image - Full Visibility */
+/* ✅ Fix Image Sizing */
 .featured-img {
-    max-width: 100%;
-    height: 260px; /* ✅ Adjusted for better image visibility */
-    object-fit: contain; /* ✅ Ensures full product visibility */
-    border-radius: 8px;
-    background-color: white; /* ✅ Adds contrast */
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+    object-fit: contain; /* ✅ Ensures full image is visible */
+    border-radius: 6px;
 }
 
 /* ✅ Adjust Text for Better Readability */
@@ -693,24 +692,23 @@ body {
 /* ✅ Responsive Adjustments */
 @media (max-width: 1024px) {
     .featured-item {
-        width: 45%; /* ✅ Two per row on tablets */
+        width: 48%;
     }
 
     .featured-img {
-        height: 220px;
+        max-height: 220px;
     }
 }
 
 @media (max-width: 768px) {
     .featured-item {
-        width: 100%; /* ✅ One per row on small screens */
+        width: 100%;
     }
 
     .featured-img {
-        height: 200px;
+        max-height: 200px;
     }
 }
-
 
 .order-quantity {
 	margin: 0;
