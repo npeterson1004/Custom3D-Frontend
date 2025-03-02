@@ -23,7 +23,7 @@ async function fetchWarehouseProducts() {
 
         products.forEach(product => {
             const productCard = `
-                <div class="col-md-4 d-flex align-items-stretch">
+                <div class="col-md-4 col-sm-6 d-flex align-items-stretch"> <!-- ✅ Each row has 3 items on medium+ screens -->
                     <div class="card mb-4 shadow-sm warehouse-item">
                         <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" class="card-img-top" alt="${product.name}">
                         <div class="card-body text-center">
@@ -43,4 +43,3 @@ async function fetchWarehouseProducts() {
         document.getElementById("warehouseContainer").innerHTML = '<p class="text-center text-danger">Failed to load products.</p>';
     }
 }
-

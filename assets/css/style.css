@@ -36,7 +36,6 @@ font-family: 'Rufina', serif;
     text-transform: capitalize;
 }
 
-
 /* ✅ Warehouse Items Styling */
 .warehouse-item {
     border: 4px solid #003366; /* ✅ Dark Blue Border */
@@ -45,18 +44,20 @@ font-family: 'Rufina', serif;
     background-color: #0a1f44; /* ✅ Darker background for contrast */
     color: #ffffff; /* ✅ White text for better visibility */
     transition: transform 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .warehouse-item:hover {
     transform: scale(1.05); /* ✅ Slight zoom effect on hover */
 }
 
-/* ✅ Ensure consistent spacing */
+/* ✅ Ensure spacing between items */
 #warehouseContainer {
     display: flex;
     flex-wrap: wrap;
     gap: 20px; /* ✅ Adds spacing between items */
-    justify-content: center;
 }
 
 /* ✅ Style Add to Cart Button */
@@ -72,7 +73,6 @@ font-family: 'Rufina', serif;
 .add-to-cart-btn:hover {
     background-color: #002288;
 }
-
 
 
 
