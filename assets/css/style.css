@@ -36,6 +36,11 @@ font-family: 'Rufina', serif;
     text-transform: capitalize;
 }
 
+/* ✅ Prevent Items from Sticking Out */
+#warehouse {
+    padding-bottom: 100px; /* ✅ Extra space to prevent overlap */
+}
+
 /* ✅ Warehouse Grid Layout */
 .warehouse-grid {
     display: flex;
@@ -43,6 +48,7 @@ font-family: 'Rufina', serif;
     justify-content: center; /* ✅ Center align the items */
     gap: 25px; /* ✅ Space between items */
     padding: 20px 0;
+    align-items: stretch;
 }
 
 /* ✅ Force Three Items Per Row */
@@ -149,6 +155,7 @@ body{
     /* Darker blue background with a fading effect */
     background-color: rgba(20, 50, 120, 0.9); /* Darker base blue */
     background-image: linear-gradient(to bottom, rgba(10, 30, 100, 0.9), rgba(0, 123, 255, 0.3), rgba(0, 123, 255, 0.1)); /* Dark to light gradient */
+    background-size: cover; /* ✅ Ensure it covers entire screen */
 }
 
 
@@ -166,6 +173,7 @@ html, body {
     flex: 1;
     width: 100%;
     max-width: 1920px; /* Prevents stretching beyond this width */
+    min-height: 100vh; /* ✅ Ensures full-page coverage */
     margin: 0 auto;
     padding: 0;
     overflow-x: hidden; /* Prevents horizontal scrolling */
