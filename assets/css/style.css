@@ -527,34 +527,34 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 }
 /* ✅ Warehouse Grid Layout */
 .warehouse-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px; /* ✅ Adjust spacing between items */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* ✅ Dynamic sizing */
+    gap: 15px; /* ✅ Less space between items */
     padding: 20px;
+    justify-content: center;
     align-items: stretch;
 }
+
 /* ✅ Ensure Items Fill Available Space */
 .warehouse-item {
-    width: 32%; /* ✅ Prevents extra white space */
-    max-height: 450px; /* ✅ Ensure taller images fit */
-    padding: 10px; /* ✅ Reduce padding to remove excess space */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* ✅ Center content */
+    justify-content: space-between;
+    width: 100%; /* ✅ Use full grid space */
+    max-width: 320px; /* ✅ Prevents excessive width */
+    padding: 12px;
     border: 3px solid #003366;
     border-radius: 8px;
     background-color: #0a1f44;
     color: white;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     transition: transform 0.2s ease-in-out;
 }
 
 /* ✅ Fix Image Sizing */
 .warehouse-img {
-    width: 100%; /* ✅ Makes sure it fills the entire box */
-    height: auto; /* ✅ Ensures full image visibility */
-    max-height: 250px; /* ✅ Limits stretching */
+    width: 100%; /* ✅ Full width */
+    max-height: 250px; /* ✅ Keeps images proportional */
     object-fit: contain; /* ✅ Ensures full image is visible */
     border-radius: 6px;
 }
@@ -578,25 +578,22 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 
 /* ✅ Responsive Adjustments */
 @media (max-width: 1024px) {
-    .warehouse-item {
-        width: 48%;
+    .warehouse-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
-
-    .warehouse-img {
-        max-height: 220px;
+    .warehouse-item {
+        max-width: 280px;
     }
 }
 
 @media (max-width: 768px) {
-    .warehouse-item {
-        width: 100%;
+    .warehouse-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
     }
-
-    .warehouse-img {
-        max-height: 200px;
+    .warehouse-item {
+        max-width: 100%;
     }
 }
-
 
 
 /* ✅ Warehouse Background - Dark to Light */
@@ -624,40 +621,41 @@ body {
 
 /* ✅ Featured Prints Grid Layout */
 .featured-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* ✅ Dynamic sizing */
+    gap: 15px;
     padding: 20px;
+    justify-content: center;
+    align-items: stretch;
 }
+
 /* ✅ Ensure Proper Item Alignment */
 .featured-item:hover {
     transform: scale(1.07);
 }
 
 
-/* ✅ Increase Item Size */
+/* ✅ Ensure Items Fill Available Space */
 .featured-item {
-    width: 32%; /* ✅ Prevents extra white space */
-    max-height: 450px;
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 320px;
+    padding: 12px;
     border: 3px solid #003366;
     border-radius: 8px;
     background-color: #0a1f44;
     color: white;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     transition: transform 0.2s ease-in-out;
 }
 
 /* ✅ Fix Image Sizing */
 .featured-img {
     width: 100%;
-    height: auto;
     max-height: 250px;
-    object-fit: contain; /* ✅ Ensures full image is visible */
+    object-fit: contain;
     border-radius: 6px;
 }
 
@@ -691,22 +689,20 @@ body {
 
 /* ✅ Responsive Adjustments */
 @media (max-width: 1024px) {
-    .featured-item {
-        width: 48%;
+    .featured-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
-
-    .featured-img {
-        max-height: 220px;
+    .featured-item {
+        max-width: 280px;
     }
 }
 
 @media (max-width: 768px) {
-    .featured-item {
-        width: 100%;
+    .featured-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
     }
-
-    .featured-img {
-        max-height: 200px;
+    .featured-item {
+        max-width: 100%;
     }
 }
 
