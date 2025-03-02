@@ -24,7 +24,7 @@ async function fetchWarehouseProducts() {
         products.forEach(product => {
             const productCard = `
                 <div class="warehouse-item">
-                    <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" onclick="openModal(this.src)" class="warehouse-img" alt="${product.name}">
+                    <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" onclick="enlargeImage(this.src)" class="warehouse-img" alt="${product.name}">
                     <div class="warehouse-details">
                         <h7>${product.name}</h7>
                         <p>${product.description}</p>
@@ -43,20 +43,20 @@ async function fetchWarehouseProducts() {
 }
 
 
-// Open the modal and display the full image
-function openModal(imgSrc) {
-    document.getElementById("imageModal").style.display = "flex";
-    document.getElementById("fullImage").src = imgSrc;
-}
+// Function to enlarge image on click
+function enlargeImage(imgSrc) {
+    let popupImg = document.getElementById("popupImage");
 
-// Close the modal when clicking the close button
-function closeModal() {
-    document.getElementById("imageModal").style.display = "none";
-}
-
-// Close the modal when clicking outside the image
-document.getElementById("imageModal").addEventListener("click", function (event) {
-    if (event.target === this) {
-        closeModal();
+    if (!popupImg) {
+        popupImg = document.createElement("img");
+        popupImg.id = "popupImage";
+        popupImg.classList.add("enlarged-img");
+        popupImg.onclick = function () {
+            this.remove(); // Click image to close
+        };
+        document.body.appendChild(popupImg);
     }
-});
+
+    popupImg.src = imgSrc;
+    popupImg.classList.add("active");
+}
