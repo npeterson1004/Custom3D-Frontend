@@ -411,39 +411,6 @@ body {
 }
 
 /* ✅ Responsive Heading Fix */
-.welcome-hero-txt h2 {
-    font-size: 42px;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #fff;
-    margin-bottom: 20px;
-    line-height: 1.4; /* ✅ Increase line height for spacing */
-}
-
-/* ✅ Adjust for Mobile Screens */
-@media (max-width: 768px) {
-    .welcome-hero-txt h2 {
-        font-size: 26px; /* ✅ Reduce font size for smaller screens */
-        line-height: 1.5; /* ✅ More spacing */
-        padding: 0 10px; /* ✅ Add some padding */
-    }
-
-    .welcome-hero-txt p {
-        font-size: 14px;
-        padding: 0 10px;
-    }
-
-    .welcome-hero {
-        padding: 50px 15px; /* ✅ Adjust padding for mobile */
-        text-align: center;
-    }
-
-    .welcome-btn {
-        width: 180px;
-        height: 50px;
-        font-size: 14px;
-    }
-}
 
 /*-------------------------------------
 		1.General css (Reset code)
@@ -723,17 +690,46 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 }
 .header-area{position: absolute;top:0;left:0;width: 100%;z-index: 99;}
 
-/*.welcome-hero-txt
+/*.welcome-hero-txt */
 .welcome-hero-txt{text-align: center;padding:290px 0 372px;}
-/*
-.welcome-hero-txt h2 {
-    font-size: 42px;
-    color: #fff;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-bottom: 45px;
-}
-    */
+
+
+    .welcome-hero-txt h2 {
+        font-size: 42px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #fff;
+        margin-bottom: 20px;
+        line-height: 1.4; /* ✅ Increase line height for spacing */
+    }
+    
+    /* ✅ Adjust for Mobile Screens */
+    @media (max-width: 768px) {
+        .welcome-hero-txt h2 {
+            font-size: 26px; /* ✅ Reduce font size for smaller screens */
+            line-height: 1.5; /* ✅ More spacing */
+            padding: 0 10px; /* ✅ Add some padding */
+        }
+    
+        .welcome-hero-txt p {
+            font-size: 14px;
+            padding: 0 10px;
+        }
+    
+        .welcome-hero {
+            padding: 50px 15px; /* ✅ Adjust padding for mobile */
+            text-align: center;
+        }
+    
+        .welcome-btn {
+            width: 180px;
+            height: 50px;
+            font-size: 14px;
+        }
+    }
+    
+
+
 .welcome-hero-txt p {
     font-size: 18px;
     text-transform: initial;
