@@ -23,15 +23,13 @@ async function fetchWarehouseProducts() {
 
         products.forEach(product => {
             const productCard = `
-                <div class="col-md-4 col-sm-6 d-flex align-items-stretch"> <!-- ✅ Each row has 3 items on medium+ screens -->
-                    <div class="card mb-4 shadow-sm warehouse-item">
-                        <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" class="card-img-top" alt="${product.name}">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">${product.name}</h5>
-                            <p class="card-text">${product.description}</p>
-                            <p class="order-price">$${product.price}</p>
-                            <button class="btn btn-primary add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price}, '${API_BASE_URL}${product.image}')">Add to Cart</button>
-                        </div>
+                <div class="warehouse-item">
+                    <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" class="warehouse-img" alt="${product.name}">
+                    <div class="warehouse-details">
+                        <h5>${product.name}</h5>
+                        <p>${product.description}</p>
+                        <p class="order-price">$${product.price}</p>
+                        <button class="btn btn-primary add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price}, '${API_BASE_URL}${product.image}')">Add to Cart</button>
                     </div>
                 </div>
             `;
