@@ -23,14 +23,14 @@ async function fetchWarehouseProducts() {
 
         products.forEach(product => {
             const productCard = `
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" class="card-img-top" alt="${product.name}" style="max-width: 100%; height: auto;">
-                        <div class="card-body">
+                <div class="col-md-4 d-flex align-items-stretch">
+                    <div class="card mb-4 shadow-sm warehouse-item">
+                        <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" class="card-img-top" alt="${product.name}">
+                        <div class="card-body text-center">
                             <h5 class="card-title">${product.name}</h5>
                             <p class="card-text">${product.description}</p>
-                            <p class="order-quantity">$${product.price}</p>
-                            <button class="btn btn-primary" onclick="addToCart('${product.name}', ${product.price}, '${API_BASE_URL}${product.image}')">Add to Cart</button>
+                            <p class="order-price">$${product.price}</p>
+                            <button class="btn btn-primary add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price}, '${API_BASE_URL}${product.image}')">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -43,3 +43,4 @@ async function fetchWarehouseProducts() {
         document.getElementById("warehouseContainer").innerHTML = '<p class="text-center text-danger">Failed to load products.</p>';
     }
 }
+
