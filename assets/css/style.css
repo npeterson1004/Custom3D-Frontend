@@ -529,42 +529,48 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 
 /* ✅ Adjust Text for Readability */
 .warehouse-details h5 {
-    font-size: 17px;
+    font-size: 18px;
     margin-bottom: 6px;
+    text-align: center;
 }
 
 .warehouse-details p {
-    font-size: 15px;
+    font-size: 16px;
     margin-bottom: 6px;
-}
-
-/* ✅ Adjust Button Size */
-.add-to-cart-btn {
-    padding: 7px 12px;
-    font-size: 15px;
+    text-align: center;
 }
 
 
 
 
-/* ✅ Improved Warehouse Grid Layout */
-.warehouse-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* ✅ Ensures items fit across the full width */
-    gap: 10px; /* ✅ Less space between items */
-    padding: 20px;
-    justify-content: center;
-    align-items: stretch;
-    width: 100%; /* ✅ Ensures full width usage */
+
+/* ✅ Ensure images fit perfectly without extra space */
+.warehouse-img, .featured-img {
+    width: 100%;
+    height: auto;
+    max-height: 400px; /* ✅ Adjusted for larger images */
+    object-fit: cover; /* ✅ Ensures the image covers space without distortion */
+    border-radius: 6px;
 }
 
-/* ✅ Ensure Items Fill Available Space */
-.warehouse-item {
+/* ✅ Improve Grid Layout Responsiveness */
+.warehouse-grid, .featured-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* ✅ Centers items on mobile */
+    gap: 10px;
+    padding: 10px;
+    width: 100%;
+}
+
+/* ✅ Make Items Stretch Across the Screen */
+.warehouse-item, .featured-item {
+    flex: 1 1 calc(100% - 20px); /* ✅ Full width on mobile with minimal gap */
+    max-width: 100%; /* ✅ Prevents unwanted margins */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    width: 100%; /* ✅ Use full grid space */
     padding: 10px;
     border: 3px solid #003366;
     border-radius: 8px;
@@ -573,35 +579,39 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     transition: transform 0.2s ease-in-out;
 }
 
-/* ✅ Fix Image Sizing */
-.warehouse-img {
-    width: 100%; /* ✅ No extra margins */
-    max-height: 260px; /* ✅ Keeps images proportional */
-    object-fit: contain; /* ✅ Ensures full image is visible without cropping */
-    border-radius: 6px;
-}
-
-/* ✅ Responsive Adjustments */
-@media (max-width: 1024px) {
-    .warehouse-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+/* ✅ Adjust for Tablets */
+@media (min-width: 768px) {
+    .warehouse-item, .featured-item {
+        flex: 1 1 calc(50% - 15px); /* ✅ Two items per row on tablets */
+        max-width: calc(50% - 15px);
     }
 }
 
-@media (max-width: 768px) {
-    .warehouse-grid {
-        grid-template-columns: 1fr; /* ✅ Ensures full width usage */
+/* ✅ Adjust for Larger Screens */
+@media (min-width: 1024px) {
+    .warehouse-item, .featured-item {
+        flex: 1 1 calc(33.333% - 15px); /* ✅ Three items per row on desktops */
+        max-width: calc(33.333% - 15px);
     }
 }
 
-
-/* ✅ Warehouse Background - Dark to Light */
+/* ✅ Remove extra margins & padding on mobile */
 body {
-    background: linear-gradient(to bottom, #0a1f44 0%, #1a3d73 30%, #2b5b99 60%, #4d7ebf 100%);
-    background-attachment: fixed; /* ✅ Prevents reset */
-    background-size: cover;
     margin: 0;
     padding: 0;
+    background: linear-gradient(to bottom, #0a1f44 0%, #1a3d73 30%, #2b5b99 60%, #4d7ebf 100%);
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.add-to-cart-btn {
+    background-color: #0044cc;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 16px;
+    transition: background 0.3s;
 }
 
 /* ✅ Ensure #warehouse section fully blends */
@@ -637,13 +647,33 @@ body {
     width: 100%;
 }
 
-/* ✅ Ensure Items Fill Available Space */
+/* ✅ Featured Prints Mobile Optimization */
+.featured-img {
+    width: 100%;
+    height: auto;
+    max-height: 400px; /* ✅ Adjusted for larger images */
+    object-fit: cover; /* ✅ Ensures the image fills space without distortion */
+    border-radius: 6px;
+}
+
+/* ✅ Optimize Featured Grid Layout */
+.featured-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* ✅ Centers items on mobile */
+    gap: 10px;
+    padding: 10px;
+    width: 100%;
+}
+
+/* ✅ Ensure Items Fill Screen Properly */
 .featured-item {
+    flex: 1 1 calc(100% - 20px); /* ✅ Full width on mobile */
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
     padding: 10px;
     border: 3px solid #003366;
     border-radius: 8px;
@@ -652,39 +682,45 @@ body {
     transition: transform 0.2s ease-in-out;
 }
 
-/* ✅ Fix Image Sizing */
-.featured-img {
-    width: 100%;
-    max-height: 260px;
-    object-fit: contain;
-    border-radius: 6px;
-}
-
-/* ✅ Responsive Adjustments */
-@media (max-width: 1024px) {
-    .featured-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+/* ✅ Adjust for Tablets */
+@media (min-width: 768px) {
+    .featured-item {
+        flex: 1 1 calc(50% - 15px); /* ✅ Two items per row on tablets */
+        max-width: calc(50% - 15px);
     }
 }
 
-@media (max-width: 768px) {
-    .featured-grid {
-        grid-template-columns: 1fr; /* ✅ Ensures full width usage */
+/* ✅ Adjust for Desktops */
+@media (min-width: 1024px) {
+    .featured-item {
+        flex: 1 1 calc(33.333% - 15px); /* ✅ Three items per row on larger screens */
+        max-width: calc(33.333% - 15px);
     }
 }
 
-/* ✅ Adjust Text for Better Readability */
+/* ✅ Remove Extra Margins & Padding on Mobile */
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #0a1f44 0%, #1a3d73 30%, #2b5b99 60%, #4d7ebf 100%);
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+
+
+/* ✅ Improve Readability */
 .featured-details h5 {
-    font-size: 17px;
+    font-size: 18px;
     margin-bottom: 6px;
+    text-align: center;
 }
 
 .featured-details p {
-    font-size: 15px;
+    font-size: 16px;
     margin-bottom: 6px;
+    text-align: center;
 }
-
-
 
 /* ✅ Ensure Buttons are Styled */
 .add-to-cart-btn {
@@ -692,7 +728,7 @@ body {
     color: white;
     font-weight: bold;
     border-radius: 6px;
-    padding: 10px 16px;
+    padding: 8px 14px;
     font-size: 16px;
     transition: background 0.3s;
 }
