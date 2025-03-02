@@ -52,17 +52,25 @@ function enlargeImage(imgSrc) {
         existingPopup.remove();
     }
 
-    // Create new enlarged image
+    // Create new enlarged image element
     let popupImg = document.createElement("img");
     popupImg.id = "popupImage";
     popupImg.classList.add("enlarged-img");
     popupImg.src = imgSrc;
 
+    // Ensure the image is visible
+    popupImg.style.display = "block";
+
     // Close image when clicked
     popupImg.onclick = function () {
         this.remove(); // ✅ Clicking the image closes it
+        document.body.classList.remove("no-scroll"); // ✅ Enable scrolling again
     };
 
+    // Prevent background scrolling
+    document.body.classList.add("no-scroll");
+
+    // Append image to the body
     document.body.appendChild(popupImg);
 }
 
