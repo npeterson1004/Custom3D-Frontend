@@ -264,6 +264,10 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
         3.  Welcome-hero
 --------------------------------------*/
 
+/*-------------------------------------
+        3.  Welcome-hero
+--------------------------------------*/
+
 /* ✅ Welcome Hero Section */
 .welcome-hero {
     position: relative;
@@ -296,6 +300,7 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     z-index: 99;
 }
 
+/* ✅ Hero Text Container */
 .welcome-hero-txt {
     position: relative;
     z-index: 2;
@@ -310,9 +315,14 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     font-weight: 700;
     text-transform: uppercase;
     color: #fff;
-    margin-bottom: 15px; /* ✅ Adds spacing below each heading */
+    margin-bottom: 20px; /* ✅ Adds spacing below each heading */
     line-height: 1.3; /* ✅ Improves readability */
     display: block;
+}
+
+/* ✅ Add Space Between First & Second Heading */
+.welcome-hero-txt h2:first-child {
+    margin-bottom: 15px; /* ✅ Adds space between first & second heading */
 }
 
 /* ✅ Fix Stacking & Spacing Issues on Mobile */
@@ -334,7 +344,7 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     }
 
     .welcome-hero-txt h2:first-child {
-        margin-bottom: 10px; /* ✅ Adds space between first & second heading */
+        margin-bottom: 12px; /* ✅ Adds space between first & second heading */
     }
 
     .welcome-hero-txt p {
@@ -368,7 +378,6 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 .welcome-btn:hover {
     background: #0102fa;
 }
-
 
 
 
@@ -507,13 +516,12 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 }
 
 
-
 /* ✅ Warehouse Grid Layout */
 .warehouse-grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* ✅ Center align the items */
-    gap: 25px; /* ✅ Space between items */
+    justify-content: center;
+    gap: 20px; /* ✅ Slightly smaller gap for better spacing */
     padding: 20px 0;
     align-items: stretch;
 }
@@ -527,13 +535,13 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     padding-bottom: 80px; /* ✅ Extra space at the bottom */
 }
 
-/* ✅ Increase Warehouse Item Size */
+/* ✅ Warehouse Item - Optimized Size */
 .warehouse-item {
-    width: 38%; /* ⬆️ Increased width for larger items */
-    max-height: 500px; /* ⬆️ More height to show image */
-    padding: 20px; /* ⬆️ More padding for better spacing */
-    border: 5px solid #003366; /* ✅ Thicker border for emphasis */
-    border-radius: 12px;
+    width: 34%; /* ✅ Slightly bigger but still fits 3 per row */
+    max-height: 450px; /* ✅ Increased height for better proportion */
+    padding: 14px; /* ✅ Adjusted padding */
+    border: 3px solid #003366;
+    border-radius: 10px;
     background-color: #0a1f44;
     color: white;
     text-align: center;
@@ -543,29 +551,30 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     transition: transform 0.2s ease-in-out;
 }
 
-/* ✅ Increase Image Size */
+/* ✅ Warehouse Image - Full Visibility */
 .warehouse-img {
     max-width: 100%;
-    height: 300px; /* ⬆️ Increased image height */
-    object-fit: cover;
-    border-radius: 10px;
+    height: 260px; /* ✅ Increased image height */
+    object-fit: contain; /* ✅ Ensures full product visibility */
+    border-radius: 8px;
+    background-color: white; /* ✅ Adds contrast to make images clear */
 }
 
-/* ✅ Adjust Text for Better Readability */
+/* ✅ Adjust Text for Readability */
 .warehouse-details h5 {
-    font-size: 20px; /* ⬆️ Increase text size */
-    margin-bottom: 8px;
+    font-size: 17px;
+    margin-bottom: 6px;
 }
 
 .warehouse-details p {
-    font-size: 16px;
-    margin-bottom: 10px;
+    font-size: 15px;
+    margin-bottom: 6px;
 }
 
-/* ✅ Increase Button Size */
+/* ✅ Adjust Button Size */
 .add-to-cart-btn {
-    padding: 10px 16px; /* ⬆️ Slightly larger button */
-    font-size: 16px;
+    padding: 7px 12px;
+    font-size: 15px;
 }
 
 /* ✅ Responsive Adjustments */
@@ -575,7 +584,7 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     }
 
     .warehouse-img {
-        height: 260px; /* ⬇️ Slightly smaller image on tablets */
+        height: 220px; /* ✅ Adjusted for smaller screens */
     }
 }
 
@@ -585,7 +594,7 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     }
 
     .warehouse-img {
-        height: 220px; /* ⬇️ Adjust image height for small screens */
+        height: 200px;
     }
 }
 
@@ -613,12 +622,13 @@ body {
 		7. Featured prints Section (Home Page)
 --------------------------------------*/
 
-/* ✅ Featured Prints Grid Layout */
+
+/* ✅ Featured Prints Grid */
 .featured-grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* ✅ Center items */
-    gap: 30px; /* ✅ Slightly more spacing between items */
+    justify-content: center;
+    gap: 20px;
     padding: 20px 0;
 }
 /* ✅ Ensure Proper Item Alignment */
@@ -626,13 +636,14 @@ body {
     transform: scale(1.07);
 }
 
-/* ✅ Increase Item Size */
+
+/* ✅ Featured Item - Optimized Size */
 .featured-item {
-    width: 38%; /* ⬆️ Increased width */
-    max-height: 500px; /* ⬆️ Taller items */
-    padding: 20px;
-    border: 5px solid #003366;
-    border-radius: 12px;
+    width: 34%; /* ✅ Slightly bigger */
+    max-height: 450px;
+    padding: 14px;
+    border: 3px solid #003366;
+    border-radius: 10px;
     background-color: #0a1f44;
     color: white;
     text-align: center;
@@ -642,24 +653,27 @@ body {
     transition: transform 0.2s ease-in-out;
 }
 
-/* ✅ Increase Image Size */
+/* ✅ Featured Image - Full Visibility */
 .featured-img {
     max-width: 100%;
-    height: 300px; /* ⬆️ Larger product images */
-    object-fit: cover;
-    border-radius: 10px;
+    height: 260px; /* ✅ Adjusted for better image visibility */
+    object-fit: contain; /* ✅ Ensures full product visibility */
+    border-radius: 8px;
+    background-color: white; /* ✅ Adds contrast */
 }
 
-/* ✅ Increase Font Size */
+/* ✅ Adjust Text for Better Readability */
 .featured-details h5 {
-    font-size: 20px;
-    margin-bottom: 8px;
+    font-size: 17px;
+    margin-bottom: 6px;
 }
 
 .featured-details p {
-    font-size: 16px;
-    margin-bottom: 10px;
+    font-size: 15px;
+    margin-bottom: 6px;
 }
+
+
 
 /* ✅ Ensure Buttons are Styled */
 .add-to-cart-btn {
@@ -679,11 +693,11 @@ body {
 /* ✅ Responsive Adjustments */
 @media (max-width: 1024px) {
     .featured-item {
-        width: 48%; /* ✅ Two per row on tablets */
+        width: 45%; /* ✅ Two per row on tablets */
     }
 
     .featured-img {
-        height: 260px;
+        height: 220px;
     }
 }
 
@@ -693,7 +707,7 @@ body {
     }
 
     .featured-img {
-        height: 220px;
+        height: 200px;
     }
 }
 
