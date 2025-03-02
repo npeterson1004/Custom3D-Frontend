@@ -113,6 +113,21 @@ font-family: 'Rufina', serif;
 }
 
 
+/* ✅ Warehouse Background - Dark to Light */
+body {
+    background: linear-gradient(to bottom, #0a1f44 0%, #1a3d73 30%, #2b5b99 60%, #4d7ebf 100%);
+    background-attachment: fixed; /* ✅ Prevents reset */
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+
+/* ✅ Ensure #warehouse section fully blends */
+#warehouse {
+    background: transparent; /* ✅ No extra background */
+    padding-bottom: 100px; /* ✅ Add bottom spacing */
+}
+
 /*-------------------------------------
 		1.Home Featured prints stlyes
 --------------------------------------*/
@@ -122,17 +137,17 @@ font-family: 'Rufina', serif;
     display: flex;
     flex-wrap: wrap;
     justify-content: center; /* ✅ Center items */
-    gap: 25px; /* ✅ Add space between items */
+    gap: 30px; /* ✅ Slightly more spacing between items */
     padding: 20px 0;
 }
 
-/* ✅ Ensure Three Items Per Row */
+/* ✅ Increase Item Size */
 .featured-item {
-    width: 28%; /* ✅ Reduce width for spacing */
-    max-height: 360px; /* ✅ Prevent long items */
-    padding: 12px;
-    border: 3px solid #003366; /* ✅ Dark blue border */
-    border-radius: 8px;
+    width: 31%; /* ⬆️ Increased width for better visibility */
+    max-height: 400px; /* ⬆️ Slightly taller for better fit */
+    padding: 14px;
+    border: 4px solid #003366; /* ⬆️ Thicker border */
+    border-radius: 10px;
     background-color: #0a1f44; /* ✅ Darker background */
     color: white;
     text-align: center;
@@ -144,26 +159,26 @@ font-family: 'Rufina', serif;
 
 /* ✅ Ensure Proper Item Alignment */
 .featured-item:hover {
-    transform: scale(1.05);
+    transform: scale(1.07);
 }
 
-/* ✅ Adjust Image Size */
+/* ✅ Increase Image Size */
 .featured-img {
     max-width: 100%;
-    height: 180px; /* ✅ Smaller height for uniformity */
+    height: 210px; /* ⬆️ Increased height for better product visibility */
     object-fit: cover; /* ✅ Maintain aspect ratio */
-    border-radius: 6px;
+    border-radius: 8px;
 }
 
-/* ✅ Reduce Text Size for Compactness */
+/* ✅ Increase Font Size */
 .featured-details h5 {
-    font-size: 16px;
-    margin-bottom: 4px;
+    font-size: 18px; /* ⬆️ Slightly larger text */
+    margin-bottom: 5px;
 }
 
 .featured-details p {
-    font-size: 14px;
-    margin-bottom: 6px;
+    font-size: 15px; /* ⬆️ Slightly larger text */
+    margin-bottom: 8px;
 }
 
 /* ✅ Ensure Buttons are Styled */
@@ -171,8 +186,8 @@ font-family: 'Rufina', serif;
     background-color: #0044cc;
     color: white;
     font-weight: bold;
-    border-radius: 5px;
-    padding: 6px 12px;
+    border-radius: 6px;
+    padding: 8px 14px; /* ⬆️ Larger button */
     transition: background 0.3s;
 }
 
@@ -183,7 +198,7 @@ font-family: 'Rufina', serif;
 /* ✅ Mobile Responsiveness */
 @media (max-width: 1024px) {
     .featured-item {
-        width: 45%; /* ✅ Two per row on tablets */
+        width: 48%; /* ✅ Two per row on tablets */
     }
 }
 
@@ -210,6 +225,76 @@ font-family: 'Rufina', serif;
     border: 1px solid #555;
     font-weight: bold;
 }
+
+
+/*-------------------------------------
+		1.footer
+--------------------------------------*/
+/* ✅ Reduce Footer Height */
+.footer {
+    background: #4d7ebf;
+    padding: 15px 0; /* ⬇️ Reduce vertical padding */
+    text-align: center;
+    color: white;
+    border-top: 3px solid #003366; /* ✅ Keep a slight top border */
+}
+
+/* ✅ Reduce Footer Top Section */
+.footer-top {
+    padding: 10px 0; /* ⬇️ Reduce vertical padding */
+}
+
+/* ✅ Make Contact Details More Compact */
+.footer-top h2 {
+    font-size: 18px; /* ⬇️ Slightly smaller heading */
+    margin-bottom: 8px; /* ⬇️ Less space below heading */
+}
+
+.footer-top p {
+    font-size: 14px; /* ✅ Keep readable but compact */
+    margin-bottom: 4px; /* ⬇️ Reduce spacing */
+}
+
+/* ✅ Footer Copyright (Even Smaller) */
+.footer-copyright {
+    padding: 10px 0; /* ⬇️ Reduce padding */
+    font-size: 12px; /* ✅ Smaller copyright text */
+}
+
+/* ✅ Footer Social Icons (Compact) */
+.footer-social {
+    text-align: center;
+    margin-top: 5px; /* ⬇️ Reduce spacing */
+}
+
+.footer-social a i {
+    font-size: 14px; /* ✅ Keep icons smaller */
+    margin-left: 8px; /* ⬇️ Reduce spacing */
+}
+
+/* ✅ Remove Extra Space at Bottom */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* ✅ Mobile Adjustments */
+@media (max-width: 768px) {
+    .footer {
+        padding: 10px 0; /* ⬇️ Make footer even smaller on mobile */
+    }
+
+    .footer-top h2 {
+        font-size: 16px; /* ⬇️ Reduce heading size */
+    }
+
+    .footer-top p {
+        font-size: 13px; /* ✅ Adjust text */
+    }
+}
+
+
+
 
 /*-------------------------------------
 		1.General css (Reset code)
@@ -933,6 +1018,10 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 }
 .footer-social i:hover{opacity: .70;}
 /*.footer-copyright */
+
+
+
+
 /* Change text box background color in Contact Form */
 #contactForm .form-control {
     background-color: #c7c6c6 !important; /* Light gray */
