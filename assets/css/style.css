@@ -546,25 +546,24 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 
 
 
-
-/* ✅ Improved Warehouse Grid Layout */
+/* ✅ Fix Warehouse Grid Layout */
 .warehouse-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* ✅ Ensures items fit across the full width */
-    gap: 10px; /* ✅ Less space between items */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* ✅ Ensures items are evenly spaced */
+    gap: 15px; /* ✅ Less gap between items */
     padding: 20px;
-    justify-content: center;
-    align-items: stretch;
-    width: 100%; /* ✅ Ensures full width usage */
+    width: 100%; /* ✅ Ensures full width */
 }
 
-/* ✅ Ensure Items Fill Available Space */
+/* ✅ Fix Warehouse Item Sizing */
 .warehouse-item {
+    flex: 1 1 calc(33.333% - 15px); /* ✅ Three items per row */
+    max-width: calc(33.333% - 15px); /* ✅ Ensures items fit perfectly */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    width: 100%; /* ✅ Use full grid space */
     padding: 10px;
     border: 3px solid #003366;
     border-radius: 8px;
@@ -575,22 +574,25 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 
 /* ✅ Fix Image Sizing */
 .warehouse-img {
-    width: 100%; /* ✅ No extra margins */
-    max-height: 260px; /* ✅ Keeps images proportional */
-    object-fit: contain; /* ✅ Ensures full image is visible without cropping */
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+    object-fit: contain; /* ✅ Ensures full image is visible */
     border-radius: 6px;
 }
 
 /* ✅ Responsive Adjustments */
 @media (max-width: 1024px) {
-    .warehouse-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    .warehouse-item {
+        flex: 1 1 calc(50% - 15px); /* ✅ Two items per row on tablets */
+        max-width: calc(50% - 15px);
     }
 }
 
 @media (max-width: 768px) {
-    .warehouse-grid {
-        grid-template-columns: 1fr; /* ✅ Ensures full width usage */
+    .warehouse-item {
+        flex: 1 1 100%; /* ✅ One item per row on mobile */
+        max-width: 100%;
     }
 }
 
@@ -626,24 +628,24 @@ body {
 }
 
 
-/* ✅ Improved Featured Prints Grid */
+/* ✅ Fix Featured Prints Grid */
 .featured-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* ✅ Full width items */
-    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 15px;
     padding: 20px;
-    justify-content: center;
-    align-items: stretch;
     width: 100%;
 }
 
-/* ✅ Ensure Items Fill Available Space */
+/* ✅ Fix Featured Item Sizing */
 .featured-item {
+    flex: 1 1 calc(33.333% - 15px); /* ✅ Three items per row */
+    max-width: calc(33.333% - 15px);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
     padding: 10px;
     border: 3px solid #003366;
     border-radius: 8px;
@@ -655,21 +657,24 @@ body {
 /* ✅ Fix Image Sizing */
 .featured-img {
     width: 100%;
-    max-height: 260px;
-    object-fit: contain;
+    height: auto;
+    max-height: 250px;
+    object-fit: contain; /* ✅ Ensures full image is visible */
     border-radius: 6px;
 }
 
 /* ✅ Responsive Adjustments */
 @media (max-width: 1024px) {
-    .featured-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    .featured-item {
+        flex: 1 1 calc(50% - 15px); /* ✅ Two items per row on tablets */
+        max-width: calc(50% - 15px);
     }
 }
 
 @media (max-width: 768px) {
-    .featured-grid {
-        grid-template-columns: 1fr; /* ✅ Ensures full width usage */
+    .featured-item {
+        flex: 1 1 100%; /* ✅ One item per row on mobile */
+        max-width: 100%;
     }
 }
 
