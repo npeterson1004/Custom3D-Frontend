@@ -500,7 +500,39 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 
 
 
+/* ✅ Lightbox Styling */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* ✅ Dark background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+/* ✅ Full Image Styling */
+.modal-content {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain; /* ✅ Ensures full image is visible */
+    border-radius: 8px;
+}
+
+/* ✅ Close Button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
 
 

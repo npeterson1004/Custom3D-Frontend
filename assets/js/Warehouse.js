@@ -24,7 +24,7 @@ async function fetchWarehouseProducts() {
         products.forEach(product => {
             const productCard = `
                 <div class="warehouse-item">
-                    <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" class="warehouse-img" alt="${product.name}">
+                    <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" onclick="openModal(this.src)" class="warehouse-img" alt="${product.name}">
                     <div class="warehouse-details">
                         <h7>${product.name}</h7>
                         <p>${product.description}</p>
@@ -41,3 +41,22 @@ async function fetchWarehouseProducts() {
         document.getElementById("warehouseContainer").innerHTML = '<p class="text-center text-danger">Failed to load products.</p>';
     }
 }
+
+
+// Open the modal and display the full image
+function openModal(imgSrc) {
+    document.getElementById("imageModal").style.display = "flex";
+    document.getElementById("fullImage").src = imgSrc;
+}
+
+// Close the modal when clicking the close button
+function closeModal() {
+    document.getElementById("imageModal").style.display = "none";
+}
+
+// Close the modal when clicking outside the image
+document.getElementById("imageModal").addEventListener("click", function (event) {
+    if (event.target === this) {
+        closeModal();
+    }
+});
