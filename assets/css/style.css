@@ -448,92 +448,38 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 
 /*.single-model-search*/
 
+/*====================================
+        5. Item Card Styles
+====================================*/
+
 /*-------------------------------------
-        5. Service 
+        Enlarged Image Styling
 --------------------------------------*/
-.service { padding: 260px 0 87px;}
 
-.single-service-item{
-    text-align: center;
-    padding:55px 30px 60px;
-    border-radius: 3px;
-    margin-bottom: 30px;
-    border: 1px solid #dadfe9;
-    -webkit-transition: .3s linear; 
-    -moz-transition:.3s linear; 
-    -ms-transition:.3s linear; 
-    -o-transition:.3s linear;
-    transition: .3s linear;
+/* ✅ General Page Reset */
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #0a1f44 0%, #1a3d73 30%, #2b5b99 60%, #4d7ebf 100%);
+    background-attachment: fixed;
+    background-size: cover;
+    position: relative; /* ✅ Prevents fullscreen overlay issues */
 }
 
-.single-service-icon {
-    display: inline-block;
-    color: #f3f7fa;
-}
-.single-service-item h2 a {
-    font-size:20px;
-    margin: 35px 0 20px;
-}
-.single-service-item h2 a span {text-transform:  lowercase;}
-.single-service-item p {padding-bottom: 35px;text-transform: initial;position: relative;}
-.single-service-item p:before {
-    position: absolute;
-    content: "";
-    width: 20px;
-    height: 3px;
-    background: #3030ea;
-    bottom: 0;
-    left: 50%;
-    margin-left: -10px;
-}
-
-.single-service-icon [class^="flaticon-"]:before,.single-service-icon[class*=" flaticon-"]:before,.single-service-icon [class^="flaticon-"]:after,.single-service-icon [class*=" flaticon-"]:after {font-size:60px;}
-.single-service-item:hover .single-service-icon [class^="flaticon-"]:before,.single-service-item:hover .single-service-icon [class*=" flaticon-"]:before,.single-service-item:hover .single-service-icon [class^="flaticon-"]:after,.single-service-item:hover .single-service-icon [class*=" flaticon-"]:after {color:#fff;}
-
-
-.single-service-item:hover h2 a,.single-service-item:hover p{color: #fff;}
-.single-service-item:hover  p:before {background: #fff;}
-.single-service-item:hover{box-shadow: 0 12px 30px 0px rgba(0,1,193,.2);background: #4e4ffa;border: 1px solid #4e4ffa;}
-
-
-
-/* ✅ View Image Button Styling */
-.view-image-btn {
-    background-color: #008CBA;
-    color: white;
-    font-weight: bold;
-    border-radius: 6px;
-    padding: 8px 14px;
-    font-size: 14px;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out;
-    margin-top: 5px;
-}
-
-.view-image-btn:hover {
-    background-color: #005f75;
-}
-
-/* ✅ Enlarged Image Styling */
-.enlarged-img {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10000;
-    max-width: 90vw;
-    max-height: 90vh;
-    object-fit: contain;
-    border-radius: 6px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    background: transparent !important;
-    display: block;
+/* ✅ Prevents background issues when opening images */
+body.no-scroll {
+    overflow: visible !important;
+    background: none !important;
 }
 
 
+/* ✅ Ensure the image doesn't block interactions */
+#popupImage {
+    display: none;
+    pointer-events: auto; /* ✅ Allows interactions with other page elements */
+}
 
-/* ✅ Fullscreen Overlay for Image */
+/* ✅ Styles for the fullscreen image overlay */
 .fullscreen-overlay {
     position: fixed;
     top: 0;
@@ -548,61 +494,149 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     cursor: pointer;
 }
 
-/* ✅ Fullscreen Image */
+
+
 .fullscreen-img {
     max-width: 90vw;
     max-height: 90vh;
     object-fit: contain; /* ✅ Show entire image */
     border-radius: 6px;
     cursor: pointer;
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: absolute; /* ✅ Change to absolute so it's properly centered */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* ✅ Center the image */
     z-index: 9999;
 }
 
 
-/* ✅ Ensure the image doesn't block interactions */
-#popupImage {
-    display: none;
-    pointer-events: auto; /* ✅ Allows interactions with other page elements */
+/*-------------------------------------
+    Buttons (View Image, Add to Cart)
+--------------------------------------*/
+
+/* ✅ "View Image" button styling */
+.view-image-btn {
+    background-color: #008CBA; /* ✅ Blue button */
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    margin-top: 10px;
 }
 
-/* ✅ Ensure background is NOT blocked */
-body.no-scroll {
-    overflow: visible !important; /* ✅ Allows page interactions */
-    background: none !important; /* ✅ Removes black tint */
+/* ✅ "View Image" button hover effect */
+.view-image-btn:hover {
+    background-color: #005f75;
 }
 
-/* ✅ Ensure clicking does NOT create a dark overlay */
-body {
-    position: relative; /* ✅ Ensures no full-screen overlay issues */
+
+
+.add-to-cart-btn {
+    background-color: #0044cc;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #002288;
 }
 
 
 
 /*-------------------------------------
-    6. Warehouse Page Styles
+   Warehouse & Featured Items Grid
 --------------------------------------*/
 
-.order-price {
-	margin: 0;
-	color:#fffdfd;
-    font-size: 20px;
-    font-weight: 500;
-    text-transform: capitalize;
+
+
+/* ✅ General styles for all items */
+.warehouse-item, .featured-item {
+    flex: 1 1 calc(100% - 20px); /* ✅ Full width on mobile */
+    max-width: 100%;
+    margin-bottom: 15px; /* ✅ Extra space between items */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 3px solid #003366;
+    border-radius: 8px;
+    background-color: #0a1f44;
+    color: white;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* ✅ Hover effect for warehouse & featured items */
+.warehouse-item:hover, .featured-item:hover {
+    transform: scale(1.05); /* ✅ Makes items slightly larger on hover */
+}
+
+/* ✅ Ensures images fit inside cards properly */
+.warehouse-img, .featured-img {
+    width: 100%;
+    height: auto;
+    max-height: 400px; /* ✅ Prevents oversized images */
+    object-fit: cover; /* ✅ Ensures images are properly displayed */
+    border-radius: 6px;
+}
+
+/* ✅ Adjust grid for warehouse page */
+.warehouse-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px; /* ✅ Adds spacing between items */
+    padding: 20px;
+    width: 100%;
+}
+
+/* ✅ Adjust grid for featured prints section */
+.featured-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px; /* ✅ Adds spacing between items */
+    padding: 20px;
+    width: 100%;
 }
 
 
 
-/* ✅ Make Items Stretch Evenly */
-.warehouse-item:hover {
-    transform: scale(1.05);
+/*-------------------------------------
+    Mobile & Desktop Responsive Adjustments
+--------------------------------------*/
+
+/* ✅ Adjusts warehouse & featured item layout for tablets */
+@media (min-width: 768px) {
+    .warehouse-item, .featured-item {
+        flex: 1 1 calc(50% - 15px); /* ✅ Two items per row */
+        max-width: calc(50% - 15px);
+        margin-bottom: 20px; /* ✅ Extra space between rows */
+    }
 }
-/* ✅ Prevent Items from Extending Too Far */
-#warehouse {
-    padding-bottom: 80px; /* ✅ Extra space at the bottom */
+
+/* ✅ Adjusts warehouse & featured item layout for desktops */
+@media (min-width: 1024px) {
+    .warehouse-item, .featured-item {
+        flex: 1 1 calc(33.333% - 15px); /* ✅ Three items per row */
+        max-width: calc(33.333% - 15px);
+        margin-bottom: 25px; /* ✅ More space for desktop */
+    }
 }
+
+
+/*-------------------------------------
+    Text Styling & Alignment
+--------------------------------------*/
+
 
 /* ✅ Fix Title and Description Alignment */
 .warehouse-details, .featured-details {
@@ -631,81 +665,37 @@ body {
 }
 
 
-/* ✅ Ensure images fit perfectly without extra space */
-.warehouse-img, .featured-img {
-    width: 100%;
-    height: auto;
-    max-height: 400px; /* ✅ Adjusted for larger images */
-    object-fit: cover; /* ✅ Ensures the image covers space without distortion */
-    border-radius: 6px;
+
+
+/*-------------------------------------
+    Price & Cart Styling
+--------------------------------------*/
+
+
+.order-price {
+	margin: 0;
+	color:#fffdfd;
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: capitalize;
 }
 
-/* ✅ Add More Space Between Warehouse Items */
-.warehouse-item {
-    flex: 1 1 calc(100% - 20px); /* ✅ Full width on mobile */
-    max-width: 100%;
-    margin-bottom: 15px; /* ✅ Extra space between items */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    border: 3px solid #003366;
-    border-radius: 8px;
-    background-color: #0a1f44;
-    color: white;
-    transition: transform 0.2s ease-in-out;
-}
-
-/* ✅ Adjust spacing for larger screens */
-@media (min-width: 768px) {
-    .warehouse-item {
-        flex: 1 1 calc(50% - 15px); /* ✅ Two items per row */
-        max-width: calc(50% - 15px);
-        margin-bottom: 20px; /* ✅ Extra space between rows */
-    }
-}
-
-@media (min-width: 1024px) {
-    .warehouse-item {
-        flex: 1 1 calc(33.333% - 15px); /* ✅ Three items per row */
-        max-width: calc(33.333% - 15px);
-        margin-bottom: 25px; /* ✅ More space for desktop */
-    }
-}
-
-/* ✅ Adjust Grid Layout */
-.warehouse-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px; /* ✅ Ensures spacing between items */
-    padding: 20px;
-    width: 100%;
-}
-
-
-
-/* ✅ Remove extra margins & padding on mobile */
-body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(to bottom, #0a1f44 0%, #1a3d73 30%, #2b5b99 60%, #4d7ebf 100%);
-    background-attachment: fixed;
-    background-size: cover;
-}
-
-.add-to-cart-btn {
-    background-color: #0044cc;
-    color: white;
+/* ✅ Styles the cart quantity input */
+.cart-quantity-input {
+    color: black !important;
+    background-color: #5f9fdb !important;
+    text-align: center;
+    width: 60px;
+    border: 1px solid #555;
     font-weight: bold;
-    border-radius: 6px;
-    padding: 8px 14px;
-    font-size: 16px;
-    transition: background 0.3s;
 }
 
-/* ✅ Ensure #warehouse section fully blends */
+
+/*-------------------------------------
+    Ensure Warehouse Section Layout is Clean
+--------------------------------------*/
+
+/* ✅ Prevent warehouse items from extending too far */
 #warehouse {
     background: transparent; /* ✅ No extra background */
     padding-bottom: 100px; /* ✅ Add bottom spacing */
@@ -714,153 +704,12 @@ body {
 
 
 
-/*-------------------------------------
-		7. Featured prints Section (Home Page)
---------------------------------------*/
 
 
 
 
-/* ✅ Ensure Proper Item Alignment */
-.featured-item:hover {
-    transform: scale(1.07);
-}
 
 
-/* ✅ Improved Featured Prints Grid */
-.featured-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* ✅ Full width items */
-    gap: 10px;
-    padding: 20px;
-    justify-content: center;
-    align-items: stretch;
-    width: 100%;
-}
-
-/* ✅ Featured Prints Mobile Optimization */
-.featured-img {
-    width: 100%;
-    height: auto;
-    max-height: 400px; /* ✅ Adjusted for larger images */
-    object-fit: cover; /* ✅ Ensures the image fills space without distortion */
-    border-radius: 6px;
-}
-
-
-
-/* ✅ Adjust Grid Layout */
-.featured-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px; /* ✅ Ensures spacing between items */
-    padding: 20px;
-    width: 100%;
-}
-
-/* ✅ Add More Space Between Featured Items */
-.featured-item {
-    flex: 1 1 calc(100% - 20px); /* ✅ Full width on mobile */
-    max-width: 100%;
-    margin-bottom: 15px; /* ✅ Extra space between items */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    border: 3px solid #003366;
-    border-radius: 8px;
-    background-color: #0a1f44;
-    color: white;
-    transition: transform 0.2s ease-in-out;
-}
-
-/* ✅ Adjust spacing for larger screens */
-@media (min-width: 768px) {
-    .featured-item {
-        flex: 1 1 calc(50% - 15px); /* ✅ Two items per row */
-        max-width: calc(50% - 15px);
-        margin-bottom: 20px; /* ✅ Extra space between rows */
-    }
-}
-
-@media (min-width: 1024px) {
-    .featured-item {
-        flex: 1 1 calc(33.333% - 15px); /* ✅ Three items per row */
-        max-width: calc(33.333% - 15px);
-        margin-bottom: 25px; /* ✅ More space for desktop */
-    }
-}
-
-/* ✅ Remove Extra Margins & Padding on Mobile */
-body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(to bottom, #0a1f44 0%, #1a3d73 30%, #2b5b99 60%, #4d7ebf 100%);
-    background-attachment: fixed;
-    background-size: cover;
-}
-
-
-
-/* ✅ Improve Readability */
-.featured-details h5 {
-    font-size: 18px;
-    margin-bottom: 6px;
-    text-align: center;
-}
-
-.featured-details p {
-    font-size: 16px;
-    margin-bottom: 6px;
-    text-align: center;
-}
-
-/* ✅ Ensure Buttons are Styled */
-.add-to-cart-btn {
-    background-color: #0044cc;
-    color: white;
-    font-weight: bold;
-    border-radius: 6px;
-    padding: 8px 14px;
-    font-size: 16px;
-    transition: background 0.3s;
-}
-
-.add-to-cart-btn:hover {
-    background-color: #002288;
-}
-
-.order-quantity {
-	margin: 0;
-	color:#fffdfd;
-    font-size: 20px;
-    font-weight: 500;
-    text-transform: capitalize;
-}
-
-.cart-quantity-input {
-    color: black !important; /* ✅ Black text */
-    background-color: #5f9fdb !important; /* ✅ Dark gray background */
-    text-align: center;
-    width: 60px;
-    border: 1px solid #555;
-    font-weight: bold;
-}
-
-
-/*.single-featured-cars*/
-.featured-img-box {
-    border: 1px solid #06286d;
-}
-
-.featured-model-info{padding:12px 7px;}
-.featured-model-info p {
-    font-size: 12px;
-    color: #0d0d0e;
-    text-transform: capitalize;
-}
 
 
 /*-------------------------------------
@@ -879,6 +728,22 @@ body {
     text-align: center;
 }
 
+.order-quantity {
+	margin: 0;
+	color:#fffdfd;
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.cart-quantity-input {
+    color: black !important; /* ✅ Black text */
+    background-color: #5f9fdb !important; /* ✅ Dark gray background */
+    text-align: center;
+    width: 60px;
+    border: 1px solid #555;
+    font-weight: bold;
+}
 /*-------------------------------------
     9. Footer & Contact Section
 --------------------------------------*/
