@@ -497,21 +497,38 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 
 
 
-
-/* ✅ Enlarged Image Styling (No Background, No Tint) */
+/* ✅ Enlarged Image Styling */
 .enlarged-img {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10000;
-    max-width: 90vw; /* ✅ Ensures it fits within viewport width */
-    max-height: 90vh; /* ✅ Ensures it fits within viewport height */
-    object-fit: contain; /* ✅ Shows full image without cropping */
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
     border-radius: 6px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* ✅ Subtle shadow */
-    background: transparent !important; /* ✅ Fully removes black background */
-    display: block; /* ✅ Ensure it appears properly */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    background: transparent !important;
+    display: block;
+}
+
+/* ✅ View Image Button Styling */
+.view-image-btn {
+    background-color: #008CBA;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 5px;
+}
+
+.view-image-btn:hover {
+    background-color: #005f75;
 }
 
 /* ✅ Ensure the image doesn't block interactions */

@@ -24,17 +24,28 @@ async function fetchFeaturedProducts() {
         products.forEach(product => {
             const productCard = `
                 <div class="featured-item">
-                    <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" onclick="enlargeImage(this.src)" class="featured-img" alt="${product.name}">
+                    <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" 
+                         onclick="enlargeImage(this.src)" 
+                         class="featured-img" 
+                         alt="${product.name}">
                     <div class="featured-details">
-                        <h7>${product.name}</h7>
+                        <h5>${product.name}</h5>
                         <p>${product.description}</p>
                         <p class="order-price">$${product.price}</p>
-                        <button class="btn btn-primary add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price}, '${API_BASE_URL}${product.image}')">Add to Cart</button>
+                        <button class="btn btn-primary add-to-cart-btn" 
+                                onclick="addToCart('${product.name}', ${product.price}, '${API_BASE_URL}${product.image}')">
+                            Add to Cart
+                        </button>
+                        <button class="view-image-btn" 
+                                onclick="enlargeImage('${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}')">
+                            View Image
+                        </button>
                     </div>
                 </div>
             `;
             imageContainer.innerHTML += productCard;
         });
+        
 
     } catch (error) {
         console.error("Error fetching featured products:", error);
@@ -47,7 +58,7 @@ async function fetchFeaturedProducts() {
 
 document.addEventListener("DOMContentLoaded", fetchFeaturedProducts);
 
-// Function to enlarge image when clicked
+// Function to enlarge image when "View Image" button is clicked
 function enlargeImage(imgSrc) {
     // Remove any existing enlarged image
     let existingPopup = document.getElementById("popupImage");
@@ -55,7 +66,7 @@ function enlargeImage(imgSrc) {
         existingPopup.remove();
     }
 
-    // Create a new image element
+    // Create a new enlarged image element
     let popupImg = document.createElement("img");
     popupImg.id = "popupImage";
     popupImg.classList.add("enlarged-img");
@@ -73,5 +84,6 @@ function enlargeImage(imgSrc) {
     // Append the image to the body
     document.body.appendChild(popupImg);
 }
+
 
 

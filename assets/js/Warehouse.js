@@ -24,17 +24,28 @@ async function fetchWarehouseProducts() {
         products.forEach(product => {
             const productCard = `
                 <div class="warehouse-item">
-                    <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" onclick="enlargeImage(this.src)" class="warehouse-img" alt="${product.name}">
+                    <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" 
+                         onclick="enlargeImage(this.src)" 
+                         class="warehouse-img" 
+                         alt="${product.name}">
                     <div class="warehouse-details">
-                        <h7>${product.name}</h7>
+                        <h5>${product.name}</h5>
                         <p>${product.description}</p>
                         <p class="order-price">$${product.price}</p>
-                        <button class="btn btn-primary add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price}, '${API_BASE_URL}${product.image}')">Add to Cart</button>
+                        <button class="btn btn-primary add-to-cart-btn" 
+                                onclick="addToCart('${product.name}', ${product.price}, '${API_BASE_URL}${product.image}')">
+                            Add to Cart
+                        </button>
+                        <button class="view-image-btn" 
+                                onclick="enlargeImage('${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}')">
+                            View Image
+                        </button>
                     </div>
                 </div>
             `;
-            warehouseContainer.innerHTML += productCard;
+            warehouseContainer.innerHTML += productCard; // ✅ Now properly updating warehouseContainer
         });
+        
 
     } catch (error) {
         console.error("❌ Error fetching warehouse products:", error);
@@ -42,7 +53,7 @@ async function fetchWarehouseProducts() {
     }
 }
 
-// Function to enlarge image when clicked
+// Function to enlarge image when "View Image" button is clicked
 function enlargeImage(imgSrc) {
     // Remove any existing enlarged image
     let existingPopup = document.getElementById("popupImage");
@@ -50,7 +61,7 @@ function enlargeImage(imgSrc) {
         existingPopup.remove();
     }
 
-    // Create a new image element
+    // Create a new enlarged image element
     let popupImg = document.createElement("img");
     popupImg.id = "popupImage";
     popupImg.classList.add("enlarged-img");
@@ -62,8 +73,8 @@ function enlargeImage(imgSrc) {
         document.body.classList.remove("no-scroll"); // ✅ Restore scrolling
     };
 
-    // Ensure page remains interactive
-    popupImg.style.pointerEvents = "auto"; // ✅ Prevents blocking interactions
+    // Prevent background interaction issues
+    popupImg.style.pointerEvents = "auto"; 
 
     // Append the image to the body
     document.body.appendChild(popupImg);
