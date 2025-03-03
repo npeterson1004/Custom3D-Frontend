@@ -571,12 +571,12 @@ body.no-scroll {
 .warehouse-item, .featured-item {
     flex: 1 1 calc(100% - 20px); /* ✅ Full width on mobile */
     max-width: 100%;
-    margin-bottom: 20px; /* ✅ Increased spacing */
+    margin-bottom: 20px; /* ✅ Balanced spacing */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start; /* ✅ Prevents compression */
-    padding: 15px;
+    padding: 5px; /* ✅ Reduced padding to minimize space around content */
     border: 3px solid #003366;
     border-radius: 8px;
     background-color: #0a1f44;
@@ -590,36 +590,26 @@ body.no-scroll {
     transform: scale(1.05); /* ✅ Makes items slightly larger on hover */
 }
 
-/* ✅ Ensures images fit properly without pushing buttons */
+/* ✅ Ensures images fit inside cards properly */
 .warehouse-img, .featured-img {
     width: 100%;
     height: auto;
-    max-height: 280px; /* ✅ Prevents images from taking up too much space */
-    object-fit: contain; /* ✅ Ensures entire image is visible */
+    max-height: 300px; /* ✅ Prevents oversized images */
+    object-fit: cover; /* ✅ Ensures images are properly displayed */
     border-radius: 6px;
 }
 
 
-/* ✅ Adjust grid for warehouse page */
-.warehouse-grid, .featured-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px; /* ✅ Increased spacing between items */
-    padding: 20px;
-    width: 100%;
-}
 
 /* ✅ Adjust grid layout */
 .warehouse-grid, .featured-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px; /* ✅ Balanced spacing */
+    gap: 10px; /* ✅ Reduces extra spacing */
     padding: 10px;
     width: 100%;
 }
-
 
 /*-------------------------------------
     Mobile & Desktop Responsive Adjustments
@@ -627,18 +617,18 @@ body.no-scroll {
 /* ✅ Mobile Adjustments */
 @media (max-width: 768px) {
     .warehouse-item, .featured-item {
-        flex: 1 1 95%; /* ✅ Slightly reduce width to prevent overlap */
-        max-width: 95%;
+        flex: 1 1 100%; /* ✅ One item per row on mobile */
+        max-width: 100%;
         margin-bottom: 30px; /* ✅ Balanced spacing */
-        min-height: 440px; /* ✅ Ensures enough space for buttons */
+        min-height: 420px;
     }
 }
 
 /* ✅ Adjusts warehouse & featured item layout for tablets */
 @media (min-width: 768px) {
     .warehouse-item, .featured-item {
-        flex: 1 1 calc(50% - 15px); /* ✅ Two items per row */
-        max-width: calc(50% - 15px);
+        flex: 1 1 calc(50% - 10px); /* ✅ Two items per row */
+        max-width: calc(50% - 10px);
         margin-bottom: 50px;
         min-height: 440px;
     }
@@ -647,8 +637,8 @@ body.no-scroll {
 /* ✅ Adjusts warehouse & featured item layout for desktops */
 @media (min-width: 1024px) {
     .warehouse-item, .featured-item {
-        flex: 1 1 calc(33.333% - 15px); /* ✅ Three items per row */
-        max-width: calc(33.333% - 15px);
+        flex: 1 1 calc(33.333% - 10px); /* ✅ Three items per row */
+        max-width: calc(33.333% - 10px);
         margin-bottom: 50px;
     }
 }
