@@ -571,17 +571,18 @@ body.no-scroll {
 .warehouse-item, .featured-item {
     flex: 1 1 calc(100% - 20px); /* ✅ Full width on mobile */
     max-width: 100%;
-    margin-bottom: 15px; /* ✅ Extra space between items */
+    margin-bottom: 30px; /* ✅ Increased space between items */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
+    padding: 15px;
     border: 3px solid #003366;
     border-radius: 8px;
     background-color: #0a1f44;
     color: white;
     transition: transform 0.2s ease-in-out;
+    min-height: 380px; /* ✅ Ensures uniform height for all items */
 }
 
 /* ✅ Hover effect for warehouse & featured items */
@@ -593,17 +594,17 @@ body.no-scroll {
 .warehouse-img, .featured-img {
     width: 100%;
     height: auto;
-    max-height: 400px; /* ✅ Prevents oversized images */
-    object-fit: cover; /* ✅ Ensures images are properly displayed */
+    max-height: 300px; /* ✅ Adjusted to prevent overflow */
+    object-fit: contain; /* ✅ Ensures entire image is visible */
     border-radius: 6px;
 }
 
 /* ✅ Adjust grid for warehouse page */
-.warehouse-grid {
+.warehouse-grid, .featured-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px; /* ✅ Adds spacing between items */
+    gap: 30px; /* ✅ Increased spacing between items */
     padding: 20px;
     width: 100%;
 }
@@ -623,42 +624,49 @@ body.no-scroll {
 /*-------------------------------------
     Mobile & Desktop Responsive Adjustments
 --------------------------------------*/
+/* ✅ Mobile Adjustments */
+@media (max-width: 768px) {
+    .warehouse-item, .featured-item {
+        flex: 1 1 100%; /* ✅ One item per row on mobile */
+        max-width: 100%;
+        margin-bottom: 40px; /* ✅ Increased space to prevent overlap */
+        min-height: 420px; /* ✅ Ensures enough space for buttons */
+    }
+}
 
 /* ✅ Adjusts warehouse & featured item layout for tablets */
 @media (min-width: 768px) {
     .warehouse-item, .featured-item {
-        flex: 1 1 calc(50% - 15px); /* ✅ Two items per row */
-        max-width: calc(50% - 15px);
-        margin-bottom: 60px; /* ✅ Extra space between rows */
-        margin-top: 20px; /* ✅ Extra space between rows */
+        flex: 1 1 calc(50% - 20px); /* ✅ Two items per row */
+        max-width: calc(50% - 20px);
+        margin-bottom: 50px; /* ✅ More spacing to prevent overlap */
+        min-height: 420px;
     }
 }
 
 /* ✅ Adjusts warehouse & featured item layout for desktops */
 @media (min-width: 1024px) {
     .warehouse-item, .featured-item {
-        flex: 1 1 calc(33.333% - 15px); /* ✅ Three items per row */
-        max-width: calc(33.333% - 15px);
-        margin-bottom: 40px; /* ✅ More space for desktop */
+        flex: 1 1 calc(33.333% - 20px); /* ✅ Three items per row */
+        max-width: calc(33.333% - 20px);
+        margin-bottom: 60px; /* ✅ More spacing on larger screens */
     }
 }
-
 
 /*-------------------------------------
     Text Styling & Alignment
 --------------------------------------*/
 
 
-/* ✅ Fix Title and Description Alignment */
+/* ✅ Fix spacing between buttons */
 .warehouse-details, .featured-details {
-    width: 100%; /* ✅ Ensures full width */
-    text-align: center; /* ✅ Forces text to be centered */
     display: flex;
     flex-direction: column;
-    align-items: center; /* ✅ Ensures child elements are centered */
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between; /* ✅ Ensures buttons always stay at the bottom */
+    flex-grow: 1;
+    width: 100%;
 }
-
 /* ✅ Ensure Titles are Centered */
 .warehouse-details h5, .featured-details h5 {
     font-size: 18px;
