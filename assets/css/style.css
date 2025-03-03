@@ -642,6 +642,24 @@ body.no-scroll {
         margin-bottom: 50px;
     }
 }
+
+
+
+/* ✅ Mobile Adjustments */
+@media (max-width: 768px) {
+    .warehouse-details h5, .featured-details h5 {
+        font-size: 22px; /* ✅ Increased for better visibility on small screens */
+        font-weight: bold; /* ✅ Makes it stand out */
+    }
+}
+
+/* ✅ Adjust for tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .warehouse-details h5, .featured-details h5 {
+        font-size: 20px; /* ✅ Slightly larger for tablets */
+    }
+}
+
 /*-------------------------------------
     Text Styling & Alignment
 --------------------------------------*/
