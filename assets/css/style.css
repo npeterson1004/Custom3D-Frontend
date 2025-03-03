@@ -603,7 +603,7 @@ body.no-scroll {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 25px; /* ✅ Adds spacing between items */
+    gap: 20px; /* ✅ Adds spacing between items */
     padding: 20px;
     width: 100%;
 }
@@ -629,7 +629,8 @@ body.no-scroll {
     .warehouse-item, .featured-item {
         flex: 1 1 calc(50% - 15px); /* ✅ Two items per row */
         max-width: calc(50% - 15px);
-        margin-bottom: 40px; /* ✅ Extra space between rows */
+        margin-bottom: 60px; /* ✅ Extra space between rows */
+        margin-top: 20px; /* ✅ Extra space between rows */
     }
 }
 
