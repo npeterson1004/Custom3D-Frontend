@@ -497,6 +497,24 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 
 
 
+/* ✅ View Image Button Styling */
+.view-image-btn {
+    background-color: #008CBA;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    margin-top: 5px;
+}
+
+.view-image-btn:hover {
+    background-color: #005f75;
+}
+
 /* ✅ Enlarged Image Styling */
 .enlarged-img {
     position: fixed;
@@ -513,23 +531,6 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     display: block;
 }
 
-/* ✅ View Image Button Styling */
-.view-image-btn {
-    background-color: #008CBA;
-    color: white;
-    font-weight: bold;
-    border-radius: 6px;
-    padding: 8px 14px;
-    font-size: 14px;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s;
-    margin-top: 5px;
-}
-
-.view-image-btn:hover {
-    background-color: #005f75;
-}
 
 /* ✅ Ensure the image doesn't block interactions */
 #popupImage {
