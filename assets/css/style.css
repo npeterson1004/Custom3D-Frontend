@@ -569,20 +569,20 @@ body.no-scroll {
 
 /* ✅ General styles for all items */
 .warehouse-item, .featured-item {
-    flex: 1 1 calc(100% - 10px); /* ✅ Fixes unnecessary spacing */
-    max-width: 100%; /* ✅ Ensures full width usage */
-    margin-bottom: 20px; /* ✅ Balanced spacing */
+    flex: 1 1 calc(100% - 20px); /* ✅ Full width on mobile */
+    max-width: 100%;
+    margin-bottom: 20px; /* ✅ Increased spacing */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px;
+    justify-content: flex-start; /* ✅ Prevents compression */
+    padding: 15px;
     border: 3px solid #003366;
-    border-radius: 3px;
+    border-radius: 8px;
     background-color: #0a1f44;
     color: white;
     transition: transform 0.2s ease-in-out;
-    min-height: 380px; /* ✅ Ensures uniform height */
+    min-height: 420px; /* ✅ Ensures enough space for buttons */
 }
 
 /* ✅ Hover effect for warehouse & featured items */
@@ -590,12 +590,12 @@ body.no-scroll {
     transform: scale(1.05); /* ✅ Makes items slightly larger on hover */
 }
 
-/* ✅ Adjust image size to prevent spacing issues */
+/* ✅ Ensures images fit properly without pushing buttons */
 .warehouse-img, .featured-img {
     width: 100%;
     height: auto;
-    max-height: 280px; /* ✅ Adjusted for better fit */
-    object-fit: contain; /* ✅ Prevents unwanted stretching */
+    max-height: 280px; /* ✅ Prevents images from taking up too much space */
+    object-fit: contain; /* ✅ Ensures entire image is visible */
     border-radius: 6px;
 }
 
@@ -610,16 +610,15 @@ body.no-scroll {
     width: 100%;
 }
 
-/* ✅ Adjust grid for featured prints section */
-.featured-grid {
+/* ✅ Adjust grid layout */
+.warehouse-grid, .featured-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px; /* ✅ Adds spacing between items */
-    padding: 20px;
+    gap: 15px; /* ✅ Balanced spacing */
+    padding: 10px;
     width: 100%;
 }
-
 
 
 /*-------------------------------------
@@ -628,44 +627,43 @@ body.no-scroll {
 /* ✅ Mobile Adjustments */
 @media (max-width: 768px) {
     .warehouse-item, .featured-item {
-        flex: 1 1 90%; /* ✅ Slightly reduce width for a better fit */
-        max-width: 90%;
+        flex: 1 1 95%; /* ✅ Slightly reduce width to prevent overlap */
+        max-width: 95%;
         margin-bottom: 30px; /* ✅ Balanced spacing */
-        min-height: 400px;
+        min-height: 440px; /* ✅ Ensures enough space for buttons */
     }
 }
 
 /* ✅ Adjusts warehouse & featured item layout for tablets */
 @media (min-width: 768px) {
     .warehouse-item, .featured-item {
-        flex: 1 1 calc(48% - 10px); /* ✅ Adjusted to fit two items properly */
-        max-width: calc(48% - 10px);
-        margin-bottom: 40px;
-        min-height: 400px;
+        flex: 1 1 calc(50% - 15px); /* ✅ Two items per row */
+        max-width: calc(50% - 15px);
+        margin-bottom: 50px;
+        min-height: 440px;
     }
 }
 
 /* ✅ Adjusts warehouse & featured item layout for desktops */
 @media (min-width: 1024px) {
     .warehouse-item, .featured-item {
-        flex: 1 1 calc(32% - 10px); /* ✅ Adjusted for three per row */
-        max-width: calc(32% - 10px);
+        flex: 1 1 calc(33.333% - 15px); /* ✅ Three items per row */
+        max-width: calc(33.333% - 15px);
         margin-bottom: 50px;
     }
 }
-
 /*-------------------------------------
     Text Styling & Alignment
 --------------------------------------*/
 
 
-/* ✅ Fix spacing between buttons */
+/* ✅ Fix buttons not staying at the bottom */
 .warehouse-details, .featured-details {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between; /* ✅ Ensures buttons always stay at the bottom */
-    flex-grow: 1;
+    flex-grow: 1; /* ✅ Fills available space */
     width: 100%;
 }
 /* ✅ Ensure Titles are Centered */
