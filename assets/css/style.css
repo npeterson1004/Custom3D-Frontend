@@ -569,9 +569,9 @@ body.no-scroll {
 
 /* ✅ General styles for all items */
 .warehouse-item, .featured-item {
-    flex: 1 1 calc(100% - 20px); /* ✅ Full width on mobile */
-    max-width: 100%;
-    margin-bottom: 30px; /* ✅ Increased space between items */
+    flex: 1 1 calc(100% - 10px); /* ✅ Fixes unnecessary spacing */
+    max-width: 100%; /* ✅ Ensures full width usage */
+    margin-bottom: 20px; /* ✅ Balanced spacing */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -582,7 +582,7 @@ body.no-scroll {
     background-color: #0a1f44;
     color: white;
     transition: transform 0.2s ease-in-out;
-    min-height: 380px; /* ✅ Ensures uniform height for all items */
+    min-height: 380px; /* ✅ Ensures uniform height */
 }
 
 /* ✅ Hover effect for warehouse & featured items */
@@ -590,22 +590,23 @@ body.no-scroll {
     transform: scale(1.05); /* ✅ Makes items slightly larger on hover */
 }
 
-/* ✅ Ensures images fit inside cards properly */
+/* ✅ Adjust image size to prevent spacing issues */
 .warehouse-img, .featured-img {
     width: 100%;
     height: auto;
-    max-height: 300px; /* ✅ Adjusted to prevent overflow */
-    object-fit: contain; /* ✅ Ensures entire image is visible */
+    max-height: 280px; /* ✅ Adjusted for better fit */
+    object-fit: contain; /* ✅ Prevents unwanted stretching */
     border-radius: 6px;
 }
+
 
 /* ✅ Adjust grid for warehouse page */
 .warehouse-grid, .featured-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 30px; /* ✅ Increased spacing between items */
-    padding: 20px;
+    gap: 15px; /* ✅ Increased spacing between items */
+    padding: 10px;
     width: 100%;
 }
 
@@ -627,29 +628,29 @@ body.no-scroll {
 /* ✅ Mobile Adjustments */
 @media (max-width: 768px) {
     .warehouse-item, .featured-item {
-        flex: 1 1 100%; /* ✅ One item per row on mobile */
-        max-width: 100%;
-        margin-bottom: 40px; /* ✅ Increased space to prevent overlap */
-        min-height: 420px; /* ✅ Ensures enough space for buttons */
+        flex: 1 1 90%; /* ✅ Slightly reduce width for a better fit */
+        max-width: 90%;
+        margin-bottom: 30px; /* ✅ Balanced spacing */
+        min-height: 400px;
     }
 }
 
 /* ✅ Adjusts warehouse & featured item layout for tablets */
 @media (min-width: 768px) {
     .warehouse-item, .featured-item {
-        flex: 1 1 calc(50% - 20px); /* ✅ Two items per row */
-        max-width: calc(50% - 20px);
-        margin-bottom: 50px; /* ✅ More spacing to prevent overlap */
-        min-height: 420px;
+        flex: 1 1 calc(48% - 10px); /* ✅ Adjusted to fit two items properly */
+        max-width: calc(48% - 10px);
+        margin-bottom: 40px;
+        min-height: 400px;
     }
 }
 
 /* ✅ Adjusts warehouse & featured item layout for desktops */
 @media (min-width: 1024px) {
     .warehouse-item, .featured-item {
-        flex: 1 1 calc(33.333% - 20px); /* ✅ Three items per row */
-        max-width: calc(33.333% - 20px);
-        margin-bottom: 60px; /* ✅ More spacing on larger screens */
+        flex: 1 1 calc(32% - 10px); /* ✅ Adjusted for three per row */
+        max-width: calc(32% - 10px);
+        margin-bottom: 50px;
     }
 }
 
@@ -669,11 +670,16 @@ body.no-scroll {
 }
 /* ✅ Ensure Titles are Centered */
 .warehouse-details h5, .featured-details h5 {
-    font-size: 18px;
+	color:#b3d5f7;
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: capitalize;
     margin-bottom: 6px;
     width: 100%; /* ✅ Ensures full width for proper centering */
     text-align: center;
 }
+
+
 
 /* ✅ Ensure Paragraphs are Centered */
 .warehouse-details p, .featured-details p {
