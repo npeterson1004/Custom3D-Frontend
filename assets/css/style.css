@@ -677,7 +677,7 @@ body.no-scroll {
 /* ✅ Ensure Titles are Centered */
 .warehouse-details h5, .featured-details h5 {
 	color:#b3d5f7;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 500;
     text-transform: capitalize;
     margin-bottom: 6px;
