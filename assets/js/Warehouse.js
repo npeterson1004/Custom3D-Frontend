@@ -59,35 +59,35 @@ async function fetchWarehouseProducts() {
 }
 
 
-
-// Function to enlarge image in fullscreen mode
+// Function to enlarge image in fullscreen mode & exit on click
 function enlargeImage(imgSrc) {
     // Create a new image element
     let popupImg = document.createElement("img");
     popupImg.src = imgSrc;
     popupImg.classList.add("fullscreen-img"); // ✅ Apply CSS styling
 
-    // Add fullscreen mode
-    popupImg.onclick = function () {
+    // Create a fullscreen background overlay (so clicking anywhere closes the image)
+    let fullscreenOverlay = document.createElement("div");
+    fullscreenOverlay.classList.add("fullscreen-overlay");
+    
+    // Append image to the overlay
+    fullscreenOverlay.appendChild(popupImg);
+    
+    // Append overlay to the body
+    document.body.appendChild(fullscreenOverlay);
+
+    // Handle exit fullscreen when clicking anywhere
+    fullscreenOverlay.onclick = function () {
         if (document.fullscreenElement) {
-            document.exitFullscreen(); // ✅ Exit fullscreen on click
-        } else {
-            popupImg.requestFullscreen(); // ✅ Enter fullscreen
+            document.exitFullscreen(); // ✅ Exit fullscreen mode
         }
+        fullscreenOverlay.remove(); // ✅ Remove the overlay and image
     };
 
-    // Append the image to the body
-    document.body.appendChild(popupImg);
-
-    // Remove the image when exiting fullscreen
-    document.addEventListener("fullscreenchange", () => {
-        if (!document.fullscreenElement) {
-            popupImg.remove(); // ✅ Remove image when exiting fullscreen
-        }
-    });
-
     // Trigger fullscreen mode immediately
-    popupImg.requestFullscreen();
+    fullscreenOverlay.requestFullscreen().catch(err => {
+        console.warn("Fullscreen request failed", err);
+    });
 }
 
 

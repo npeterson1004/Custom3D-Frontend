@@ -531,18 +531,36 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     display: block;
 }
 
-/* ✅ Fullscreen Image Styling */
+
+
+/* ✅ Fullscreen Overlay for Image */
+.fullscreen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9); /* ✅ Dark overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    cursor: pointer;
+}
+
+/* ✅ Fullscreen Image */
 .fullscreen-img {
-    width: 100vw; /* ✅ Use full viewport width */
-    height: 100vh; /* ✅ Use full viewport height */
-    object-fit: contain; /* ✅ Ensure the whole image is visible */
-    background: black; /* ✅ Background to avoid distractions */
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain; /* ✅ Show entire image */
+    border-radius: 6px;
+    cursor: pointer;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 9999;
-    cursor: pointer; /* ✅ User can click to exit */
 }
+
 
 /* ✅ Ensure the image doesn't block interactions */
 #popupImage {
@@ -622,20 +640,11 @@ body {
     border-radius: 6px;
 }
 
-/* ✅ Improve Grid Layout Responsiveness */
-.warehouse-grid, .featured-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center; /* ✅ Centers items on mobile */
-    gap: 10px;
-    padding: 10px;
-    width: 100%;
-}
-
-/* ✅ Make Items Stretch Across the Screen */
-.warehouse-item, .featured-item {
-    flex: 1 1 calc(100% - 20px); /* ✅ Full width on mobile with minimal gap */
-    max-width: 100%; /* ✅ Prevents unwanted margins */
+/* ✅ Add More Space Between Warehouse Items */
+.warehouse-item {
+    flex: 1 1 calc(100% - 20px); /* ✅ Full width on mobile */
+    max-width: 100%;
+    margin-bottom: 15px; /* ✅ Extra space between items */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -648,21 +657,34 @@ body {
     transition: transform 0.2s ease-in-out;
 }
 
-/* ✅ Adjust for Tablets */
+/* ✅ Adjust spacing for larger screens */
 @media (min-width: 768px) {
-    .warehouse-item, .featured-item {
-        flex: 1 1 calc(50% - 15px); /* ✅ Two items per row on tablets */
+    .warehouse-item {
+        flex: 1 1 calc(50% - 15px); /* ✅ Two items per row */
         max-width: calc(50% - 15px);
+        margin-bottom: 20px; /* ✅ Extra space between rows */
     }
 }
 
-/* ✅ Adjust for Larger Screens */
 @media (min-width: 1024px) {
-    .warehouse-item, .featured-item {
-        flex: 1 1 calc(33.333% - 15px); /* ✅ Three items per row on desktops */
+    .warehouse-item {
+        flex: 1 1 calc(33.333% - 15px); /* ✅ Three items per row */
         max-width: calc(33.333% - 15px);
+        margin-bottom: 25px; /* ✅ More space for desktop */
     }
 }
+
+/* ✅ Adjust Grid Layout */
+.warehouse-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px; /* ✅ Ensures spacing between items */
+    padding: 20px;
+    width: 100%;
+}
+
+
 
 /* ✅ Remove extra margins & padding on mobile */
 body {
@@ -725,20 +747,23 @@ body {
     border-radius: 6px;
 }
 
-/* ✅ Optimize Featured Grid Layout */
+
+
+/* ✅ Adjust Grid Layout */
 .featured-grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* ✅ Centers items on mobile */
-    gap: 10px;
-    padding: 10px;
+    justify-content: center;
+    gap: 15px; /* ✅ Ensures spacing between items */
+    padding: 20px;
     width: 100%;
 }
 
-/* ✅ Ensure Items Fill Screen Properly */
+/* ✅ Add More Space Between Featured Items */
 .featured-item {
     flex: 1 1 calc(100% - 20px); /* ✅ Full width on mobile */
     max-width: 100%;
+    margin-bottom: 15px; /* ✅ Extra space between items */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -751,19 +776,20 @@ body {
     transition: transform 0.2s ease-in-out;
 }
 
-/* ✅ Adjust for Tablets */
+/* ✅ Adjust spacing for larger screens */
 @media (min-width: 768px) {
     .featured-item {
-        flex: 1 1 calc(50% - 15px); /* ✅ Two items per row on tablets */
+        flex: 1 1 calc(50% - 15px); /* ✅ Two items per row */
         max-width: calc(50% - 15px);
+        margin-bottom: 20px; /* ✅ Extra space between rows */
     }
 }
 
-/* ✅ Adjust for Desktops */
 @media (min-width: 1024px) {
     .featured-item {
-        flex: 1 1 calc(33.333% - 15px); /* ✅ Three items per row on larger screens */
+        flex: 1 1 calc(33.333% - 15px); /* ✅ Three items per row */
         max-width: calc(33.333% - 15px);
+        margin-bottom: 25px; /* ✅ More space for desktop */
     }
 }
 

@@ -22,9 +22,11 @@ async function fetchFeaturedProducts() {
         }
 
         products.forEach(product => {
+            // Create the product card as an element instead of using a template string
             const productCard = document.createElement("div");
             productCard.classList.add("featured-item");
-        
+
+            // Set inner HTML for product details
             productCard.innerHTML = `
                 <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" 
                      class="featured-img" 
@@ -41,17 +43,16 @@ async function fetchFeaturedProducts() {
                     </button>
                 </div>
             `;
-        
+
             // Attach event listener to "View Image" button
             const viewImageButton = productCard.querySelector(".view-image-btn");
             viewImageButton.addEventListener("click", () => {
                 enlargeImage(product.image.startsWith('http') ? product.image : API_BASE_URL + product.image);
             });
-        
+
             // Append product card to container
             imageContainer.appendChild(productCard);
         });
-        
 
     } catch (error) {
         console.error("Error fetching featured products:", error);
@@ -62,34 +63,35 @@ async function fetchFeaturedProducts() {
 document.addEventListener("DOMContentLoaded", fetchFeaturedProducts);
 
 
-// Function to enlarge image in fullscreen mode
+// Function to enlarge image in fullscreen mode & exit on click
 function enlargeImage(imgSrc) {
     // Create a new image element
     let popupImg = document.createElement("img");
     popupImg.src = imgSrc;
     popupImg.classList.add("fullscreen-img"); // ✅ Apply CSS styling
 
-    // Add fullscreen mode
-    popupImg.onclick = function () {
+    // Create a fullscreen background overlay (so clicking anywhere closes the image)
+    let fullscreenOverlay = document.createElement("div");
+    fullscreenOverlay.classList.add("fullscreen-overlay");
+    
+    // Append image to the overlay
+    fullscreenOverlay.appendChild(popupImg);
+    
+    // Append overlay to the body
+    document.body.appendChild(fullscreenOverlay);
+
+    // Handle exit fullscreen when clicking anywhere
+    fullscreenOverlay.onclick = function () {
         if (document.fullscreenElement) {
-            document.exitFullscreen(); // ✅ Exit fullscreen on click
-        } else {
-            popupImg.requestFullscreen(); // ✅ Enter fullscreen
+            document.exitFullscreen(); // ✅ Exit fullscreen mode
         }
+        fullscreenOverlay.remove(); // ✅ Remove the overlay and image
     };
 
-    // Append the image to the body
-    document.body.appendChild(popupImg);
-
-    // Remove the image when exiting fullscreen
-    document.addEventListener("fullscreenchange", () => {
-        if (!document.fullscreenElement) {
-            popupImg.remove(); // ✅ Remove image when exiting fullscreen
-        }
-    });
-
     // Trigger fullscreen mode immediately
-    popupImg.requestFullscreen();
+    fullscreenOverlay.requestFullscreen().catch(err => {
+        console.warn("Fullscreen request failed", err);
+    });
 }
 
 
