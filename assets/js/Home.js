@@ -22,28 +22,34 @@ async function fetchFeaturedProducts() {
         }
 
         products.forEach(product => {
-            const productCard = `
-                <div class="featured-item">
-                    <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" 
-                         onclick="enlargeImage(this.src)" 
-                         class="featured-img" 
-                         alt="${product.name}">
-                    <div class="featured-details">
-                        <h5>${product.name}</h5>
-                        <p>${product.description}</p>
-                        <p class="order-price">$${product.price}</p>
-                        <button class="btn btn-primary add-to-cart-btn" 
-                                onclick="addToCart('${product.name}', ${product.price}, '${API_BASE_URL}${product.image}')">
-                            Add to Cart
-                        </button>
-                        <button class="view-image-btn" 
-                                onclick="enlargeImage('${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}')">
-                            View Image
-                        </button>
-                    </div>
+            const productCard = document.createElement("div");
+            productCard.classList.add("featured-item");
+        
+            productCard.innerHTML = `
+                <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" 
+                     class="featured-img" 
+                     alt="${product.name}">
+                <div class="featured-details">
+                    <h5>${product.name}</h5>
+                    <p>${product.description}</p>
+                    <p class="order-price">$${product.price}</p>
+                    <button class="btn btn-primary add-to-cart-btn">
+                        Add to Cart
+                    </button>
+                    <button class="view-image-btn">
+                        View Image
+                    </button>
                 </div>
             `;
-            imageContainer.innerHTML += productCard;
+        
+            // Attach event listener to "View Image" button
+            const viewImageButton = productCard.querySelector(".view-image-btn");
+            viewImageButton.addEventListener("click", () => {
+                enlargeImage(product.image.startsWith('http') ? product.image : API_BASE_URL + product.image);
+            });
+        
+            // Append product card to container
+            imageContainer.appendChild(productCard);
         });
         
 
@@ -53,37 +59,39 @@ async function fetchFeaturedProducts() {
     }
 }
 
-
-
-
 document.addEventListener("DOMContentLoaded", fetchFeaturedProducts);
 
-// Function to enlarge image when "View Image" button is clicked
+
+// Function to enlarge image in fullscreen mode
 function enlargeImage(imgSrc) {
-    // Remove any existing enlarged image
-    let existingPopup = document.getElementById("popupImage");
-    if (existingPopup) {
-        existingPopup.remove();
-    }
-
-    // Create a new enlarged image element
+    // Create a new image element
     let popupImg = document.createElement("img");
-    popupImg.id = "popupImage";
-    popupImg.classList.add("enlarged-img");
     popupImg.src = imgSrc;
+    popupImg.classList.add("fullscreen-img"); // ✅ Apply CSS styling
 
-    // Close image when clicked
+    // Add fullscreen mode
     popupImg.onclick = function () {
-        this.remove(); // ✅ Clicking the image closes it
-        document.body.classList.remove("no-scroll"); // ✅ Restore scrolling
+        if (document.fullscreenElement) {
+            document.exitFullscreen(); // ✅ Exit fullscreen on click
+        } else {
+            popupImg.requestFullscreen(); // ✅ Enter fullscreen
+        }
     };
-
-    // Ensure page remains interactive
-    popupImg.style.pointerEvents = "auto"; // ✅ Prevents blocking interactions
 
     // Append the image to the body
     document.body.appendChild(popupImg);
+
+    // Remove the image when exiting fullscreen
+    document.addEventListener("fullscreenchange", () => {
+        if (!document.fullscreenElement) {
+            popupImg.remove(); // ✅ Remove image when exiting fullscreen
+        }
+    });
+
+    // Trigger fullscreen mode immediately
+    popupImg.requestFullscreen();
 }
+
 
 
 

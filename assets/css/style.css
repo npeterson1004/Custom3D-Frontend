@@ -531,6 +531,18 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     display: block;
 }
 
+/* ✅ Fullscreen Image Styling */
+.fullscreen-img {
+    width: 100vw; /* ✅ Use full viewport width */
+    height: 100vh; /* ✅ Use full viewport height */
+    object-fit: contain; /* ✅ Ensure the whole image is visible */
+    background: black; /* ✅ Background to avoid distractions */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    cursor: pointer; /* ✅ User can click to exit */
+}
 
 /* ✅ Ensure the image doesn't block interactions */
 #popupImage {

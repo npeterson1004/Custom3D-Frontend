@@ -33,8 +33,7 @@ async function fetchWarehouseProducts() {
                     <h5>${product.name}</h5>
                     <p>${product.description}</p>
                     <p class="order-price">$${product.price}</p>
-                    <button class="btn btn-primary add-to-cart-btn" 
-                            onclick="addToCart('${product.name}', ${product.price}, '${API_BASE_URL}${product.image}')">
+                    <button class="btn btn-primary add-to-cart-btn">
                         Add to Cart
                     </button>
                     <button class="view-image-btn">
@@ -43,7 +42,7 @@ async function fetchWarehouseProducts() {
                 </div>
             `;
 
-            // Find the "View Image" button inside the card and attach event listener
+            // Attach event listener to "View Image" button
             const viewImageButton = productCard.querySelector(".view-image-btn");
             viewImageButton.addEventListener("click", function () {
                 enlargeImage(product.image.startsWith('http') ? product.image : API_BASE_URL + product.image);
@@ -60,32 +59,36 @@ async function fetchWarehouseProducts() {
 }
 
 
-// Function to enlarge image when "View Image" button is clicked
+
+// Function to enlarge image in fullscreen mode
 function enlargeImage(imgSrc) {
-    let existingPopup = document.getElementById("popupImage");
-
-    // Remove any existing enlarged image before adding a new one
-    if (existingPopup) {
-        existingPopup.remove();
-    }
-
-    // Create a new enlarged image element
+    // Create a new image element
     let popupImg = document.createElement("img");
-    popupImg.id = "popupImage";
-    popupImg.classList.add("enlarged-img");
     popupImg.src = imgSrc;
+    popupImg.classList.add("fullscreen-img"); // ✅ Apply CSS styling
 
-    // Close image when clicked
+    // Add fullscreen mode
     popupImg.onclick = function () {
-        this.remove(); // ✅ Clicking the image closes it
-        document.body.classList.remove("no-scroll"); // ✅ Restore scrolling
+        if (document.fullscreenElement) {
+            document.exitFullscreen(); // ✅ Exit fullscreen on click
+        } else {
+            popupImg.requestFullscreen(); // ✅ Enter fullscreen
+        }
     };
-
-    // Prevent background interaction issues
-    popupImg.style.pointerEvents = "auto"; 
 
     // Append the image to the body
     document.body.appendChild(popupImg);
+
+    // Remove the image when exiting fullscreen
+    document.addEventListener("fullscreenchange", () => {
+        if (!document.fullscreenElement) {
+            popupImg.remove(); // ✅ Remove image when exiting fullscreen
+        }
+    });
+
+    // Trigger fullscreen mode immediately
+    popupImg.requestFullscreen();
 }
+
 
 
