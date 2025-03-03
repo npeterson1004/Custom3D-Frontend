@@ -22,30 +22,36 @@ async function fetchWarehouseProducts() {
         }
 
         products.forEach(product => {
-            const productCard = `
-                <div class="warehouse-item">
-                    <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" 
-                         onclick="enlargeImage(this.src)" 
-                         class="warehouse-img" 
-                         alt="${product.name}">
-                    <div class="warehouse-details">
-                        <h5>${product.name}</h5>
-                        <p>${product.description}</p>
-                        <p class="order-price">$${product.price}</p>
-                        <button class="btn btn-primary add-to-cart-btn" 
-                                onclick="addToCart('${product.name}', ${product.price}, '${API_BASE_URL}${product.image}')">
-                            Add to Cart
-                        </button>
-                        <button class="view-image-btn" 
-                                onclick="enlargeImage('${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}')">
-                            View Image
-                        </button>
-                    </div>
+            const productCard = document.createElement("div");
+            productCard.classList.add("warehouse-item");
+
+            productCard.innerHTML = `
+                <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" 
+                     class="warehouse-img" 
+                     alt="${product.name}">
+                <div class="warehouse-details">
+                    <h5>${product.name}</h5>
+                    <p>${product.description}</p>
+                    <p class="order-price">$${product.price}</p>
+                    <button class="btn btn-primary add-to-cart-btn" 
+                            onclick="addToCart('${product.name}', ${product.price}, '${API_BASE_URL}${product.image}')">
+                        Add to Cart
+                    </button>
+                    <button class="view-image-btn">
+                        View Image
+                    </button>
                 </div>
             `;
-            warehouseContainer.innerHTML += productCard; // ✅ Now properly updating warehouseContainer
+
+            // Find the "View Image" button inside the card and attach event listener
+            const viewImageButton = productCard.querySelector(".view-image-btn");
+            viewImageButton.addEventListener("click", function () {
+                enlargeImage(product.image.startsWith('http') ? product.image : API_BASE_URL + product.image);
+            });
+
+            // Append product card to container
+            warehouseContainer.appendChild(productCard);
         });
-        
 
     } catch (error) {
         console.error("❌ Error fetching warehouse products:", error);
@@ -53,10 +59,12 @@ async function fetchWarehouseProducts() {
     }
 }
 
+
 // Function to enlarge image when "View Image" button is clicked
 function enlargeImage(imgSrc) {
-    // Remove any existing enlarged image
     let existingPopup = document.getElementById("popupImage");
+
+    // Remove any existing enlarged image before adding a new one
     if (existingPopup) {
         existingPopup.remove();
     }
