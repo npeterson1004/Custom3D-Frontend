@@ -67,7 +67,7 @@ function showOrderProcessingMessage() {
     let messageBox = document.createElement("div");
     messageBox.id = "order-message";
     messageBox.className = "order-notification processing";
-    messageBox.innerText = "🕒 Processing your order... You will receive a confirmation email if your order is confirmed.";
+    messageBox.innerText = "🕒 Processing your order...";
 
     document.body.appendChild(messageBox);
 }
@@ -79,7 +79,7 @@ function showOrderConfirmationMessage() {
     let messageBox = document.createElement("div");
     messageBox.id = "order-message";
     messageBox.className = "order-notification confirmed";
-    messageBox.innerText = "✅ Your order has been placed! Tap to close.";
+    messageBox.innerText = "✅ Your order has been placed! You will receive a confirmation email within a couple days if your order is confirmed by owner. Tap to close.";
 
     // ✅ Close message when user clicks it
     messageBox.addEventListener("click", () => {
