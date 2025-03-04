@@ -745,6 +745,12 @@ body.no-scroll {
     font-weight: bold;
 }
 
+.cart-item-img {
+    width: 50px;  /* Adjust width */
+    height: auto;
+    border-radius: 5px;
+    object-fit: cover;
+}
 
 /*-------------------------------------
     Ensure Warehouse Section Layout is Clean

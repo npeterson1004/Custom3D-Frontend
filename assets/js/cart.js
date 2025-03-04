@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-// ✅ Load Cart from Local Storage
 function loadCart() {
     let userEmail = localStorage.getItem("userEmail");
     if (!userEmail) return;
@@ -46,38 +45,27 @@ function loadCart() {
         cart.forEach((item, index) => {
             let itemTotal = item.price * item.quantity;
             total += itemTotal;
-/*
-            // ✅ FIX: Ensure Cloudinary URLs are used correctly
-            let imageUrl = item.image;
 
-            // ✅ If the image URL starts with "//", prepend "https:"
-            if (imageUrl.startsWith("//")) {
-                imageUrl = `https:${imageUrl}`;
-            }
+            // ✅ Ensure the image URL is correct
+            let imageUrl = item.image.startsWith("http") ? item.image : `${API_BASE_URL}${item.image}`;
 
-            // ✅ If the image URL is from Cloudinary, do NOT add API_BASE_URL
-            if (imageUrl.includes("cloudinary.com")) {
-                imageUrl = imageUrl.replace("https//", "https://"); // Fix missing colon if needed
-            } else if (!imageUrl.startsWith("http")) {
-                imageUrl = `${API_BASE_URL}${imageUrl}`; // ✅ Only apply API_BASE_URL to local images
-            }
-
-            // ✅ Log the final image URL for debugging
-            console.log(`📸 Image URL for ${item.name}: ${imageUrl}`);
-*/
             cartItemsContainer.innerHTML += `
                 <tr>
-        <td> ${item.name}</td>
-        <td>${item.name}</td>
-        <td>$${item.price.toFixed(2)}</td>
-        <td>
-            <input type="number" value="${item.quantity}" min="1" 
-                onchange="updateQuantity(${index}, this.value)" 
-                class="cart-quantity-input">
-        </td>
-        <td>$${itemTotal.toFixed(2)}</td>
-        <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
-    </tr>
+                    <td>
+                        <img src="${imageUrl}" alt="${item.name}" class="cart-item-img">
+                    </td>
+                    <td>${item.name}</td>
+                    <td>$${item.price.toFixed(2)}</td>
+                    <td>
+                        <input type="number" value="${item.quantity}" min="1" 
+                            onchange="updateQuantity(${index}, this.value)" 
+                            class="cart-quantity-input">
+                    </td>
+                    <td>$${itemTotal.toFixed(2)}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button>
+                    </td>
+                </tr>
             `;
         });
     }
