@@ -148,12 +148,14 @@ async function loadContacts() {
         contactsContainer.innerHTML = ""; // Clear previous entries
 
         if (contacts.length === 0) {
-            contactsContainer.innerHTML = '<tr><td colspan="5" class="text-center">No contact requests available.</td></tr>';
+            contactsContainer.innerHTML = '<tr><td colspan="6" class="text-center">No contact requests available.</td></tr>';
             return;
         }
 
         contacts.forEach(contact => {
-            let fileLink = contact.fileUrl ? `<a href="${contact.fileUrl}" target="_blank">Download File</a>` : "No file";
+            let fileLink = contact.fileUrl
+                ? `<a href="${API_BASE_URL}${contact.fileUrl}" target="_blank" class="btn btn-sm btn-primary">Download File</a>`
+                : "No file";
 
             const contactRow = `
                 <tr>
@@ -169,7 +171,7 @@ async function loadContacts() {
 
     } catch (error) {
         console.error("❌ Error loading contacts:", error);
-        document.getElementById("contactsContainer").innerHTML = '<tr><td colspan="5" class="text-center text-danger">⚠️ Failed to load contacts.</td></tr>';
+        document.getElementById("contactsContainer").innerHTML = '<tr><td colspan="6" class="text-center text-danger">⚠️ Failed to load contacts.</td></tr>';
     }
 }
 
