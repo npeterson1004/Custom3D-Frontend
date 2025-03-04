@@ -1,6 +1,6 @@
 //contact.js
 
-import { API_BASE_URL } from "./config.js"; // ✅ Ensure correct API base URL
+import { API_BASE_URL } from "./config.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const contactForm = document.getElementById("contactForm");
@@ -9,18 +9,22 @@ document.addEventListener("DOMContentLoaded", () => {
         contactForm.addEventListener("submit", async function (e) {
             e.preventDefault();
 
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const number = document.getElementById("number").value;
-            const description = document.getElementById("description").value;
+            const formData = new FormData();
+            formData.append("name", document.getElementById("name").value);
+            formData.append("email", document.getElementById("email").value);
+            formData.append("number", document.getElementById("number").value);
+            formData.append("description", document.getElementById("description").value);
 
-            const requestData = { name, email, number, description };
+            // ✅ Add file to FormData (if a file is selected)
+            const fileInput = document.getElementById("file");
+            if (fileInput.files.length > 0) {
+                formData.append("file", fileInput.files[0]);
+            }
 
             try {
                 const response = await fetch(`${API_BASE_URL}/api/contact`, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(requestData)
+                    body: formData
                 });
 
                 const data = await response.json();

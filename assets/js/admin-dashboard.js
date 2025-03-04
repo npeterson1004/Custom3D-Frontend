@@ -153,12 +153,15 @@ async function loadContacts() {
         }
 
         contacts.forEach(contact => {
+            let fileLink = contact.fileUrl ? `<a href="${contact.fileUrl}" target="_blank">Download File</a>` : "No file";
+
             const contactRow = `
                 <tr>
                     <td>${sanitize(contact.name)}</td>
                     <td>${sanitize(contact.email)}</td>
                     <td>${sanitize(contact.number)}</td>
                     <td>${sanitize(contact.description)}</td>
+                    <td>${fileLink}</td>
                     <td>${new Date(contact.createdAt).toLocaleString()}</td>
                 </tr>`;
             contactsContainer.innerHTML += contactRow;
@@ -169,6 +172,7 @@ async function loadContacts() {
         document.getElementById("contactsContainer").innerHTML = '<tr><td colspan="5" class="text-center text-danger">⚠️ Failed to load contacts.</td></tr>';
     }
 }
+
 
 // ✅ Load contacts when the "View Contacts" tab is clicked
 document.getElementById("view-contacts-tab").addEventListener("click", loadContacts);
