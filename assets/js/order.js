@@ -31,7 +31,7 @@ async function sendOrder() {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`,
                 "Content-Type": "application/json"
             },
-            credentials: "include", // ✅ Ensures cookies/tokens are included
+            credentials: "include",
             body: JSON.stringify(orderData)
         });
 
@@ -39,7 +39,7 @@ async function sendOrder() {
             throw new Error("❌ Order failed to send.");
         }
 
-        // ✅ Show Order Confirmation Message
+        // ✅ Show Order Confirmation Message (Tap to Dismiss)
         showOrderConfirmationMessage();
 
         // ✅ Clear only this user's cart
@@ -62,8 +62,7 @@ async function sendOrder() {
 
 // ✅ Function to Show Order Processing Message
 function showOrderProcessingMessage() {
-    const existingMessage = document.getElementById("order-message");
-    if (existingMessage) existingMessage.remove();
+    removeExistingMessage();
 
     let messageBox = document.createElement("div");
     messageBox.id = "order-message";
@@ -71,25 +70,30 @@ function showOrderProcessingMessage() {
     messageBox.innerText = "🕒 Processing your order... You will receive a confirmation email if your order is confirmed.";
 
     document.body.appendChild(messageBox);
-
-    setTimeout(() => {
-        messageBox.style.opacity = "1";
-    }, 100);
 }
 
-// ✅ Function to Show Order Confirmation Message
+// ✅ Function to Show Order Confirmation Message (Tap to Dismiss)
 function showOrderConfirmationMessage() {
-    const messageBox = document.getElementById("order-message");
-    if (messageBox) {
-        messageBox.className = "order-notification confirmed";
-        messageBox.innerText = "✅ Your order has been placed! You will receive a confirmation email with purchasing and shipment details once verified by owner. May take 1-2 days";
-        
-        // Automatically hide message after 5 seconds
-        setTimeout(() => {
-            messageBox.style.opacity = "0";
-            setTimeout(() => messageBox.remove(), 500);
-        }, 5000);
-    }
+    removeExistingMessage();
+
+    let messageBox = document.createElement("div");
+    messageBox.id = "order-message";
+    messageBox.className = "order-notification confirmed";
+    messageBox.innerText = "✅ Your order has been placed! Tap to close.";
+
+    // ✅ Close message when user clicks it
+    messageBox.addEventListener("click", () => {
+        messageBox.style.opacity = "0";
+        setTimeout(() => messageBox.remove(), 300);
+    });
+
+    document.body.appendChild(messageBox);
+}
+
+// ✅ Function to Remove Any Existing Message Before Showing a New One
+function removeExistingMessage() {
+    const existingMessage = document.getElementById("order-message");
+    if (existingMessage) existingMessage.remove();
 }
 
 // ✅ Make sendOrder globally accessible
@@ -110,8 +114,8 @@ styles.innerHTML = `
         font-size: 16px;
         box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
         z-index: 1000;
-        opacity: 0;
-        transition: opacity 0.5s ease-out;
+        cursor: pointer;
+        transition: opacity 0.3s ease-out;
     }
 
     .order-notification.processing {
@@ -120,6 +124,10 @@ styles.innerHTML = `
 
     .order-notification.confirmed {
         background: #28a745; /* Green for confirmed */
+    }
+
+    .order-notification:hover {
+        opacity: 0.8;
     }
 `;
 document.head.appendChild(styles);
