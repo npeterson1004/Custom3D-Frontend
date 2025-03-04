@@ -153,8 +153,8 @@ async function loadContacts() {
         }
 
         contacts.forEach(contact => {
-            let fileLink = contact.fileUrl 
-                ? `<a href="${contact.fileUrl}" target="_blank" download>📥 Download File</a>` 
+            let fileLink = contact.fileUrl && contact.fileUrl.startsWith("http")
+                ? `<a href="${contact.fileUrl}" target="_blank" download>📂 Download File</a>` 
                 : "No file uploaded";
 
             const contactRow = `
