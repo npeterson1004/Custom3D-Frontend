@@ -1,8 +1,6 @@
 //Home.js
 
 
-import { API_BASE_URL } from "./config.js";  // ✅ Import API base URL
-
 async function fetchFeaturedProducts() {
     try {
         const response = await fetch(`${API_BASE_URL}/api/products/featured`);
@@ -22,11 +20,9 @@ async function fetchFeaturedProducts() {
         }
 
         products.forEach(product => {
-            // Create the product card as an element instead of using a template string
             const productCard = document.createElement("div");
             productCard.classList.add("featured-item");
 
-            // Set inner HTML for product details
             productCard.innerHTML = `
                 <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" 
                      class="featured-img" 
@@ -35,7 +31,7 @@ async function fetchFeaturedProducts() {
                     <h5>${product.name}</h5>
                     <p>${product.description}</p>
                     <p class="order-price">$${product.price}</p>
-                    <button class="btn btn-primary add-to-cart-btn">
+                    <button class="btn btn-primary add-to-cart-btn" data-product-id="${product._id}">
                         Add to Cart
                     </button>
                     <button class="view-image-btn">
@@ -50,6 +46,12 @@ async function fetchFeaturedProducts() {
                 enlargeImage(product.image.startsWith('http') ? product.image : API_BASE_URL + product.image);
             });
 
+            // Attach event listener to "Add to Cart" button
+            const addToCartButton = productCard.querySelector(".add-to-cart-btn");
+            addToCartButton.addEventListener("click", () => {
+                addToCart(product);
+            });
+
             // Append product card to container
             imageContainer.appendChild(productCard);
         });
@@ -59,8 +61,25 @@ async function fetchFeaturedProducts() {
         imageContainer.innerHTML = '<p class="text-center text-danger">Failed to load featured products.</p>';
     }
 }
-
 document.addEventListener("DOMContentLoaded", fetchFeaturedProducts);
+// Function to handle adding a product to the cart
+function addToCart(product) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const existingProductIndex = cart.findIndex(item => item._id === product._id);
+    if (existingProductIndex !== -1) {
+        cart[existingProductIndex].quantity += 1; // Increase quantity if product exists
+    } else {
+        cart.push({ ...product, quantity: 1 }); // Add new product with quantity
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert(`${product.name} has been added to the cart!`);
+}
+
+
+
 
 
 // Function to enlarge image in fullscreen mode & exit on click

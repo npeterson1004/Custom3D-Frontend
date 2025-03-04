@@ -33,7 +33,7 @@ async function fetchWarehouseProducts() {
                     <h5>${product.name}</h5>
                     <p>${product.description}</p>
                     <p class="order-price">$${product.price}</p>
-                    <button class="btn btn-primary add-to-cart-btn">
+                    <button class="btn btn-primary add-to-cart-btn" data-product-id="${product._id}">
                         Add to Cart
                     </button>
                     <button class="view-image-btn">
@@ -48,6 +48,12 @@ async function fetchWarehouseProducts() {
                 enlargeImage(product.image.startsWith('http') ? product.image : API_BASE_URL + product.image);
             });
 
+            // Attach event listener to "Add to Cart" button
+            const addToCartButton = productCard.querySelector(".add-to-cart-btn");
+            addToCartButton.addEventListener("click", () => {
+                addToCart(product);
+            });
+
             // Append product card to container
             warehouseContainer.appendChild(productCard);
         });
@@ -57,6 +63,23 @@ async function fetchWarehouseProducts() {
         document.getElementById("warehouseContainer").innerHTML = '<p class="text-center text-danger">Failed to load products.</p>';
     }
 }
+
+// Function to handle adding a product to the cart
+function addToCart(product) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const existingProductIndex = cart.findIndex(item => item._id === product._id);
+    if (existingProductIndex !== -1) {
+        cart[existingProductIndex].quantity += 1; // Increase quantity if product exists
+    } else {
+        cart.push({ ...product, quantity: 1 }); // Add new product with quantity
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert(`${product.name} has been added to the cart!`);
+}
+
 
 
 // Function to enlarge image in fullscreen mode & exit on click
