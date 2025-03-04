@@ -1,7 +1,5 @@
 //contact.js
 
-import { API_BASE_URL } from "./config.js";
-
 document.addEventListener("DOMContentLoaded", () => {
     const contactForm = document.getElementById("contactForm");
 
@@ -15,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
             formData.append("number", document.getElementById("number").value);
             formData.append("description", document.getElementById("description").value);
 
-            // ✅ Add file to FormData (if a file is selected)
             const fileInput = document.getElementById("file");
             if (fileInput.files.length > 0) {
                 formData.append("file", fileInput.files[0]);
@@ -27,12 +24,20 @@ document.addEventListener("DOMContentLoaded", () => {
                     body: formData
                 });
 
+                // ✅ Log full response to check if it's an error page
+                console.log("📩 Full Response:", response);
+
+                if (!response.ok) {
+                    throw new Error(`❌ Server Error: ${response.status} ${response.statusText}`);
+                }
+
+                // ✅ Try parsing JSON, but handle unexpected responses
                 const data = await response.json();
+                console.log("✅ Server Response JSON:", data);
+
                 document.getElementById("message").innerHTML = `<div class="alert alert-success">${data.message}</div>`;
 
-                if (response.ok) {
-                    this.reset();
-                }
+                this.reset();
             } catch (error) {
                 console.error("❌ Error submitting contact request:", error);
                 document.getElementById("message").innerHTML = `<div class="alert alert-danger">⚠️ Failed to submit request.</div>`;
