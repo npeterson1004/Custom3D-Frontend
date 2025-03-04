@@ -80,9 +80,10 @@
                         <textarea class="form-control" id="description" rows="5" placeholder="Describe your request" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="file">Upload File (optional)</label>
-                        <input type="file" class="form-control-file" id="file">
+                        <label for="file">Upload 3D Print File (Allowed: STL, OBJ, STEP, 3MF)</label>
+                        <input type="file" class="form-control" id="file" name="file" accept=".stl, .obj, .step, .3mf">
                     </div>
+                
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
                 

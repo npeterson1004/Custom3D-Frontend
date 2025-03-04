@@ -46,3 +46,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+
+document.getElementById("file").addEventListener("change", function () {
+    const allowedExtensions = ["stl", "obj", "step", "3mf"];
+    const file = this.files[0];
+
+    if (file) {
+        const extension = file.name.split(".").pop().toLowerCase();
+        if (!allowedExtensions.includes(extension)) {
+            alert("⚠️ Invalid file type. Please upload a STL, OBJ, STEP, or 3MF file.");
+            this.value = ""; // Reset file input
+        } else {
+            alert(`✅ File selected: ${file.name}`);
+        }
+    }
+});
