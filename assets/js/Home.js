@@ -48,9 +48,9 @@ async function fetchFeaturedProducts() {
                 enlargeImage(product.image.startsWith('http') ? product.image : API_BASE_URL + product.image);
             });
 
-            // Attach event listener to "Add to Cart" button
+            // ✅ FIXED: Correctly pass parameters to `addToCart`
             productCard.querySelector(".add-to-cart-btn").addEventListener("click", () => {
-                addToCart(product); // Call global addToCart from cart.js
+                addToCart(product.name, product.price, product.image);
             });
 
             // Append product card to container
@@ -86,6 +86,5 @@ function enlargeImage(imgSrc) {
         console.warn("Fullscreen request failed", err);
     });
 }
-
 
 
