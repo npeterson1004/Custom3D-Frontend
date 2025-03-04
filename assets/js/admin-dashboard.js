@@ -154,7 +154,7 @@ async function loadContacts() {
 
         contacts.forEach(contact => {
             let fileLink = contact.fileUrl
-                ? `<a href="${API_BASE_URL}${contact.fileUrl}" target="_blank" class="btn btn-sm btn-primary">Download File</a>`
+                ? `<a href="${contact.fileUrl}" target="_blank" class="btn btn-sm btn-primary" download>Download File</a>`
                 : "No file";
 
             const contactRow = `
@@ -174,6 +174,7 @@ async function loadContacts() {
         document.getElementById("contactsContainer").innerHTML = '<tr><td colspan="6" class="text-center text-danger">⚠️ Failed to load contacts.</td></tr>';
     }
 }
+
 
 
 // ✅ Load contacts when the "View Contacts" tab is clicked
