@@ -99,7 +99,7 @@ async function openColorModal(productId, button) {
 
             colorOption.innerHTML = `
                 <img src="${color.image}" class="color-preview" 
-                     style="width: 40px; height: 40px; margin-right: 10px; border: 2px solid black; border-radius: 5px; padding: 2px;">
+                     style="width: 40px; height: 40px; margin-right: 10px; border: 2px solid black; border-radius: 5px;">
                 <span class="cart-color-text" style="color:#080808; font-size: 20px;">${color.name}</span>
             `;
 
