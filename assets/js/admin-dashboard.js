@@ -206,7 +206,7 @@ async function fetchOrders() {
         ordersContainer.innerHTML = ""; // Clear previous entries
 
         if (orders.length === 0) {
-            ordersContainer.innerHTML = '<tr><td colspan="4" class="text-center">No orders available.</td></tr>';
+            ordersContainer.innerHTML = '<tr><td colspan="5" class="text-center">No orders available.</td></tr>';
             return;
         }
 
@@ -214,11 +214,15 @@ async function fetchOrders() {
             const orderRow = `
                 <tr>
                     <td>${order.userEmail}</td>
-            <td>
-                ${order.items.map(item => 
-                    `<span class="order-quantity">${item.quantity}</span> x ${item.name}`
-                ).join(", ")}
-            </td>
+                    <td>
+                        ${order.items.map(item => `
+                            <div>
+                                <span class="order-quantity">${item.quantity}</span> x ${item.name}
+                                <img src="${item.color.image}" alt="${item.color.name}" class="tiny-color-img" style="width: 20px; height: 20px;">
+                                <span>${item.color.name}</span>
+                            </div>
+                        `).join("")}
+                    </td>
                     <td>$${order.totalAmount.toFixed(2)}</td>
                     <td>${new Date(order.orderDate).toLocaleString()}</td>
                 </tr>
@@ -228,7 +232,7 @@ async function fetchOrders() {
 
     } catch (error) {
         console.error("❌ Error fetching orders:", error);
-        document.getElementById("ordersContainer").innerHTML = '<tr><td colspan="4" class="text-center text-danger">⚠️ Failed to load orders.</td></tr>';
+        document.getElementById("ordersContainer").innerHTML = '<tr><td colspan="5" class="text-center text-danger">⚠️ Failed to load orders.</td></tr>';
     }
 }
 

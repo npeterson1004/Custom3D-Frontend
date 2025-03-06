@@ -90,9 +90,14 @@ async function openColorModal(productId, button) {
 
         colors.forEach(color => {
             const colorOption = document.createElement("div");
-            colorOption.classList.add("color-option");
+            colorOption.classList.add("color-option", "d-flex", "align-items-center", "m-2", "p-2", "border", "rounded");
+            colorOption.style.cursor = "pointer";
+            colorOption.style.display = "flex";
+            colorOption.style.alignItems = "center";
+
             colorOption.innerHTML = `
-                <img src="${color.image}" class="color-preview" style="width: 40px; height: 40px; cursor: pointer;">
+                <img src="${color.image}" class="color-preview" style="width: 40px; height: 40px; margin-right: 10px;">
+                <span class="color-name">${color.name}</span>
             `;
 
             colorOption.addEventListener("click", () => {
@@ -110,6 +115,7 @@ async function openColorModal(productId, button) {
         console.error("Error fetching filament colors:", error);
     }
 }
+
 
 // Function to enlarge image in fullscreen mode & exit on click
 function enlargeImage(imgSrc) {

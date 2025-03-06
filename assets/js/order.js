@@ -1,7 +1,7 @@
 //order.js
 import { API_BASE_URL } from "./config.js";
 
-// ✅ Send Order to Admin
+// ✅ Send Order to Admin (Now Includes Colors)
 async function sendOrder() {
     let userEmail = localStorage.getItem("userEmail");
 
@@ -19,7 +19,22 @@ async function sendOrder() {
     }
 
     const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const orderData = { userEmail, items: cart, totalAmount };
+
+    // ✅ Modify orderData to include selected color
+    const orderData = {
+        userEmail,
+        items: cart.map(item => ({
+            name: item.name,
+            price: item.price,
+            image: item.image,
+            quantity: item.quantity,
+            color: {
+                name: item.color.name,
+                image: item.color.image
+            }
+        })),
+        totalAmount
+    };
 
     // ✅ Show Processing Message
     showOrderProcessingMessage();
@@ -39,7 +54,7 @@ async function sendOrder() {
             throw new Error("❌ Order failed to send.");
         }
 
-        // ✅ Show Order Confirmation Message (Tap to Dismiss)
+        // ✅ Show Order Confirmation Message
         showOrderConfirmationMessage();
 
         // ✅ Clear only this user's cart
@@ -59,6 +74,8 @@ async function sendOrder() {
         alert("❌ Order failed. Please try again.");
     }
 }
+
+
 
 // ✅ Function to Show Order Processing Message
 function showOrderProcessingMessage() {
