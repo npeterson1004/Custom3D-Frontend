@@ -542,7 +542,7 @@ body.no-scroll {
 
 /* ✅ Color Option Styling */
 .color-option {
-    background-color: #ffffff; /* White Background */
+    background-color: #0390d1; /* White Background */
     padding: 10px;
     margin: 5px;
     border-radius: 5px;
@@ -551,7 +551,7 @@ body.no-scroll {
 
 /* ✅ Hover Effect */
 .color-option:hover {
-    background-color: #085497; /* Change Background on Hover */
+    background-color: #054277; /* Change Background on Hover */
     color: white !important; /* Change Text Color on Hover */
     cursor: pointer;
 }
@@ -562,6 +562,18 @@ body.no-scroll {
 }
 
 
+/* ✅ Add Black Border to Color Images */
+.color-option img {
+    border: 2px solid black;  /* Thin black border */
+    border-radius: 5px;       /* Slightly rounded corners */
+    padding: 2px;             /* Small padding for better spacing */
+    transition: border-color 0.3s ease; /* Smooth transition */
+}
+
+/* ✅ Change Border on Hover */
+.color-option:hover img {
+    border-color: white; /* White border on hover */
+}
 
 
 

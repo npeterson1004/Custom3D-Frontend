@@ -98,7 +98,8 @@ async function openColorModal(productId, button) {
             colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // Smooth effect
 
             colorOption.innerHTML = `
-                <img src="${color.image}" class="color-preview" style="width: 40px; height: 40px; margin-right: 10px;">
+                <img src="${color.image}" class="color-preview" 
+                     style="width: 40px; height: 40px; margin-right: 10px; border: 2px solid black; border-radius: 5px; padding: 2px;">
                 <span class="cart-color-text" style="color:#080808; font-size: 20px;">${color.name}</span>
             `;
 
@@ -106,16 +107,20 @@ async function openColorModal(productId, button) {
             colorOption.addEventListener("mouseenter", () => {
                 colorOption.style.backgroundColor = "#007bff"; // Blue Hover
                 colorOption.querySelector(".cart-color-text").style.color = "white"; // White Text
+                colorOption.querySelector("img").style.borderColor = "white"; // White border on hover
             });
 
             colorOption.addEventListener("mouseleave", () => {
                 colorOption.style.backgroundColor = "#ffffff"; // Reset Background
                 colorOption.querySelector(".cart-color-text").style.color = "#080808"; // Reset Text Color
+                colorOption.querySelector("img").style.borderColor = "black"; // Reset Border Color
             });
 
             // ✅ Click Event to Select Color
             colorOption.addEventListener("click", () => {
-                button.innerHTML = `<img src="${color.image}" class="cart-color-img" style="width: 20px; height: 20px; margin-right: 5px;"> ${color.name}`;
+                button.innerHTML = `<img src="${color.image}" class="cart-color-img" 
+                                    style="width: 20px; height: 20px; margin-right: 5px; border: 2px solid black;"> 
+                                    ${color.name}`;
                 button.setAttribute("data-selected-color", JSON.stringify(color));
                 $("#colorModal").modal("hide"); // Close modal
             });
@@ -129,6 +134,7 @@ async function openColorModal(productId, button) {
         console.error("Error fetching filament colors:", error);
     }
 }
+
 
 
 // Function to enlarge image in fullscreen mode & exit on click
