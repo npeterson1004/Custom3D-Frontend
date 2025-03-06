@@ -94,7 +94,7 @@ async function openColorModal(productId, button) {
             colorOption.style.cursor = "pointer";
             colorOption.style.display = "flex";
             colorOption.style.alignItems = "center";
-            colorOption.style.backgroundColor = "#ffffff"; // Default Background
+            colorOption.style.backgroundColor = "#0390d1"; // Default Background
             colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // Smooth effect
 
             colorOption.innerHTML = `

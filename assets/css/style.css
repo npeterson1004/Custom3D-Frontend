@@ -542,7 +542,7 @@ body.no-scroll {
 
 /* ✅ Color Option Styling */
 .color-option {
-    background-color: #0390d1; /* White Background */
+    background-color: #054277; /* White Background */
     padding: 10px;
     margin: 5px;
     border-radius: 5px;
@@ -566,7 +566,6 @@ body.no-scroll {
 .color-option img {
     border: 2px solid black;  /* Thin black border */
     border-radius: 5px;       /* Slightly rounded corners */
-    padding: 2px;             /* Small padding for better spacing */
     transition: border-color 0.3s ease; /* Smooth transition */
 }
 
