@@ -20,7 +20,7 @@ async function sendOrder() {
 
     const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-    // ✅ Modify orderData to include selected color
+    // ✅ Ensure color is optional
     const orderData = {
         userEmail,
         items: cart.map(item => ({
@@ -28,17 +28,11 @@ async function sendOrder() {
             price: item.price,
             image: item.image,
             quantity: item.quantity,
-            color: {
-                name: item.color.name,
-                image: item.color.image
-            }
+            color: item.color ? { name: item.color.name, image: item.color.image } : null // ✅ Allow null colors
         })),
         totalAmount
     };
-
-    // ✅ Show Processing Message
-    showOrderProcessingMessage();
-
+    showOrderProcessingMessage()
     try {
         const response = await fetch(`${API_BASE_URL}/api/orders`, {
             method: "POST",
@@ -54,19 +48,9 @@ async function sendOrder() {
             throw new Error("❌ Order failed to send.");
         }
 
-        // ✅ Show Order Confirmation Message
         showOrderConfirmationMessage();
-
-        // ✅ Clear only this user's cart
         localStorage.removeItem(`cart_${userEmail}`);
-
-        // ✅ Ensure updateCartCount() exists before calling it
-        if (typeof updateCartCount === "function") {
-            updateCartCount();
-        } else {
-            console.warn("⚠️ updateCartCount is not available.");
-        }
-
+        updateCartCount();
         loadCart();
 
     } catch (error) {

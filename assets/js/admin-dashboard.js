@@ -182,7 +182,6 @@ document.getElementById("view-contacts-tab").addEventListener("click", loadConta
 
 
 
-
 async function fetchOrders() {
     try {
         const token = localStorage.getItem("adminToken");
@@ -218,8 +217,10 @@ async function fetchOrders() {
                         ${order.items.map(item => `
                             <div>
                                 <span class="order-quantity">${item.quantity}</span> x ${item.name}
-                                <img src="${item.color.image}" alt="${item.color.name}" class="tiny-color-img" style="width: 20px; height: 20px;">
-                                <span>${item.color.name}</span>
+                                ${item.color && item.color.image 
+                                    ? `<img src="${item.color.image}" alt="${item.color.name}" class="tiny-color-img" style="width: 20px; height: 20px;"> <span>${item.color.name}</span>`
+                                    : "<span>No color selected</span>"
+                                }
                             </div>
                         `).join("")}
                     </td>
@@ -238,8 +239,6 @@ async function fetchOrders() {
 
 // ✅ Load orders when the admin page loads
 document.addEventListener("DOMContentLoaded", fetchOrders);
-
-
 
 
 
