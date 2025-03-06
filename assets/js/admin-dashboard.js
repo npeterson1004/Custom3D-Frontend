@@ -241,14 +241,14 @@ document.addEventListener("DOMContentLoaded", function () {
     loadFilamentColors();
 });
 
-// Function to add a filament color
+// ✅ Function to add a filament color
 document.getElementById("addFilamentColorForm").addEventListener("submit", async function (e) {
     e.preventDefault();
     const formData = new FormData(this);
     const token = localStorage.getItem("adminToken");
 
     try {
-        const response = await fetch(`${API_BASE_URL}/api/admin/filament-colors`, {
+        const response = await fetch(`${API_BASE_URL}/api/filament-colors`, {  // ✅ Correct API route
             method: "POST",
             headers: { "Authorization": `Bearer ${token}` },
             body: formData
@@ -259,7 +259,7 @@ document.getElementById("addFilamentColorForm").addEventListener("submit", async
 
         if (response.ok) {
             this.reset();
-            loadFilamentColors(); // Reload colors
+            loadFilamentColors(); // ✅ Reload colors after adding a new one
         }
     } catch (error) {
         console.error("Error adding filament color:", error);
@@ -267,18 +267,18 @@ document.getElementById("addFilamentColorForm").addEventListener("submit", async
     }
 });
 
-// ✅ Keep only this `loadFilamentColors()` function
+// ✅ Function to fetch and display filament colors
 async function loadFilamentColors() {
     try {
         const token = localStorage.getItem("adminToken");
-        const response = await fetch(`${API_BASE_URL}/api/admin/filament-colors`, {
+        const response = await fetch(`${API_BASE_URL}/api/filament-colors`, {  // ✅ Correct API route
             method: "GET",
             headers: { "Authorization": `Bearer ${token}` }
         });
 
         const colors = await response.json();
         const tableBody = document.getElementById("filamentColorsTable");
-        tableBody.innerHTML = ""; // Clear previous entries
+        tableBody.innerHTML = "";
 
         if (colors.length === 0) {
             tableBody.innerHTML = '<tr><td colspan="4" class="text-center">No filament colors available.</td></tr>';
@@ -291,7 +291,9 @@ async function loadFilamentColors() {
                     <td>${color.name}</td>
                     <td>${color.type}</td>
                     <td><img src="${color.image}" alt="${color.name}" width="50"></td>
-                    <td><button class="btn btn-danger" onclick="deleteFilamentColor('${color._id}')">Delete</button></td>
+                    <td>
+                        <button class="btn btn-danger" onclick="deleteFilamentColor('${color._id}')">Delete</button>
+                    </td>
                 </tr>
             `;
             tableBody.innerHTML += row;
@@ -303,27 +305,22 @@ async function loadFilamentColors() {
     }
 }
 
-// Function to delete a filament color
+// ✅ Function to delete a filament color
 async function deleteFilamentColor(colorId) {
     if (!confirm("Are you sure you want to delete this color?")) return;
 
     try {
         const token = localStorage.getItem("adminToken");
-        await fetch(`${API_BASE_URL}/api/admin/filament-colors/${colorId}`, {
+        await fetch(`${API_BASE_URL}/api/filament-colors/${colorId}`, {  // ✅ Correct API route
             method: "DELETE",
             headers: { "Authorization": `Bearer ${token}` }
         });
 
-        loadFilamentColors();
+        loadFilamentColors(); // ✅ Reload colors after deletion
     } catch (error) {
         console.error("Error deleting filament color:", error);
     }
 }
-
-// ✅ Ensure the tab loads filament colors when clicked
-document.getElementById("view-filament-colors-tab").addEventListener("click", loadFilamentColors);
-
-
 
 
 
