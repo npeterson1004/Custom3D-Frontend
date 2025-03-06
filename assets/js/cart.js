@@ -20,6 +20,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+// ✅ Add Item to Cart
+function addToCart(name, price, image, color) {
+    let userEmail = localStorage.getItem("userEmail");
+    if (!userEmail) {
+        alert("⚠️ You must log in to add items to the cart.");
+        return;
+    }
+
+    let cart = JSON.parse(localStorage.getItem(`cart_${userEmail}`)) || [];
+
+    // ✅ Ensure Cloudinary URLs are stored correctly
+    let fixedImage = image.startsWith("http") ? image : `${API_BASE_URL}${image}`;
+
+    let existingItem = cart.find(item => item.name === name && item.color.name === color.name);
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({ name, price, image: fixedImage, quantity: 1, color });
+    }
+
+    localStorage.setItem(`cart_${userEmail}`, JSON.stringify(cart));
+
+    updateCartCount();
+    showNotification(`${name} in ${color.name} added to cart!`);
+    loadCart();
+}
+
+// ✅ Update Cart UI to Show Selected Color
 function loadCart() {
     let userEmail = localStorage.getItem("userEmail");
     if (!userEmail) return;
@@ -31,7 +59,6 @@ function loadCart() {
     const cartTotal = document.getElementById("cart-total");
     const cartCountElements = document.querySelectorAll("#cart-count");
 
-    // ✅ Update cart count across all pages
     cartCountElements.forEach(cartCount => {
         cartCount.innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
     });
@@ -46,25 +73,18 @@ function loadCart() {
             let itemTotal = item.price * item.quantity;
             total += itemTotal;
 
-            // ✅ Ensure the image URL is correct
             let imageUrl = item.image.startsWith("http") ? item.image : `${API_BASE_URL}${item.image}`;
 
             cartItemsContainer.innerHTML += `
                 <tr>
-                    <td>
-                        <img src="${imageUrl}" alt="${item.name}" class="cart-item-img">
-                    </td>
+                    <td><img src="${imageUrl}" alt="${item.name}" class="cart-item-img"></td>
                     <td>${item.name}</td>
+                    <td><img src="${item.color.image}" alt="${item.color.name}" class="tiny-color-img"></td>
                     <td>$${item.price.toFixed(2)}</td>
-                    <td>
-                        <input type="number" value="${item.quantity}" min="1" 
-                            onchange="updateQuantity(${index}, this.value)" 
-                            class="cart-quantity-input">
-                    </td>
+                    <td>${item.color.name}</td>
+                    <td>${item.quantity}</td>
                     <td>$${itemTotal.toFixed(2)}</td>
-                    <td>
-                        <button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button>
-                    </td>
+                    <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
                 </tr>
             `;
         });
@@ -73,37 +93,6 @@ function loadCart() {
     if (cartTotal) {
         cartTotal.innerText = total.toFixed(2);
     }
-}
-
-
-
-// ✅ Add Item to Cart
-function addToCart(name, price, image) {
-    let userEmail = localStorage.getItem("userEmail");
-    if (!userEmail) {
-        alert("⚠️ You must log in to add items to the cart.");
-        return;
-    }
-
-    let cart = JSON.parse(localStorage.getItem(`cart_${userEmail}`)) || [];
-
-    // ✅ Ensure Cloudinary URLs are stored correctly
-    let fixedImage = image.startsWith("http") ? image : `${API_BASE_URL}${image}`;
-
-    let existingItem = cart.find(item => item.name === name);
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cart.push({ name, price, image: fixedImage, quantity: 1 });
-    }
-
-    localStorage.setItem(`cart_${userEmail}`, JSON.stringify(cart));
-
-    // ✅ Update cart count immediately after adding an item
-    updateCartCount();
-
-    showNotification(`${name} added to cart!`);
-    loadCart();
 }
 
 

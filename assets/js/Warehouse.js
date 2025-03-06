@@ -33,32 +33,81 @@ async function fetchWarehouseProducts() {
                     <h5>${product.name}</h5>
                     <p>${product.description}</p>
                     <p class="order-price">$${product.price}</p>
+                    
+                    <button class="btn btn-secondary choose-color-btn" data-product-id="${product._id}">
+                        <img src="../assets/images/default-color.png" class="tiny-color-img" style="width: 20px; height: 20px; margin-right: 5px;"> 
+                        Choose Color
+                    </button>
+
                     <button class="btn btn-primary add-to-cart-btn" data-product-id="${product._id}">
                         Add to Cart
                     </button>
+
                     <button class="view-image-btn">
                         View Image
                     </button>
                 </div>
             `;
 
-            // Attach event listener to "View Image" button
+            // ✅ Attach event listener for "Choose Color"
+            productCard.querySelector(".choose-color-btn").addEventListener("click", () => {
+                openColorModal(product._id, productCard.querySelector(".choose-color-btn"));
+            });
+
+            // ✅ Attach event listener for "Add to Cart"
+            productCard.querySelector(".add-to-cart-btn").addEventListener("click", () => {
+                const colorData = productCard.querySelector(".choose-color-btn").getAttribute("data-selected-color");
+                if (!colorData) {
+                    alert("⚠️ Please select a color before adding to cart.");
+                    return;
+                }
+                const selectedColor = JSON.parse(colorData);
+                addToCart(product.name, product.price, product.image, selectedColor);
+            });
+
+            // ✅ Attach event listener for "View Image"
             productCard.querySelector(".view-image-btn").addEventListener("click", () => {
                 enlargeImage(product.image.startsWith('http') ? product.image : API_BASE_URL + product.image);
             });
 
-            // ✅ FIXED: Correctly pass parameters to `addToCart`
-            productCard.querySelector(".add-to-cart-btn").addEventListener("click", () => {
-                addToCart(product.name, product.price, product.image);
-            });
-
-            // Append product card to container
             warehouseContainer.appendChild(productCard);
         });
 
     } catch (error) {
         console.error("❌ Error fetching warehouse products:", error);
         warehouseContainer.innerHTML = '<p class="text-center text-danger">Failed to load products.</p>';
+    }
+}
+
+// ✅ Function to open the color selection modal
+async function openColorModal(productId, button) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/filament-colors`);
+        const colors = await response.json();
+
+        const colorOptionsContainer = document.getElementById("colorOptions");
+        colorOptionsContainer.innerHTML = ""; // Clear previous content
+
+        colors.forEach(color => {
+            const colorOption = document.createElement("div");
+            colorOption.classList.add("color-option");
+            colorOption.innerHTML = `
+                <img src="${color.image}" class="color-preview" style="width: 40px; height: 40px; cursor: pointer;">
+            `;
+
+            colorOption.addEventListener("click", () => {
+                button.innerHTML = `<img src="${color.image}" class="tiny-color-img" style="width: 20px; height: 20px; margin-right: 5px;"> ${color.name}`;
+                button.setAttribute("data-selected-color", JSON.stringify(color));
+                $("#colorModal").modal("hide"); // Close modal
+            });
+
+            colorOptionsContainer.appendChild(colorOption);
+        });
+
+        $("#colorModal").modal("show"); // Show the modal
+
+    } catch (error) {
+        console.error("Error fetching filament colors:", error);
     }
 }
 
