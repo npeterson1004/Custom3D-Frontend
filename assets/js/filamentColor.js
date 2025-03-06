@@ -1,4 +1,5 @@
 //filamentColor.js
+import { API_BASE_URL } from "./config.js";
 // ✅ Ensure function is defined globally
 export async function loadFilamentColors() {
     try {
