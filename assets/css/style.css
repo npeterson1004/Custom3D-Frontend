@@ -559,6 +559,24 @@ body.no-scroll {
     background-color: #002288;
 }
 
+/* ✅ Resize the color image inside the cart */
+.cart-color-img {
+    width: 25px; /* Adjust the size as needed */
+    height: 25px;
+    object-fit: cover;
+    border-radius: 50%; /* Makes it circular */
+    border: 1px solid #ccc;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+/* ✅ Adjust product image size */
+.cart-item-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+}
 
 
 /*-------------------------------------

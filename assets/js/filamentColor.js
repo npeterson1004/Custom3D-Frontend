@@ -1,19 +1,20 @@
 //filamentColor.js
 import { API_BASE_URL } from "./config.js";
 
-// ✅ Ensure the DOM is fully loaded before accessing elements
 document.addEventListener("DOMContentLoaded", function () {
     console.log("✅ FilamentColor.js Loaded");
 
     // ✅ Get elements safely
-    const viewFilamentTab = document.querySelector("#view-filament-tab");
+    const viewFilamentTab = document.querySelector("#view-filament-colors-tab");
     const addFilamentForm = document.querySelector("#addFilamentColorForm");
-    const filamentTable = document.querySelector("#filamentColorsTable");
 
     if (viewFilamentTab) {
-        viewFilamentTab.addEventListener("click", loadFilamentColors);
+        viewFilamentTab.addEventListener("click", function () {
+            console.log("📌 View Filament Colors Tab Clicked");
+            loadFilamentColors(); // ✅ Load colors when clicking the tab
+        });
     } else {
-        console.warn("⚠️ Warning: Element #view-filament-tab not found!");
+        console.warn("⚠️ Warning: Element #view-filament-colors-tab not found!");
     }
 
     if (addFilamentForm) {
@@ -44,22 +45,25 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
         console.warn("⚠️ Warning: Element #addFilamentColorForm not found!");
     }
-
-    if (!filamentTable) {
-        console.warn("⚠️ Warning: Element #filamentColorsTable not found!");
-    }
 });
 
 // ✅ Function to fetch and display filament colors
 async function loadFilamentColors() {
     try {
+        console.log("📌 Fetching filament colors...");
         const token = localStorage.getItem("adminToken");
         const response = await fetch(`${API_BASE_URL}/api/filament-colors`, {
             method: "GET",
             headers: { "Authorization": `Bearer ${token}` }
         });
 
+        if (!response.ok) {
+            throw new Error("❌ Failed to fetch colors");
+        }
+
         const colors = await response.json();
+        console.log("✅ Colors Received:", colors);
+
         const tableBody = document.querySelector("#filamentColorsTable");
 
         if (!tableBody) {
@@ -89,7 +93,7 @@ async function loadFilamentColors() {
         });
 
     } catch (error) {
-        console.error("Error loading filament colors:", error);
+        console.error("❌ Error loading filament colors:", error);
         const tableBody = document.querySelector("#filamentColorsTable");
         if (tableBody) {
             tableBody.innerHTML = '<tr><td colspan="4" class="text-center text-danger">⚠️ Failed to load filament colors.</td></tr>';
@@ -110,6 +114,7 @@ async function deleteFilamentColor(colorId) {
 
         loadFilamentColors(); // ✅ Refresh table after deletion
     } catch (error) {
-        console.error("Error deleting filament color:", error);
+        console.error("❌ Error deleting filament color:", error);
     }
 }
+

@@ -74,6 +74,11 @@ function loadCart() {
             total += itemTotal;
 
             let imageUrl = item.image.startsWith("http") ? item.image : `${API_BASE_URL}${item.image}`;
+            // ✅ Check if color exists, otherwise show "No Color Selected"
+            let colorDisplay = item.color 
+            ? `<img src="${item.color.image}" alt="${item.color.name}" class="cart-color-img"> <br><span>${item.color.name}</span>`
+            : "<span>No Color Selected</span>";
+
 
             cartItemsContainer.innerHTML += `
                 <tr>

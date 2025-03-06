@@ -240,6 +240,11 @@ async function fetchOrders() {
 // ✅ Load orders when the admin page loads
 document.addEventListener("DOMContentLoaded", fetchOrders);
 
+// ✅ Load filament colors when the "View Filament Colors" tab is clicked
+document.getElementById("view-filament-colors-tab").addEventListener("click", function () {
+    console.log("📌 View Filament Colors Tab Clicked");
+    loadFilamentColors(); // ✅ Ensure colors load on click
+});
 
 
 
