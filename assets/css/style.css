@@ -526,18 +526,22 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 }
 
 /* ✅ Hover Effect: Turns Dark Blue */
-.nav-tabs .nav-link:not(.active):hover {
+.nav-tabs .nav-link:hover {
     background-color: #034a92 !important; /* Dark Blue on Hover */
     color: #ffffff !important; /* Keep text white */
     border-radius: 5px; /* Slightly rounded tabs */
 }
 
 /* ✅ Active Tab Style: Stays Dark Blue */
-.nav-tabs .nav-link.active {
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-link:focus,
+.nav-tabs .nav-link:visited {
     background-color: #034a92 !important; /* Dark Blue for Active Tab */
     color: #ffffff !important;
     border-radius: 5px;
 }
+
+
 
 
 
