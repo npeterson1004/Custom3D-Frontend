@@ -84,7 +84,7 @@ function loadCart() {
                 <tr>
                     <td><img src="${imageUrl}" alt="${item.name}" class="cart-item-img"></td>
                     <td>${item.name}</td>
-                    <td><img src="${item.color.image}" alt="${item.color.name}" class="tiny-color-img" style="width: 20px; height: 20px; margin-right: 5px;></td>
+                    <td><img src="${item.color.image}" alt="${item.color.name}" class="cart-item-img"></td>
                     <td>$${item.price.toFixed(2)}</td>
                     <td>${item.color.name}</td>
                     <td>${item.quantity}</td>

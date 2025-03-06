@@ -762,10 +762,12 @@ body.no-scroll {
     border: 1px solid #ccc;
     display: inline-block;
     margin-bottom: 5px;
-    color:#080808;
-    font-size: 20px;
-}
 
+}
+.cart-color-text {
+color:#080808;
+font-size: 20px;
+}
 
 /*-------------------------------------
     Ensure Warehouse Section Layout is Clean

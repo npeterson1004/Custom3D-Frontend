@@ -97,7 +97,7 @@ async function openColorModal(productId, button) {
 
             colorOption.innerHTML = `
                 <img src="${color.image}" class="color-preview" style="width: 40px; height: 40px; margin-right: 10px;">
-                <span class="color-name">${color.name}</span>
+                <span class="cart-color-text">${color.name}</span>
             `;
 
             colorOption.addEventListener("click", () => {
