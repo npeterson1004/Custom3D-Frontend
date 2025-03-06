@@ -516,6 +516,32 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 
 
 
+
+/* ✅ Default Tab Styling */
+.nav-tabs .nav-link {
+    color: #ffffff !important; /* White text by default */
+    font-size: 20px;
+    background-color: transparent; /* No background */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ✅ Hover Effect: Turns Dark Blue */
+.nav-tabs .nav-link:hover {
+    background-color: #034a92 !important; /* Dark Blue on Hover */
+    color: #ffffff !important; /* Keep text white */
+    border-radius: 5px; /* Slightly rounded tabs */
+}
+
+/* ✅ Active Tab Style */
+.nav-tabs .nav-link.active {
+    background-color: #034a92 !important; /* Dark Blue for Active Tab */
+    color: #ffffff !important;
+    border-radius: 5px;
+}
+
+
+
+
 /*-------------------------------------
         Enlarged Image Styling
 --------------------------------------*/
