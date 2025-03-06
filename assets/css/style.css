@@ -133,7 +133,7 @@ h8 {
 h9 { 
 	margin: 0;
 	color:#080808;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 500;
     text-transform: capitalize;
 }
@@ -467,6 +467,54 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 /*====================================
         5. Item Card Styles
 ====================================*/
+/*color selector */
+
+
+/* ✅ Color Selector Modal */
+#colorModal .modal-content {
+    background-color: #034a92; /* Dark Blue Background */
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* ✅ Color Option Styling */
+.color-option {
+    background-color: #95d9fd; /* Light Blue Background */
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+/* ✅ Hover Effect */
+.color-option:hover {
+    background-color: #034a92; /* Dark Blue on Hover */
+    color: white !important; /* Change Text Color on Hover */
+    cursor: pointer;
+}
+
+/* ✅ Ensure Text Changes Color on Hover */
+.color-option:hover .cart-color-text {
+    color: white !important; /* Change text color on hover */
+}
+
+/* ✅ Add Black Border to Color Images */
+.color-option img {
+    border: 2px solid black;  /* Black border */
+    border-radius: 5px;  
+    padding: 0px;             /* Ensure no gap between image and border */
+    display: block;
+    transition: border-color 0.3s ease;
+}
+
+/* ✅ Maintain Black Border on Hover */
+.color-option:hover img {
+    border-color: black !important; /* Keep border black */
+}
+
+
 
 /*-------------------------------------
         Enlarged Image Styling
@@ -529,54 +577,6 @@ body.no-scroll {
 /*-------------------------------------
     Buttons (View Image, Add to Cart)
 --------------------------------------*/
-
-/*color selector */
-
-
-/* ✅ Color Selector Modal */
-#colorModal .modal-content {
-    background-color: #034a92; /* Dark Blue Background */
-    border-radius: 10px;
-    padding: 20px;
-}
-
-/* ✅ Color Option Styling */
-.color-option {
-    background-color: #8dd4fa; /* Light Blue Background */
-    padding: 10px;
-    margin: 5px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
-}
-
-/* ✅ Hover Effect */
-.color-option:hover {
-    background-color: #034a92; /* Dark Blue on Hover */
-    color: white !important; /* Change Text Color on Hover */
-    cursor: pointer;
-}
-
-/* ✅ Ensure Text Changes Color on Hover */
-.color-option:hover .cart-color-text {
-    color: white !important; /* Change text color on hover */
-}
-
-/* ✅ Add Black Border to Color Images */
-.color-option img {
-    border: 2px solid black;  /* Black border */
-    border-radius: 5px;  
-    padding: 0px;             /* Ensure no gap between image and border */
-    display: block;
-    transition: border-color 0.3s ease;
-}
-
-/* ✅ Maintain Black Border on Hover */
-.color-option:hover img {
-    border-color: black !important; /* Keep border black */
-}
-
 
 
 

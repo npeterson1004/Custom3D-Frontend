@@ -94,7 +94,7 @@ async function openColorModal(productId, button) {
             colorOption.style.cursor = "pointer";
             colorOption.style.display = "flex";
             colorOption.style.alignItems = "center";
-            colorOption.style.backgroundColor = "#7acdfa"; // ✅ Light Blue Background
+            colorOption.style.backgroundColor = "#95d9fd"; // ✅ Light Blue Background
             colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // ✅ Smooth effect
 
             colorOption.innerHTML = `
