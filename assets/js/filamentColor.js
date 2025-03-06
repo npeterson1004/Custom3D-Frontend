@@ -1,30 +1,52 @@
+//filamentColor.js
 import { API_BASE_URL } from "./config.js";
 
-// ✅ Load Filament Colors when "View Filament Colors" tab is clicked
-document.getElementById("view-filament-tab").addEventListener("click", loadFilamentColors);
+// ✅ Ensure the DOM is fully loaded before accessing elements
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("✅ FilamentColor.js Loaded");
 
-// ✅ Function to add a filament color
-document.getElementById("addFilamentColorForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    const token = localStorage.getItem("adminToken");
+    // ✅ Get elements safely
+    const viewFilamentTab = document.querySelector("#view-filament-tab");
+    const addFilamentForm = document.querySelector("#addFilamentColorForm");
+    const filamentTable = document.querySelector("#filamentColorsTable");
 
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/filament-colors`, {
-            method: "POST",
-            headers: { "Authorization": `Bearer ${token}` },
-            body: formData
+    if (viewFilamentTab) {
+        viewFilamentTab.addEventListener("click", loadFilamentColors);
+    } else {
+        console.warn("⚠️ Warning: Element #view-filament-tab not found!");
+    }
+
+    if (addFilamentForm) {
+        addFilamentForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const token = localStorage.getItem("adminToken");
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/filament-colors`, {
+                    method: "POST",
+                    headers: { "Authorization": `Bearer ${token}` },
+                    body: formData
+                });
+
+                const result = await response.json();
+                document.querySelector("#colorMessage").textContent = result.message;
+
+                if (response.ok) {
+                    this.reset();
+                    loadFilamentColors(); // ✅ Refresh table after adding a color
+                }
+            } catch (error) {
+                console.error("Error adding filament color:", error);
+                document.querySelector("#colorMessage").textContent = "❌ Failed to add filament color.";
+            }
         });
+    } else {
+        console.warn("⚠️ Warning: Element #addFilamentColorForm not found!");
+    }
 
-        const result = await response.json();
-        document.getElementById("colorMessage").textContent = result.message;
-
-        if (response.ok) {
-            this.reset();
-        }
-    } catch (error) {
-        console.error("Error adding filament color:", error);
-        document.getElementById("colorMessage").textContent = "❌ Failed to add filament color.";
+    if (!filamentTable) {
+        console.warn("⚠️ Warning: Element #filamentColorsTable not found!");
     }
 });
 
@@ -38,8 +60,14 @@ async function loadFilamentColors() {
         });
 
         const colors = await response.json();
-        const tableBody = document.getElementById("filamentColorsTable");
-        tableBody.innerHTML = "";
+        const tableBody = document.querySelector("#filamentColorsTable");
+
+        if (!tableBody) {
+            console.warn("⚠️ Warning: Element #filamentColorsTable not found!");
+            return;
+        }
+
+        tableBody.innerHTML = ""; // Clear table before adding new data
 
         if (colors.length === 0) {
             tableBody.innerHTML = '<tr><td colspan="4" class="text-center">No filament colors available.</td></tr>';
@@ -62,7 +90,10 @@ async function loadFilamentColors() {
 
     } catch (error) {
         console.error("Error loading filament colors:", error);
-        document.getElementById("filamentColorsTable").innerHTML = '<tr><td colspan="4" class="text-center text-danger">⚠️ Failed to load filament colors.</td></tr>';
+        const tableBody = document.querySelector("#filamentColorsTable");
+        if (tableBody) {
+            tableBody.innerHTML = '<tr><td colspan="4" class="text-center text-danger">⚠️ Failed to load filament colors.</td></tr>';
+        }
     }
 }
 
@@ -77,7 +108,7 @@ async function deleteFilamentColor(colorId) {
             headers: { "Authorization": `Bearer ${token}` }
         });
 
-        loadFilamentColors();
+        loadFilamentColors(); // ✅ Refresh table after deletion
     } catch (error) {
         console.error("Error deleting filament color:", error);
     }
