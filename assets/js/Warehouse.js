@@ -94,8 +94,8 @@ async function openColorModal(productId, button) {
             colorOption.style.cursor = "pointer";
             colorOption.style.display = "flex";
             colorOption.style.alignItems = "center";
-            colorOption.style.backgroundColor = "#4DA8DA"; // ✅ Light Blue Background
-            colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease, border 0.3s ease"; // ✅ Smooth effect
+            colorOption.style.backgroundColor = "#7acdfa"; // ✅ Light Blue Background
+            colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // ✅ Smooth effect
 
             colorOption.innerHTML = `
                 <img src="${color.image}" class="color-preview" 
@@ -103,17 +103,15 @@ async function openColorModal(productId, button) {
                 <span class="cart-color-text" style="color:#080808; font-size: 20px;">${color.name}</span>
             `;
 
-            // ✅ Change Background and Text Color on Hover
+            // ✅ Change Background and Text Color on Hover (but keep border black)
             colorOption.addEventListener("mouseenter", () => {
-                colorOption.style.backgroundColor = "#00274D"; // ✅ Dark Blue Hover
+                colorOption.style.backgroundColor = "#034a92"; // ✅ Dark Blue Hover
                 colorOption.querySelector(".cart-color-text").style.color = "white"; // ✅ White Text
-                colorOption.querySelector("img").style.borderColor = "white"; // ✅ White border on hover
             });
 
             colorOption.addEventListener("mouseleave", () => {
-                colorOption.style.backgroundColor = "#4DA8DA"; // ✅ Reset Background
+                colorOption.style.backgroundColor = "#7acdfa"; // ✅ Reset Background
                 colorOption.querySelector(".cart-color-text").style.color = "#080808"; // ✅ Reset Text Color
-                colorOption.querySelector("img").style.borderColor = "black"; // ✅ Reset Border Color
             });
 
             // ✅ Click Event to Select Color

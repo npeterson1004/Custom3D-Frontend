@@ -565,13 +565,17 @@ body.no-scroll {
 
 /* ✅ Add Black Border to Color Images */
 .color-option img {
-    border: 2px solid black;  /* Thin black border */
+    border: 2px solid black;  /* Black border */
     border-radius: 5px;  
     padding: 0px;             /* Ensure no gap between image and border */
-    display: block;       /* Slightly rounded corners */
-    transition: border-color 0.3s ease; /* Smooth transition */
+    display: block;
+    transition: border-color 0.3s ease;
 }
 
+/* ✅ Maintain Black Border on Hover */
+.color-option:hover img {
+    border-color: black !important; /* Keep border black */
+}
 
 
 
