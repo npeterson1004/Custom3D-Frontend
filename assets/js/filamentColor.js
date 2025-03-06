@@ -1,5 +1,62 @@
 //filamentColor.js
 import { API_BASE_URL } from "./config.js";
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("✅ FilamentColor.js Loaded");
+
+    // ✅ Ensure "Add Filament Color" Form Works
+    const addFilamentForm = document.querySelector("#addFilamentColorForm");
+
+    if (addFilamentForm) {
+        addFilamentForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const token = localStorage.getItem("adminToken");
+
+            try {
+                console.log("📌 Adding Filament Color...");
+                const response = await fetch(`${API_BASE_URL}/api/filament-colors`, {
+                    method: "POST",
+                    headers: { "Authorization": `Bearer ${token}` },
+                    body: formData
+                });
+
+                const result = await response.json();
+                console.log("✅ Response:", result);
+
+                document.querySelector("#colorMessage").textContent = result.message;
+
+                if (response.ok) {
+                    this.reset();
+                    loadFilamentColors(); // ✅ Refresh table after adding a color
+                }
+            } catch (error) {
+                console.error("❌ Error adding filament color:", error);
+                document.querySelector("#colorMessage").textContent = "❌ Failed to add filament color.";
+            }
+        });
+    } else {
+        console.warn("⚠️ Warning: Element #addFilamentColorForm not found!");
+    }
+});
+
+// ✅ Load filament colors when "View Filament Colors" is clicked
+document.addEventListener("DOMContentLoaded", function () {
+    const viewFilamentTab = document.querySelector("#view-filament-colors-tab");
+    if (viewFilamentTab) {
+        viewFilamentTab.addEventListener("click", function () {
+            console.log("📌 View Filament Colors Tab Clicked");
+            loadFilamentColors();
+        });
+    } else {
+        console.warn("⚠️ Warning: #view-filament-colors-tab not found!");
+    }
+});
+
+
+
+
 // ✅ Ensure function is defined globally
 export async function loadFilamentColors() {
     try {
