@@ -223,7 +223,7 @@ nav.navbar.bootsnav {
 
 /*.nav li*/
 nav.navbar.bootsnav ul.nav > li > a {
-    color: #e3e8ec; /* Dark blue */
+    color: #7a7c7e; /* Dark blue */
     font-size: 16px;
     font-weight: 500;
     text-transform:uppercase;
