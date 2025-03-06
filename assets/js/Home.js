@@ -79,7 +79,7 @@ async function fetchFeaturedProducts() {
     }
 }
 
-// ✅ Function to open the color selection modal
+// ✅ Function to open the color selection modal with styling
 async function openColorModal(productId, button) {
     try {
         const response = await fetch(`${API_BASE_URL}/api/filament-colors`);
@@ -94,12 +94,26 @@ async function openColorModal(productId, button) {
             colorOption.style.cursor = "pointer";
             colorOption.style.display = "flex";
             colorOption.style.alignItems = "center";
+            colorOption.style.backgroundColor = "#ffffff"; // Default Background
+            colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // Smooth effect
 
             colorOption.innerHTML = `
                 <img src="${color.image}" class="color-preview" style="width: 40px; height: 40px; margin-right: 10px;">
                 <span class="cart-color-text" style="color:#080808; font-size: 20px;">${color.name}</span>
             `;
 
+            // ✅ Change Background and Text Color on Hover
+            colorOption.addEventListener("mouseenter", () => {
+                colorOption.style.backgroundColor = "#007bff"; // Blue Hover
+                colorOption.querySelector(".cart-color-text").style.color = "white"; // White Text
+            });
+
+            colorOption.addEventListener("mouseleave", () => {
+                colorOption.style.backgroundColor = "#ffffff"; // Reset Background
+                colorOption.querySelector(".cart-color-text").style.color = "#080808"; // Reset Text Color
+            });
+
+            // ✅ Click Event to Select Color
             colorOption.addEventListener("click", () => {
                 button.innerHTML = `<img src="${color.image}" class="cart-color-img" style="width: 20px; height: 20px; margin-right: 5px;"> ${color.name}`;
                 button.setAttribute("data-selected-color", JSON.stringify(color));
@@ -115,6 +129,7 @@ async function openColorModal(productId, button) {
         console.error("Error fetching filament colors:", error);
     }
 }
+
 
 // Function to enlarge image in fullscreen mode & exit on click
 function enlargeImage(imgSrc) {

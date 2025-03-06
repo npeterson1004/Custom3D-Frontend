@@ -229,7 +229,7 @@ nav.navbar.bootsnav {
 
 /*.nav li*/
 nav.navbar.bootsnav ul.nav > li > a {
-    color: #7a7c7e; /* Dark blue */
+    color: #ffffff; /* Dark blue */
     font-size: 16px;
     font-weight: 500;
     text-transform:uppercase;
@@ -529,6 +529,42 @@ body.no-scroll {
 /*-------------------------------------
     Buttons (View Image, Add to Cart)
 --------------------------------------*/
+
+/*color selector */
+
+
+/* ✅ Color Selector Modal Styles */
+#colorModal .modal-content {
+    background-color: #085497; /* Light Blue Background */
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* ✅ Color Option Styling */
+.color-option {
+    background-color: #ffffff; /* White Background */
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ✅ Hover Effect */
+.color-option:hover {
+    background-color: #085497; /* Change Background on Hover */
+    color: white !important; /* Change Text Color on Hover */
+    cursor: pointer;
+}
+
+/* ✅ Ensure Text Changes Color on Hover */
+.color-option:hover .cart-color-text {
+    color: white !important; /* Change text color on hover */
+}
+
+
+
+
+
 
 /* ✅ "View Image" button styling */
 .view-image-btn {
