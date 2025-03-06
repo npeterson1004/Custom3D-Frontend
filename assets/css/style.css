@@ -535,14 +535,14 @@ body.no-scroll {
 
 /* ✅ Color Selector Modal */
 #colorModal .modal-content {
-    background-color: #013a74; /* Dark Blue Background */
+    background-color: #034a92; /* Dark Blue Background */
     border-radius: 10px;
     padding: 20px;
 }
 
 /* ✅ Color Option Styling */
 .color-option {
-    background-color: #60b7e6; /* Light Blue Background */
+    background-color: #71c7f5; /* Light Blue Background */
     padding: 10px;
     margin: 5px;
     border-radius: 5px;
@@ -553,7 +553,7 @@ body.no-scroll {
 
 /* ✅ Hover Effect */
 .color-option:hover {
-    background-color: #013a74; /* Dark Blue on Hover */
+    background-color: #034a92; /* Dark Blue on Hover */
     color: white !important; /* Change Text Color on Hover */
     cursor: pointer;
 }
@@ -572,10 +572,7 @@ body.no-scroll {
     transition: border-color 0.3s ease; /* Smooth transition */
 }
 
-/* ✅ Change Border on Hover */
-.color-option:hover img {
-    border-color: white; /* White border on hover */
-}
+
 
 
 
