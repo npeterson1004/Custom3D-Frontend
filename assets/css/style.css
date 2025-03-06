@@ -96,7 +96,7 @@ html, body {
 a,a:hover,a:active,a:focus {
 	display:inline-block;
 	text-decoration:none;
-	color: #eceff3;
+	color: #6a6b6d;
 	font-size:20px;
 	padding:0;
     font-weight: 500;
@@ -208,7 +208,7 @@ nav.navbar.bootsnav {
 /*.navbar-brand*/
 .navbar-header a.navbar-brand,.navbar-header a.navbar-brand:hover,.navbar-header a.navbar-brand:focus{
     display: inline-block;
-    color: #f3f3f3;
+    color: #5f5d5d;
     font-size: 24px;
     letter-spacing: 3px;
     font-family: 'Rufina', serif;
