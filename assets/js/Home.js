@@ -1,5 +1,4 @@
 //Home.js
-
 import { API_BASE_URL } from "./config.js";
 
 document.addEventListener("DOMContentLoaded", fetchFeaturedProducts);
@@ -9,28 +8,28 @@ async function fetchFeaturedProducts() {
         const response = await fetch(`${API_BASE_URL}/api/products/featured`);
         const products = await response.json();
 
-        const imageContainer = document.getElementById("imageContainer");
-        if (!imageContainer) {
-            console.error("Error: 'imageContainer' not found.");
+        const featuredContainer = document.getElementById("featuredContainer");
+        if (!featuredContainer) {
+            console.error("Error: 'featuredContainer' not found.");
             return;
         }
 
-        imageContainer.innerHTML = ""; // Clear existing content
+        featuredContainer.innerHTML = ""; // Clear existing content
 
         if (products.length === 0) {
-            imageContainer.innerHTML = '<p class="text-center">No featured products available.</p>';
+            featuredContainer.innerHTML = '<p class="text-center">No featured products available.</p>';
             return;
         }
 
         products.forEach(product => {
             const productCard = document.createElement("div");
-            productCard.classList.add("featured-item");
+            productCard.classList.add("warehouse-item"); // ✅ Use the same class as warehouse
 
             productCard.innerHTML = `
                 <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" 
-                     class="featured-img" 
+                     class="warehouse-img" 
                      alt="${product.name}">
-                <div class="featured-details">
+                <div class="warehouse-details">
                     <h5>${product.name}</h5>
                     <p>${product.description}</p>
                     <p class="order-price">$${product.price}</p>
@@ -54,16 +53,16 @@ async function fetchFeaturedProducts() {
             });
 
             // Append product card to container
-            imageContainer.appendChild(productCard);
+            featuredContainer.appendChild(productCard);
         });
 
     } catch (error) {
         console.error("Error fetching featured products:", error);
-        imageContainer.innerHTML = '<p class="text-center text-danger">Failed to load featured products.</p>';
+        featuredContainer.innerHTML = '<p class="text-center text-danger">Failed to load featured products.</p>';
     }
 }
 
-// Function to enlarge image in fullscreen mode & exit on click
+// ✅ Function to enlarge image in fullscreen mode & exit on click
 function enlargeImage(imgSrc) {
     let popupImg = document.createElement("img");
     popupImg.src = imgSrc;
@@ -86,5 +85,4 @@ function enlargeImage(imgSrc) {
         console.warn("Fullscreen request failed", err);
     });
 }
-
 
