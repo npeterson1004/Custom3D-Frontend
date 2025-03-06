@@ -542,7 +542,11 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 }
 
 
-
+/* ✅ Ensure First Tab is NOT Dark Blue by Default */
+.nav-tabs .nav-item:first-child .nav-link:not(.active) {
+    background-color: transparent !important; /* Reset background */
+    color: #ffffff !important;
+}
 
 
 /*-------------------------------------
