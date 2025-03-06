@@ -79,7 +79,7 @@ async function fetchWarehouseProducts() {
     }
 }
 
-// ✅ Function to open the color selection modal with styling
+// ✅ Function to open the color selection modal with proper styling
 async function openColorModal(productId, button) {
     try {
         const response = await fetch(`${API_BASE_URL}/api/filament-colors`);
@@ -94,8 +94,8 @@ async function openColorModal(productId, button) {
             colorOption.style.cursor = "pointer";
             colorOption.style.display = "flex";
             colorOption.style.alignItems = "center";
-            colorOption.style.backgroundColor = "#0390d1"; // Default Background
-            colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // Smooth effect
+            colorOption.style.backgroundColor = "#4DA8DA"; // ✅ Light Blue Background
+            colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease, border 0.3s ease"; // ✅ Smooth effect
 
             colorOption.innerHTML = `
                 <img src="${color.image}" class="color-preview" 
@@ -105,15 +105,15 @@ async function openColorModal(productId, button) {
 
             // ✅ Change Background and Text Color on Hover
             colorOption.addEventListener("mouseenter", () => {
-                colorOption.style.backgroundColor = "#007bff"; // Blue Hover
-                colorOption.querySelector(".cart-color-text").style.color = "white"; // White Text
-                colorOption.querySelector("img").style.borderColor = "white"; // White border on hover
+                colorOption.style.backgroundColor = "#00274D"; // ✅ Dark Blue Hover
+                colorOption.querySelector(".cart-color-text").style.color = "white"; // ✅ White Text
+                colorOption.querySelector("img").style.borderColor = "white"; // ✅ White border on hover
             });
 
             colorOption.addEventListener("mouseleave", () => {
-                colorOption.style.backgroundColor = "#ffffff"; // Reset Background
-                colorOption.querySelector(".cart-color-text").style.color = "#080808"; // Reset Text Color
-                colorOption.querySelector("img").style.borderColor = "black"; // Reset Border Color
+                colorOption.style.backgroundColor = "#4DA8DA"; // ✅ Reset Background
+                colorOption.querySelector(".cart-color-text").style.color = "#080808"; // ✅ Reset Text Color
+                colorOption.querySelector("img").style.borderColor = "black"; // ✅ Reset Border Color
             });
 
             // ✅ Click Event to Select Color
@@ -128,12 +128,13 @@ async function openColorModal(productId, button) {
             colorOptionsContainer.appendChild(colorOption);
         });
 
-        $("#colorModal").modal("show"); // Show the modal
+        $("#colorModal").modal("show"); // ✅ Show the modal
 
     } catch (error) {
         console.error("Error fetching filament colors:", error);
     }
 }
+
 
 
 // Function to enlarge image in fullscreen mode & exit on click
