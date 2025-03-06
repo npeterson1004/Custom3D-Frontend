@@ -101,7 +101,7 @@ async function openColorModal(productId, button) {
             `;
 
             colorOption.addEventListener("click", () => {
-                button.innerHTML = `<img src="${color.image}" class="tiny-color-img" style="width: 20px; height: 20px; margin-right: 5px;"> ${color.name}`;
+                button.innerHTML = `<img src="${color.image}" class="cart-color-img" style="width: 20px; height: 20px; margin-right: 5px;"> ${color.name}`;
                 button.setAttribute("data-selected-color", JSON.stringify(color));
                 $("#colorModal").modal("hide"); // Close modal
             });

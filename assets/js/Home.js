@@ -8,7 +8,7 @@ async function fetchFeaturedProducts() {
         const response = await fetch(`${API_BASE_URL}/api/products/featured`);
         const products = await response.json();
 
-        const imageContainer = document.getElementById("imageContainer");
+        const imageContainer = document.getElementById("featuredContainer");
         if (!imageContainer) {
             console.error("Error: 'imageContainer' not found.");
             return;
@@ -89,7 +89,7 @@ async function openColorSelection(productId) {
 
         let colorOptions = colors.map(color => `
             <div class="color-option" onclick="selectColor('${productId}', '${color.name}', '${color.image}')">
-                <img src="${color.image}" alt="${color.name}" class="color-img">
+                <img src="${color.image}" alt="${color.name}" class="cart-color-img">
                 <span>${color.name}</span>
             </div>
         `).join("");
