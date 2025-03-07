@@ -38,13 +38,37 @@ async function payWithVenmo() {
 }
 
 
-/* ✅ Confirm Payment and Send Order */
+/* ✅ Confirm Payment and Update Status */
 async function confirmPayment() {
-    document.getElementById("paymentStatus").innerHTML += `<p class="text-success">✅ Payment Confirmed. Now sending order...</p>`;
+    const orderId = localStorage.getItem("orderId");
 
-    setTimeout(() => {
-        sendOrder();
-    }, 2000);
+    if (!orderId) {
+        alert("⚠️ No order found. Please confirm your order first.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/orders/${orderId}/payment-status`, {
+            method: "PATCH",
+            headers: { 
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ paymentStatus: "Completed" })
+        });
+
+        if (!response.ok) {
+            throw new Error("❌ Failed to confirm payment.");
+        }
+
+        document.getElementById("paymentStatus").innerHTML += `<p class="text-success">✅ Payment Confirmed. Order is being processed.</p>`;
+        localStorage.removeItem(`cart_${userEmail}`);
+        updateCartCount();
+
+    } catch (error) {
+        console.error("❌ Error confirming payment:", error);
+        alert("❌ Payment confirmation failed. Please try again.");
+    }
 }
 
 // ✅ Make functions globally accessible
