@@ -1,6 +1,54 @@
 //order.js
 import { API_BASE_URL } from "./config.js";
 
+/* ✅ Send Order After Payment */
+async function sendOrder() {
+    const orderId = localStorage.getItem("orderId");
+
+    if (!orderId) {
+        alert("⚠️ No order found. Please confirm your order first.");
+        return;
+    }
+
+    try {
+        showOrderProcessingMessage(); // ✅ Show processing message
+
+        const response = await fetch(`${API_BASE_URL}/api/orders/${orderId}/payment-status`, {
+            method: "PATCH",
+            headers: { 
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ paymentStatus: "Completed" }) // ✅ Update payment status
+        });
+
+        if (!response.ok) {
+            throw new Error("❌ Order update failed.");
+        }
+
+        document.getElementById("paymentStatus").innerHTML += `<p class="text-success">✅ Order successfully sent!</p>`;
+
+        // ✅ Clear cart after successful order
+        let userEmail = localStorage.getItem("userEmail");
+        if (userEmail) {
+            localStorage.removeItem(`cart_${userEmail}`);
+        }
+        updateCartCount();
+
+        // ✅ Hide buttons after order is sent
+        document.getElementById("sendOrderButton").style.display = "none";
+        document.getElementById("confirmPaymentButton").style.display = "none";
+
+    } catch (error) {
+        console.error("❌ Error sending order:", error);
+        alert("❌ Failed to send order. Please try again.");
+    }
+}
+
+// ✅ Make function globally accessible
+window.sendOrder = sendOrder;
+
+
 /* ✅ Confirm Order (Creates Order in Database) */
 async function confirmOrder() {
     let userEmail = localStorage.getItem("userEmail");
