@@ -1,13 +1,8 @@
 //order.js
 import { API_BASE_URL } from "./config.js";
 
-/* ✅ Open Payment Modal */
-function openPaymentModal() {
-    $("#paymentModal").modal("show");
-}
-
-/* ✅ Store Order Before Sending Payment */
-async function sendOrder() {
+/* ✅ Confirm Order (Creates Order in Database) */
+async function confirmOrder() {
     let userEmail = localStorage.getItem("userEmail");
 
     if (!userEmail) {
@@ -34,13 +29,12 @@ async function sendOrder() {
             color: item.color ? { name: item.color.name, image: item.color.image } : null
         })),
         totalAmount,
-        paymentMethod: "Venmo", // ✅ Payment method is Venmo
-        paymentStatus: "Pending" // ✅ Mark as pending until admin confirms payment
+        paymentMethod: "Venmo",
+        paymentStatus: "Pending"
     };
 
     try {
-        // ✅ Show Order Processing Message
-        showOrderProcessingMessage();
+        showOrderProcessingMessage(); // ✅ Show processing message
 
         const response = await fetch(`${API_BASE_URL}/api/orders`, {
             method: "POST",
@@ -53,7 +47,7 @@ async function sendOrder() {
         });
 
         if (!response.ok) {
-            throw new Error("❌ Order failed to send.");
+            throw new Error("❌ Order failed to create.");
         }
 
         const orderResponse = await response.json();
@@ -64,23 +58,59 @@ async function sendOrder() {
         // ✅ Show Order Confirmation Message
         showOrderConfirmationMessage();
 
-        // ✅ Show Payment Modal
+        // ✅ Open Payment Modal after confirming order
         openPaymentModal();
 
-        // ✅ Clear Cart After Sending Order
-        localStorage.removeItem(`cart_${userEmail}`);
-        updateCartCount();
-        loadCart();
-
     } catch (error) {
-        console.error("❌ Error placing order:", error);
-        alert("❌ Order failed. Please try again.");
+        console.error("❌ Error confirming order:", error);
+        alert("❌ Order confirmation failed. Please try again.");
     }
 }
 
-// ✅ Make sendOrder globally accessible
+/* ✅ Open Payment Modal */
+function openPaymentModal() {
+    $("#paymentModal").modal("show");
+}
+
+/* ✅ Process Venmo Payment */
+async function payWithVenmo() {
+    const userEmail = localStorage.getItem("userEmail");
+    const orderId = localStorage.getItem("orderId"); // ✅ Ensure order ID exists
+
+    if (!userEmail || !orderId) {
+        alert("⚠️ No order found. Please confirm your order first.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/payment/venmo`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userEmail, orderId })
+        });
+
+        const data = await response.json();
+
+        document.getElementById("paymentStatus").innerHTML = `
+            <p>📲 Open Venmo and send payment to:</p>
+            <p><b>${data.venmoUsername}</b></p>
+            <p>💲 Include your order number: <b>${orderId}</b></p>
+            <p>✅ Click "Pay & Send Order" after payment.</p>
+        `;
+
+        // ✅ Show Pay & Send Order button
+        document.getElementById("sendOrderButton").style.display = "block";
+
+    } catch (error) {
+        console.error("❌ Error processing Venmo payment:", error);
+        document.getElementById("paymentStatus").innerHTML = `<p class="text-danger">❌ Payment failed. Please try again.</p>`;
+    }
+}
+
+/* ✅ Make Functions Globally Accessible */
+window.confirmOrder = confirmOrder;
 window.openPaymentModal = openPaymentModal;
-window.sendOrder = sendOrder;
+window.payWithVenmo = payWithVenmo;
 
 /* ✅ Show Order Processing Message */
 function showOrderProcessingMessage() {
@@ -116,6 +146,7 @@ function removeExistingMessage() {
     const existingMessage = document.getElementById("order-message");
     if (existingMessage) existingMessage.remove();
 }
+
 
 // ✅ Apply CSS for Notification Messages
 const styles = document.createElement("style");

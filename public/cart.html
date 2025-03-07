@@ -72,8 +72,18 @@
             </table>
             <div class="text-right">
                 <h4>Total: $<span id="cart-total">0.00</span></h4>
-<!-- Proceed to Payment Button -->
-<button class="btn btn-primary" onclick="openPaymentModal()">Proceed to Payment</button>
+
+                <!-- Confirm Order Button -->
+                <button id="confirmOrderButton" class="btn btn-primary" onclick="confirmOrder()">Confirm Order</button>
+
+                <!-- Proceed to Payment Button (Hidden Until Order is Confirmed) -->
+                <button id="proceedToPaymentButton" class="btn btn-primary" onclick="openPaymentModal()" style="display: none;">
+                    Proceed to Payment
+                </button>
+            </div>
+        </div>
+    </section>
+</div> <!-- End of .main-content -->
 
 <!-- Payment Modal -->
 <div id="paymentModal" class="modal fade" tabindex="-1" role="dialog">
@@ -97,14 +107,6 @@
         </div>
     </div>
 </div>
-
-
-   
-            </div>
-        </div>
-    </section>
-</div> <!-- End of .main-content -->
-
 
 
 
