@@ -46,6 +46,7 @@ async function sendOrder() {
     }
 }
 
+
 // ✅ Ensure function is globally accessible
 window.sendOrder = sendOrder;
 
