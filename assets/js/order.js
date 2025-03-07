@@ -27,7 +27,11 @@ async function sendOrder() {
             throw new Error(`❌ Failed to update payment status. Server responded with ${response.status}`);
         }
 
-        document.getElementById("paymentStatus").innerHTML += `<p class="text-success">✅ Order successfully sent!</p>`;
+        const result = await response.json();
+        console.log("✅ Order successfully updated:", result);
+
+        // ✅ Show success message
+        document.getElementById("paymentStatus").innerHTML = `<p class="text-success">✅ Order successfully sent!</p>`;
 
         // ✅ Clear cart after successful order
         let userEmail = localStorage.getItem("userEmail");
@@ -42,6 +46,16 @@ async function sendOrder() {
 
         if (sendOrderButton) sendOrderButton.style.display = "none";
         if (confirmPaymentButton) confirmPaymentButton.style.display = "none";
+
+        // ✅ Remove the "Pending Order" message after a few seconds
+        setTimeout(() => {
+            removeExistingMessage();
+        }, 3000); // ✅ Message disappears after 3 seconds
+
+        // ✅ Refresh admin dashboard (if on the page)
+        if (window.location.pathname.includes("admin-dashboard.html")) {
+            fetchOrders();
+        }
 
     } catch (error) {
         console.error("❌ Error sending order:", error);
@@ -142,7 +156,13 @@ function showOrderProcessingMessage() {
     messageBox.innerText = "🕒 Processing your order...";
 
     document.body.appendChild(messageBox);
+
+    // ✅ Remove the message after 3 seconds
+    setTimeout(() => {
+        removeExistingMessage();
+    }, 3000);
 }
+
 
 /* ✅ Show Order Confirmation Message */
 function showOrderConfirmationMessage() {
