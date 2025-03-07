@@ -137,7 +137,13 @@ h9 {
     font-weight: 500;
     text-transform: capitalize;
 }
-
+h10 { 
+	margin: 0;
+	color:#080808;
+    font-size: 25px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
 p {
 	margin: 0;
 	color:#f2f3f5;

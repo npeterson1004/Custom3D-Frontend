@@ -29,7 +29,7 @@ async function confirmOrder() {
             color: item.color ? { name: item.color.name, image: item.color.image } : null
         })),
         totalAmount,
-        paymentMethod: "Venmo",
+        paymentMethod: "Venmo", // ✅ Fix: Ensure payment method is included
         paymentStatus: "Pending"
     };
 
@@ -66,6 +66,7 @@ async function confirmOrder() {
         alert("❌ Order confirmation failed. Please try again.");
     }
 }
+
 
 /* ✅ Open Payment Modal */
 function openPaymentModal() {
