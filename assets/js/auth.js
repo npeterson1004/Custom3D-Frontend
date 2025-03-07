@@ -115,10 +115,8 @@ async function logout() {
 
     let userEmail = localStorage.getItem("userEmail");
 
-    // ✅ Clear the user's cart from localStorage
-    if (userEmail) {
-        localStorage.removeItem(`cart_${userEmail}`);
-    }
+    // ✅ Store the user's cart before clearing localStorage
+    let cartData = userEmail ? localStorage.getItem(`cart_${userEmail}`) : null;
 
     const token = localStorage.getItem("token") || localStorage.getItem("adminToken");
 
@@ -131,8 +129,14 @@ async function logout() {
         });
     }
 
-    console.log("✅ Removing all stored data...");
+    console.log("✅ Removing all stored data except cart...");
+
+    // ✅ Clear localStorage while preserving the cart
     localStorage.clear();
+    
+    if (userEmail && cartData) {
+        localStorage.setItem(`cart_${userEmail}`, cartData); // ✅ Restore cart data
+    }
 
     console.log("✅ Redirecting to login page...");
     setTimeout(() => {
