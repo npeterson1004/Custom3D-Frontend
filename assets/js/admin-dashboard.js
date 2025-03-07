@@ -182,7 +182,7 @@ async function fetchOrders() {
         ordersContainer.innerHTML = "";
 
         if (orders.length === 0) {
-            ordersContainer.innerHTML = '<tr><td colspan="5" class="text-center">No orders available.</td></tr>';
+            ordersContainer.innerHTML = '<tr><td colspan="6" class="text-center">No orders available.</td></tr>';
             return;
         }
 
@@ -203,14 +203,64 @@ async function fetchOrders() {
                     </td>
                     <td>$${order.totalAmount.toFixed(2)}</td>
                     <td>${new Date(order.orderDate).toLocaleString()}</td>
+                    <td>
+                        <select class="payment-status-dropdown" data-order-id="${order._id}">
+                            <option value="Pending" ${order.paymentStatus === "Pending" ? "selected" : ""}>Pending</option>
+                            <option value="Completed" ${order.paymentStatus === "Completed" ? "selected" : ""}>Completed</option>
+                        </select>
+                    </td>
                 </tr>
             `;
+        });
+
+        // ✅ Attach Event Listeners to Payment Status Dropdowns
+        document.querySelectorAll(".payment-status-dropdown").forEach(dropdown => {
+            dropdown.addEventListener("change", function() {
+                const orderId = this.getAttribute("data-order-id");
+                const newStatus = this.value;
+                updatePaymentStatus(orderId, newStatus);
+            });
         });
 
     } catch (error) {
         console.error("❌ Error fetching orders:", error);
     }
 }
+
+
+/* ✅ Update Payment Status */
+async function updatePaymentStatus(orderId, newStatus) {
+    try {
+        const token = localStorage.getItem("adminToken");
+
+        const response = await fetch(`${API_BASE_URL}/api/orders/${orderId}/payment-status`, {
+            method: "PATCH",
+            headers: { 
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ paymentStatus: newStatus })
+        });
+
+        if (!response.ok) {
+            throw new Error("❌ Failed to update payment status.");
+        }
+
+        console.log(`✅ Payment status updated successfully to ${newStatus}`);
+        
+        // ✅ Refresh orders to reflect changes
+        fetchOrders();
+
+    } catch (error) {
+        console.error("❌ Error updating payment status:", error);
+    }
+}
+
+
+
+// ✅ Load orders when the admin page loads
+document.addEventListener("DOMContentLoaded", fetchOrders);
+
 
 /* ✅ Tab Navigation - Ensure First Tab Doesn't Stay Active */
 document.addEventListener("DOMContentLoaded", function () {

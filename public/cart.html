@@ -72,11 +72,43 @@
             </table>
             <div class="text-right">
                 <h4>Total: $<span id="cart-total">0.00</span></h4>
-                <button class="btn btn-primary" onclick="sendOrder()">Send Order</button>
+<!-- Proceed to Payment Button -->
+<button class="btn btn-primary" onclick="openPaymentModal()">Proceed to Payment</button>
+
+<!-- Payment Modal -->
+<div id="paymentModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Choose Payment Method</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <button class="btn btn-primary" onclick="payWithVenmo()">Pay with Venmo</button>
+                <p id="paymentStatus" class="mt-3"></p>
+
+                <!-- Confirm Payment Button (Hidden Until Payment is Confirmed) -->
+                <button id="confirmPaymentButton" class="btn btn-success mt-3" onclick="confirmPayment()" style="display: none;">
+                    Confirm Payment
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+   
             </div>
         </div>
     </section>
 </div> <!-- End of .main-content -->
+
+
+
+
+
 
         <!-- Blank Space -->
         <div style="height: 80px;"></div>
@@ -113,6 +145,7 @@
     <script type="module" src="../assets/js/auth.js"></script>
     <script type="module" src="../assets/js/cart.js"></script>
     <script type="module" src="../assets/js/order.js"></script>
+    <script type="module" src="../assets/js/payment.js"></script>
 
 
 

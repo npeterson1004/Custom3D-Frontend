@@ -1,7 +1,13 @@
 //order.js
 import { API_BASE_URL } from "./config.js";
 
-// ✅ Send Order to Admin (Now Includes Colors)
+/* ✅ Open Payment Modal */
+function openPaymentModal() {
+    $("#paymentModal").modal("show");
+}
+
+/* ✅ Store Order Before Sending Payment */
+/* ✅ Store Order Before Sending Payment */
 async function sendOrder() {
     let userEmail = localStorage.getItem("userEmail");
 
@@ -12,7 +18,6 @@ async function sendOrder() {
     }
 
     let cart = JSON.parse(localStorage.getItem(`cart_${userEmail}`)) || [];
-
     if (cart.length === 0) {
         alert("⚠️ Your cart is empty.");
         return;
@@ -20,7 +25,6 @@ async function sendOrder() {
 
     const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-    // ✅ Ensure color is optional
     const orderData = {
         userEmail,
         items: cart.map(item => ({
@@ -28,15 +32,17 @@ async function sendOrder() {
             price: item.price,
             image: item.image,
             quantity: item.quantity,
-            color: item.color ? { name: item.color.name, image: item.color.image } : null // ✅ Allow null colors
+            color: item.color ? { name: item.color.name, image: item.color.image } : null
         })),
-        totalAmount
+        totalAmount,
+        paymentMethod: "Venmo",
+        paymentStatus: "Pending"
     };
-    showOrderProcessingMessage()
+
     try {
         const response = await fetch(`${API_BASE_URL}/api/orders`, {
             method: "POST",
-            headers: { 
+            headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`,
                 "Content-Type": "application/json"
             },
@@ -48,7 +54,12 @@ async function sendOrder() {
             throw new Error("❌ Order failed to send.");
         }
 
+        const orderResponse = await response.json();
+        localStorage.setItem("orderId", orderResponse.order._id);
+
         showOrderConfirmationMessage();
+        $("#paymentModal").modal("hide");
+
         localStorage.removeItem(`cart_${userEmail}`);
         updateCartCount();
         loadCart();
@@ -58,6 +69,26 @@ async function sendOrder() {
         alert("❌ Order failed. Please try again.");
     }
 }
+
+
+/* ✅ Show Order Confirmation Message */
+function showOrderConfirmationMessage() {
+    let messageBox = document.createElement("div");
+    messageBox.id = "order-message";
+    messageBox.className = "order-notification confirmed";
+    messageBox.innerText = "✅ Your order has been placed and is awaiting payment confirmation. Tap to close.";
+
+    messageBox.addEventListener("click", () => {
+        messageBox.style.opacity = "0";
+        setTimeout(() => messageBox.remove(), 300);
+    });
+
+    document.body.appendChild(messageBox);
+}
+
+// ✅ Make sendOrder globally accessible
+window.openPaymentModal = openPaymentModal;
+window.sendOrder = sendOrder;
 
 
 
@@ -73,23 +104,7 @@ function showOrderProcessingMessage() {
     document.body.appendChild(messageBox);
 }
 
-// ✅ Function to Show Order Confirmation Message (Tap to Dismiss)
-function showOrderConfirmationMessage() {
-    removeExistingMessage();
 
-    let messageBox = document.createElement("div");
-    messageBox.id = "order-message";
-    messageBox.className = "order-notification confirmed";
-    messageBox.innerText = "✅ Your order has been placed! You will receive a confirmation email within a couple days if your order is confirmed by owner. Tap to close.";
-
-    // ✅ Close message when user clicks it
-    messageBox.addEventListener("click", () => {
-        messageBox.style.opacity = "0";
-        setTimeout(() => messageBox.remove(), 300);
-    });
-
-    document.body.appendChild(messageBox);
-}
 
 // ✅ Function to Remove Any Existing Message Before Showing a New One
 function removeExistingMessage() {
