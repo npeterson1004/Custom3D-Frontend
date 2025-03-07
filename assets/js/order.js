@@ -19,11 +19,12 @@ async function sendOrder() {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`,
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ paymentStatus: "Completed" }) // ✅ Update payment status
+            credentials: "include", // ✅ Ensures session cookies are sent
+            body: JSON.stringify({ paymentStatus: "Completed" }) // ✅ Correctly update payment status
         });
 
         if (!response.ok) {
-            throw new Error("❌ Order update failed.");
+            throw new Error(`❌ Failed to update payment status. Server responded with ${response.status}`);
         }
 
         document.getElementById("paymentStatus").innerHTML += `<p class="text-success">✅ Order successfully sent!</p>`;
@@ -45,8 +46,9 @@ async function sendOrder() {
     }
 }
 
-// ✅ Make function globally accessible
+// ✅ Ensure function is globally accessible
 window.sendOrder = sendOrder;
+
 
 
 /* ✅ Confirm Order (Creates Order in Database) */
@@ -84,36 +86,20 @@ async function confirmOrder() {
     try {
         showOrderProcessingMessage(); // ✅ Show processing message
 
-        const response = await fetch(`${API_BASE_URL}/api/orders`, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`,
-                "Content-Type": "application/json"
-            },
-            credentials: "include",
-            body: JSON.stringify(orderData)
-        });
+        // ✅ Store Order Data Locally (Instead of sending it to admin immediately)
+        localStorage.setItem("pendingOrder", JSON.stringify(orderData));
 
-        if (!response.ok) {
-            throw new Error("❌ Order failed to create.");
-        }
-
-        const orderResponse = await response.json();
-
-        // ✅ Store Order ID for Payment Processing
-        localStorage.setItem("orderId", orderResponse.order._id);
-
-        // ✅ Show Order Confirmation Message
-        showOrderConfirmationMessage();
-
-        // ✅ Enable Proceed to Payment Button
+        // ✅ Show Proceed to Payment Button (User must click this next)
         document.getElementById("proceedToPaymentButton").style.display = "block";
+
+        showOrderConfirmationMessage();
 
     } catch (error) {
         console.error("❌ Error confirming order:", error);
         alert("❌ Order confirmation failed. Please try again.");
     }
 }
+
 
 
 

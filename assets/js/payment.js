@@ -5,10 +5,10 @@ import { API_BASE_URL } from "./config.js";
 /* ✅ Process Venmo Payment */
 async function payWithVenmo() {
     const userEmail = localStorage.getItem("userEmail");
-    let orderId = localStorage.getItem("orderId"); // ✅ Retrieve stored order ID
+    let pendingOrder = localStorage.getItem("pendingOrder"); // ✅ Retrieve order data
 
-    if (!userEmail || !orderId) {
-        alert("⚠️ No order found. Please try again.");
+    if (!userEmail || !pendingOrder) {
+        alert("⚠️ No order found. Please confirm your order first.");
         return;
     }
 
@@ -16,16 +16,16 @@ async function payWithVenmo() {
         const response = await fetch(`${API_BASE_URL}/api/payment/venmo`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ userEmail, orderId })
+            body: JSON.stringify({ userEmail })
         });
 
         const data = await response.json();
 
         document.getElementById("paymentStatus").innerHTML = `
-            <h8>📲 Open Venmo and send payment to:</h8>
-            <h8><b>${data.venmoUsername}</b></h8>
-            <h8>💲 Include your order number: <b>${orderId}</b></h8>
-            <h8>✅ Click "Send Order" after payment.</h8>
+            <h11>📲 Open Venmo and send payment to:</h11>
+            <h11><b>${data.venmoUsername}</b></h11>
+            <h11>💲 Include your order number when paying</h11>
+            <h11>✅ Click "Pay & Send Order" after payment.</h11>
         `;
 
         // ✅ Show Send Order button
