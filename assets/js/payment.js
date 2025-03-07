@@ -22,11 +22,10 @@ async function payWithVenmo() {
         const data = await response.json();
 
         document.getElementById("paymentStatus").innerHTML = `
-            <h11>📲 Open Venmo and send payment to:</h11>
-            <h11><b>${data.venmoUsername}</b></h11>
-            <h11>💲 Include your order number when paying</h11>
-            <h11>✅ Click "Pay & Send Order" after payment.</h11>
-        `;
+        <h11>📲 Open Venmo and send payment to: <b>${data.venmoUsername}</b></h11>
+        <h11>💲 Include your order number when paying</h11>
+        <h11>✅ Click "Pay & Send Order" after payment.</h11>
+    `;
 
         // ✅ Show Send Order button
         document.getElementById("sendOrderButton").style.display = "block";
