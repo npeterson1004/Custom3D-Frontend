@@ -840,12 +840,21 @@ body.no-scroll {
 
 /* ✅ Styles the cart quantity input */
 .cart-quantity-input {
-    color: black !important;
-    background-color: #5f9fdb !important;
-    text-align: center;
-    width: 60px;
-    border: 1px solid #555;
-    font-weight: bold;
+    width: 50px;  /* ✅ Makes the input box smaller */
+    height: 30px; /* ✅ Adjusts height */
+    text-align: center; /* ✅ Centers text inside input */
+    background-color: #63d7fa; /* ✅ Light blue background */
+    border: 1px solid #1350f7; /* ✅ Blue border */
+    border-radius: 5px; /* ✅ Soft rounded corners */
+    font-weight: bold; /* ✅ Makes number more visible */
+    color: #333; /* ✅ Dark text for readability */
+}
+
+/* ✅ Change background color when input is focused */
+.cart-quantity-input:focus {
+    background-color: #4ed0f8; /* ✅ Slightly darker blue when focused */
+    border-color: #0056b3; /* ✅ Darker blue border */
+    outline: none; /* ✅ Removes default outline */
 }
 
 .cart-item-img {

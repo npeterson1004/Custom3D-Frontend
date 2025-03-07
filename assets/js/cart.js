@@ -87,10 +87,10 @@ function loadCart() {
                     <td><img src="${item.color.image}"  class="cart-item-img"></td>
                     <td>$${item.price.toFixed(2)}</td>
                     <td>${item.color.name}</td>
-                    <td>
-                        <input type="number" class="form-control cart-quantity" min="1" value="${item.quantity}" 
-                            onchange="updateCartItem(${index}, this.value)">
-                    </td>
+                <td>
+                    <input type="number" class="form-control cart-quantity-input" min="1" value="${item.quantity}" 
+                    onchange="updateCartItem(${index}, this.value)">
+                </td>
                     <td>$${itemTotal.toFixed(2)}</td>
                     <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
                 </tr>
