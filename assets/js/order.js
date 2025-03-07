@@ -137,8 +137,6 @@ window.openPaymentModal = openPaymentModal;
 
 
 
-
-
 /* ✅ Open Payment Modal */
 async function openPaymentModal() {
     const orderId = localStorage.getItem("orderId");
@@ -164,13 +162,23 @@ async function openPaymentModal() {
             throw new Error("❌ Failed to update payment status.");
         }
 
-        $("#paymentModal").modal("show"); // ✅ Show the payment modal after updating status
+        // ✅ Ensure modal is fully loaded before accessing buttons
+        $("#paymentModal").modal("show");
+
+        setTimeout(() => {
+            const sendOrderButton = document.getElementById("sendOrderButton");
+            const confirmPaymentButton = document.getElementById("confirmPaymentButton");
+
+            if (sendOrderButton) sendOrderButton.style.display = "block";
+            if (confirmPaymentButton) confirmPaymentButton.style.display = "block";
+        }, 500); // ✅ Delay execution to ensure modal is rendered
 
     } catch (error) {
         console.error("❌ Error updating payment status:", error);
         alert("❌ Failed to proceed to payment. Please try again.");
     }
 }
+
 
 
 
