@@ -251,6 +251,22 @@ document.getElementById("view-filament-colors-tab").addEventListener("click", fu
 });
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    const firstTab = document.querySelector(".nav-tabs .nav-item:first-child .nav-link");
+
+    // Remove 'active' class on page load
+    if (firstTab.classList.contains("active")) {
+        firstTab.classList.remove("active");
+    }
+
+    // Make sure clicking tabs behaves normally
+    document.querySelectorAll(".nav-tabs .nav-link").forEach(tab => {
+        tab.addEventListener("click", function () {
+            document.querySelectorAll(".nav-tabs .nav-link").forEach(t => t.classList.remove("active"));
+            this.classList.add("active");
+        });
+    });
+});
 
 
 // Prevent XSS attacks
