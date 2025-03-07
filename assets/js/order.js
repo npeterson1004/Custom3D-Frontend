@@ -36,9 +36,14 @@ async function sendOrder() {
         }
         updateCartCount();
 
-        // ✅ Hide buttons after order is sent
-        document.getElementById("sendOrderButton").style.display = "none";
-        document.getElementById("confirmPaymentButton").style.display = "none";
+        // ✅ Hide buttons after order is sent (Ensure elements exist first)
+        setTimeout(() => {
+            const sendOrderButton = document.getElementById("sendOrderButton");
+            const confirmPaymentButton = document.getElementById("confirmPaymentButton");
+
+            if (sendOrderButton) sendOrderButton.style.display = "none";
+            if (confirmPaymentButton) confirmPaymentButton.style.display = "none";
+        }, 500); // ✅ Delayed execution to avoid accessing null elements
 
         // ✅ Remove "Pending Order" message
         setTimeout(() => {
@@ -55,6 +60,7 @@ async function sendOrder() {
         alert("❌ Failed to send order. Please try again.");
     }
 }
+
 
 
 // ✅ Ensure function is globally accessible
