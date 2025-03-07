@@ -19,7 +19,7 @@ async function sendOrder() {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`,
                 "Content-Type": "application/json"
             },
-            credentials: "include", // ✅ Ensures session cookies are sent
+            credentials: "include",
             body: JSON.stringify({ paymentStatus: "Completed" }) // ✅ Correctly update payment status
         });
 
@@ -27,10 +27,6 @@ async function sendOrder() {
             throw new Error(`❌ Failed to update payment status. Server responded with ${response.status}`);
         }
 
-        const result = await response.json();
-        console.log("✅ Order successfully updated:", result);
-
-        // ✅ Show success message
         document.getElementById("paymentStatus").innerHTML = `<p class="text-success">✅ Order successfully sent!</p>`;
 
         // ✅ Clear cart after successful order
@@ -40,19 +36,16 @@ async function sendOrder() {
         }
         updateCartCount();
 
-        // ✅ Hide buttons after order is sent (Ensure elements exist first)
-        const sendOrderButton = document.getElementById("sendOrderButton");
-        const confirmPaymentButton = document.getElementById("confirmPaymentButton");
+        // ✅ Hide buttons after order is sent
+        document.getElementById("sendOrderButton").style.display = "none";
+        document.getElementById("confirmPaymentButton").style.display = "none";
 
-        if (sendOrderButton) sendOrderButton.style.display = "none";
-        if (confirmPaymentButton) confirmPaymentButton.style.display = "none";
-
-        // ✅ Remove the "Pending Order" message after a few seconds
+        // ✅ Remove "Pending Order" message
         setTimeout(() => {
             removeExistingMessage();
         }, 3000); // ✅ Message disappears after 3 seconds
 
-        // ✅ Refresh admin dashboard (if on the page)
+        // ✅ Refresh admin dashboard if on that page
         if (window.location.pathname.includes("admin-dashboard.html")) {
             fetchOrders();
         }
@@ -63,13 +56,14 @@ async function sendOrder() {
     }
 }
 
+
 // ✅ Ensure function is globally accessible
 window.sendOrder = sendOrder;
 
 
 
 
-/* ✅ Confirm Order  */
+/* ✅ Confirm Order (Creates Order in Database) */
 async function confirmOrder() {
     let userEmail = localStorage.getItem("userEmail");
 
@@ -104,10 +98,24 @@ async function confirmOrder() {
     try {
         showOrderProcessingMessage(); // ✅ Show processing message
 
-        // ✅ Store order locally instead of sending it to the admin yet
-        localStorage.setItem("pendingOrder", JSON.stringify(orderData));
+        const response = await fetch(`${API_BASE_URL}/api/orders`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+            body: JSON.stringify(orderData)
+        });
 
-        // ✅ Show Proceed to Payment Button (User must click this next)
+        if (!response.ok) {
+            throw new Error("❌ Order failed to create.");
+        }
+
+        const orderResponse = await response.json();
+        localStorage.setItem("orderId", orderResponse.order._id); // ✅ Store order ID for payment
+
+        // ✅ Show "Proceed to Payment" button after confirming order
         document.getElementById("proceedToPaymentButton").style.display = "block";
 
         showOrderConfirmationMessage();
@@ -122,6 +130,7 @@ async function confirmOrder() {
 
 
 
+
 /* ✅ Make Functions Globally Accessible */
 window.confirmOrder = confirmOrder;
 window.openPaymentModal = openPaymentModal;
@@ -131,16 +140,37 @@ window.openPaymentModal = openPaymentModal;
 
 
 /* ✅ Open Payment Modal */
-function openPaymentModal() {
-    let orderId = localStorage.getItem("orderId");
+async function openPaymentModal() {
+    const orderId = localStorage.getItem("orderId");
+
     if (!orderId) {
         alert("⚠️ Please confirm your order before proceeding to payment.");
         return;
     }
-    $("#paymentModal").modal("show");
+
+    try {
+        // ✅ Update payment status in the database
+        const response = await fetch(`${API_BASE_URL}/api/orders/${orderId}/payment-status`, {
+            method: "PATCH",
+            headers: { 
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+            body: JSON.stringify({ paymentStatus: "Processing Payment" }) // ✅ Status changed to "Processing Payment"
+        });
+
+        if (!response.ok) {
+            throw new Error("❌ Failed to update payment status.");
+        }
+
+        $("#paymentModal").modal("show"); // ✅ Show the payment modal after updating status
+
+    } catch (error) {
+        console.error("❌ Error updating payment status:", error);
+        alert("❌ Failed to proceed to payment. Please try again.");
+    }
 }
-
-
 
 
 
