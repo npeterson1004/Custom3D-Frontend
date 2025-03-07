@@ -1,79 +1,16 @@
 //auth.js
 
+// auth.js - Handles Authentication & Token Management
 import { API_BASE_URL } from "./config.js";
 
-document.getElementById("registerForm")?.addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    const username = document.getElementById("username").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, email, password }),
-            credentials: "include"
-        });
-
-        const data = await response.json();
-        document.getElementById("message").innerHTML = `<div class="alert alert-success">${data.message}</div>`;
-
-        if (response.ok) {
-            window.location.href = "login.html"; // Redirect to login page after registration
-        }
-    } catch (error) {
-        document.getElementById("message").innerHTML = `<div class="alert alert-danger">❌ Registration failed.</div>`;
-    }
-});
-
-
-document.getElementById("loginForm")?.addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password }),
-            credentials: "include"
-        });
-
-        const data = await response.json();
-        if (!response.ok) {
-            throw new Error(data.message || "Login failed!");
-        }
-
-        console.log("✅ Login Successful! Storing Token...", data);
-
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("userEmail", data.user.email);
-
-        setTimeout(() => {
-            const storedToken = localStorage.getItem("token");
-
-            if (!storedToken) {
-                console.error("🚨 Token was NOT stored! Aborting redirect.");
-                return;
-            }
-
-            console.log("✅ Token stored successfully. Redirecting...");
-            window.location.href = "index.html"; // Redirect to homepage after login
-
-        }, 500);
-    } catch (error) {
-        console.error("❌ Login Error:", error);
-        document.getElementById("message").innerHTML = `<div class="alert alert-danger">${error.message}</div>`;
-    }
-});
-
+/** 
+ * ✅ Retrieves the authentication token from localStorage or backend 
+ * ✅ Ensures token validity before using it 
+ */
 async function getAuthToken() {
     let token = localStorage.getItem("token") || localStorage.getItem("adminToken");
 
+    // 🔍 If no token found, try retrieving from the backend
     if (!token) {
         try {
             const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
@@ -98,7 +35,7 @@ async function getAuthToken() {
         }
     }
 
-    // ✅ Ensure token is valid before decoding
+    // 🚨 Ensure token is valid before decoding
     if (!token || token === "null" || token === "undefined") {
         console.warn("🚨 Invalid token detected. Clearing storage.");
         localStorage.removeItem("token");
@@ -123,14 +60,13 @@ async function getAuthToken() {
     }
 }
 
-
-
-
-
+/**
+ * ✅ Checks the login status of the user
+ * ✅ Verifies the token with the backend
+ */
 async function checkLoginStatus() {
     setTimeout(async () => {
         const token = await getAuthToken();
-
         console.log("🔍 Checking Retrieved Token:", token);
 
         if (!token) {
@@ -168,28 +104,27 @@ async function checkLoginStatus() {
     }, 500);
 }
 
-
-
-
+// ✅ Runs `checkLoginStatus` when the page loads
 document.addEventListener("DOMContentLoaded", checkLoginStatus);
 
-
-
-
-
+/**
+ * ✅ Logs the user out, removes tokens, and redirects to login
+ */
 async function logout() {
     console.log("🔍 Logging out...");
 
     let userEmail = localStorage.getItem("userEmail");
 
+    // ✅ Clear the user's cart from localStorage
     if (userEmail) {
         localStorage.removeItem(`cart_${userEmail}`);
     }
 
     const token = localStorage.getItem("token") || localStorage.getItem("adminToken");
 
+    // ✅ Backend logout request
     if (token) {
-        await fetch(`${API_BASE_URL}/api/auth/logout`, { // ✅ Backend logout request
+        await fetch(`${API_BASE_URL}/api/auth/logout`, {
             method: "POST",
             headers: { "Authorization": `Bearer ${token}` },
             credentials: "include" // ✅ Ensures cookies are cleared
@@ -204,6 +139,9 @@ async function logout() {
         window.location.href = "login.html";
     }, 500); // ✅ Short delay before redirecting
 }
+
+// ✅ Make `logout` function globally accessible
+window.logout = logout;
 
 
 
