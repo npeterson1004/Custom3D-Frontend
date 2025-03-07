@@ -168,16 +168,10 @@ async function openPaymentModal() {
             throw new Error("❌ Failed to update payment status.");
         }
 
-        // ✅ Ensure modal is fully loaded before accessing buttons
-        $("#paymentModal").modal("show");
+        // ✅ Hide "Pay & Send Order" until a payment method is selected
+        document.getElementById("sendOrderButton").style.display = "none";
 
-        setTimeout(() => {
-            const sendOrderButton = document.getElementById("sendOrderButton");
-            const confirmPaymentButton = document.getElementById("confirmPaymentButton");
-
-            if (sendOrderButton) sendOrderButton.style.display = "block";
-            if (confirmPaymentButton) confirmPaymentButton.style.display = "block";
-        }, 500); // ✅ Delay execution to ensure modal is rendered
+        $("#paymentModal").modal("show"); // ✅ Show the payment modal after updating status
 
     } catch (error) {
         console.error("❌ Error updating payment status:", error);

@@ -175,10 +175,7 @@ async function fetchOrders() {
             headers: { "Authorization": `Bearer ${token}` }
         });
 
-        if (!response.ok) {
-            const errorMessage = await response.text();
-            throw new Error(`⚠️ Failed to fetch orders: ${errorMessage}`);
-        }
+        if (!response.ok) throw new Error("⚠️ Failed to fetch orders.");
 
         const orders = await response.json();
         const ordersContainer = document.getElementById("ordersContainer");
@@ -190,12 +187,13 @@ async function fetchOrders() {
         }
 
         orders.forEach(order => {
-            if (!order._id) {
-                console.warn("⚠️ Skipping order with missing _id:", order);
-                return;
-            }
-
             const orderRow = document.createElement("tr");
+
+            // ✅ Determine the color based on the payment status
+            let statusColor = "";
+            if (order.paymentStatus === "Completed") statusColor = "status-completed";
+            else if (order.paymentStatus === "Processing Payment") statusColor = "status-processing";
+            else statusColor = "status-pending"; // Default for pending
 
             orderRow.innerHTML = `
                 <td>${order.userEmail}</td>
@@ -213,7 +211,7 @@ async function fetchOrders() {
                 <td>$${order.totalAmount.toFixed(2)}</td>
                 <td>${new Date(order.orderDate).toLocaleString()}</td>
                 <td>
-                    <select class="payment-status-dropdown" data-order-id="${order._id}">
+                    <select class="payment-status-dropdown ${statusColor}" data-order-id="${order._id}">
                         <option value="Pending" ${order.paymentStatus === "Pending" ? "selected" : ""}>Pending</option>
                         <option value="Processing Payment" ${order.paymentStatus === "Processing Payment" ? "selected" : ""}>Processing Payment</option>
                         <option value="Completed" ${order.paymentStatus === "Completed" ? "selected" : ""}>Completed</option>
@@ -224,16 +222,14 @@ async function fetchOrders() {
             ordersContainer.appendChild(orderRow);
         });
 
-        // ✅ Ensure event listeners are only attached AFTER the dropdowns exist
-        setTimeout(() => {
-            document.querySelectorAll(".payment-status-dropdown").forEach(select => {
-                select.addEventListener("change", function () {
-                    const orderId = this.getAttribute("data-order-id");
-                    const newStatus = this.value;
-                    updatePaymentStatus(orderId, newStatus);
-                });
+        // ✅ Attach event listeners after adding rows
+        document.querySelectorAll(".payment-status-dropdown").forEach(select => {
+            select.addEventListener("change", function () {
+                const orderId = this.getAttribute("data-order-id");
+                const newStatus = this.value;
+                updatePaymentStatus(orderId, newStatus);
             });
-        }, 500); // ✅ Small delay to ensure DOM elements exist
+        });
 
     } catch (error) {
         console.error("❌ Error fetching orders:", error);

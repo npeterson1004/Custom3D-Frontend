@@ -882,6 +882,41 @@ font-size: 20px;
 }
 
 
+.payment-status-dropdown {
+    background-color: #fff !important; /* Ensure dropdown background is white */
+    color: #000 !important; /* Ensure text is black */
+    border: 1px solid #ccc; /* Add border for better visibility */
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.payment-status-dropdown {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-weight: bold;
+}
+
+/* ✅ Green for Completed */
+.status-completed {
+    background-color: #28a745 !important; /* Green */
+    color: white !important;
+}
+
+/* ✅ Yellow for Processing Payment */
+.status-processing {
+    background-color: #ffc107 !important; /* Yellow */
+    color: black !important;
+}
+
+/* ✅ Red for Pending */
+.status-pending {
+    background-color: #dc3545 !important; /* Red */
+    color: white !important;
+}
+
+
+
 
 /*-------------------------------------
     Ensure Warehouse Section Layout is Clean
