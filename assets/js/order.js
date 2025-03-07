@@ -7,7 +7,6 @@ function openPaymentModal() {
 }
 
 /* ✅ Store Order Before Sending Payment */
-/* ✅ Store Order Before Sending Payment */
 async function sendOrder() {
     let userEmail = localStorage.getItem("userEmail");
 
@@ -35,11 +34,14 @@ async function sendOrder() {
             color: item.color ? { name: item.color.name, image: item.color.image } : null
         })),
         totalAmount,
-        paymentMethod: "Venmo",
-        paymentStatus: "Pending"
+        paymentMethod: "Venmo", // ✅ Payment method is Venmo
+        paymentStatus: "Pending" // ✅ Mark as pending until admin confirms payment
     };
 
     try {
+        // ✅ Show Order Processing Message
+        showOrderProcessingMessage();
+
         const response = await fetch(`${API_BASE_URL}/api/orders`, {
             method: "POST",
             headers: {
@@ -55,11 +57,17 @@ async function sendOrder() {
         }
 
         const orderResponse = await response.json();
+
+        // ✅ Store Order ID for Payment Processing
         localStorage.setItem("orderId", orderResponse.order._id);
 
+        // ✅ Show Order Confirmation Message
         showOrderConfirmationMessage();
-        $("#paymentModal").modal("hide");
 
+        // ✅ Show Payment Modal
+        openPaymentModal();
+
+        // ✅ Clear Cart After Sending Order
         localStorage.removeItem(`cart_${userEmail}`);
         updateCartCount();
         loadCart();
@@ -70,9 +78,26 @@ async function sendOrder() {
     }
 }
 
+// ✅ Make sendOrder globally accessible
+window.openPaymentModal = openPaymentModal;
+window.sendOrder = sendOrder;
+
+/* ✅ Show Order Processing Message */
+function showOrderProcessingMessage() {
+    removeExistingMessage();
+
+    let messageBox = document.createElement("div");
+    messageBox.id = "order-message";
+    messageBox.className = "order-notification processing";
+    messageBox.innerText = "🕒 Processing your order...";
+
+    document.body.appendChild(messageBox);
+}
 
 /* ✅ Show Order Confirmation Message */
 function showOrderConfirmationMessage() {
+    removeExistingMessage();
+
     let messageBox = document.createElement("div");
     messageBox.id = "order-message";
     messageBox.className = "order-notification confirmed";
@@ -86,34 +111,11 @@ function showOrderConfirmationMessage() {
     document.body.appendChild(messageBox);
 }
 
-// ✅ Make sendOrder globally accessible
-window.openPaymentModal = openPaymentModal;
-window.sendOrder = sendOrder;
-
-
-
-// ✅ Function to Show Order Processing Message
-function showOrderProcessingMessage() {
-    removeExistingMessage();
-
-    let messageBox = document.createElement("div");
-    messageBox.id = "order-message";
-    messageBox.className = "order-notification processing";
-    messageBox.innerText = "🕒 Processing your order...";
-
-    document.body.appendChild(messageBox);
-}
-
-
-
-// ✅ Function to Remove Any Existing Message Before Showing a New One
+/* ✅ Remove Any Existing Message */
 function removeExistingMessage() {
     const existingMessage = document.getElementById("order-message");
     if (existingMessage) existingMessage.remove();
 }
-
-// ✅ Make sendOrder globally accessible
-window.sendOrder = sendOrder;
 
 // ✅ Apply CSS for Notification Messages
 const styles = document.createElement("style");
