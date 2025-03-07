@@ -51,7 +51,7 @@ window.sendOrder = sendOrder;
 
 
 
-/* ✅ Confirm Order (Creates Order in Database) */
+/* ✅ Confirm Order  */
 async function confirmOrder() {
     let userEmail = localStorage.getItem("userEmail");
 
@@ -86,7 +86,7 @@ async function confirmOrder() {
     try {
         showOrderProcessingMessage(); // ✅ Show processing message
 
-        // ✅ Store Order Data Locally (Instead of sending it to admin immediately)
+        // ✅ Store order locally instead of sending it to the admin yet
         localStorage.setItem("pendingOrder", JSON.stringify(orderData));
 
         // ✅ Show Proceed to Payment Button (User must click this next)
@@ -99,6 +99,7 @@ async function confirmOrder() {
         alert("❌ Order confirmation failed. Please try again.");
     }
 }
+
 
 
 
