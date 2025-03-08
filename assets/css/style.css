@@ -925,24 +925,26 @@ font-size: 20px;
 }
 
 
-  /* ✅ Ensure cart table is scrollable on small screens */
-  .cart-container {
+ /* ✅ Fix Cart Table for Small Screens */
+ .cart-container {
+    width: 100%;
     overflow-x: auto;
+    display: block;
+    white-space: nowrap;
+}
+
+.cart-table {
+    min-width: 900px; /* Ensure table is wide enough */
     width: 100%;
 }
 
-/* ✅ Prevent table from shrinking too much */
-.cart-table {
-    min-width: 700px; /* Ensure table doesn't collapse on small screens */
-}
-
-/* ✅ Make images responsive */
+/* ✅ Fix Image Sizes */
 .cart-item-img {
     max-width: 80px;
     height: auto;
 }
 
-/* ✅ Fix right-side cut-off on small screens */
+/* ✅ Adjust for Small Screens */
 @media screen and (max-width: 768px) {
     .cart-container {
         overflow-x: auto;
@@ -950,6 +952,7 @@ font-size: 20px;
     }
     .cart-table {
         min-width: 100%;
+        overflow-x: scroll;
     }
     .cart-item-img {
         max-width: 50px;
