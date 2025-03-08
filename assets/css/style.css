@@ -925,40 +925,38 @@ font-size: 20px;
 }
 
 
- /* ✅ Fix Cart Table for Small Screens */
- .cart-container {
-    width: 100%;
-    overflow-x: auto;
-    display: block;
-    white-space: nowrap;
-}
+         /* ✅ Fix Cart Table Scrolling */
+         .cart-container {
+            width: 100%;
+            overflow-x: auto; /* ✅ Allows horizontal scrolling */
+            display: block;
+            white-space: nowrap;
+        }
 
-.cart-table {
-    min-width: 900px; /* Ensure table is wide enough */
-    width: 100%;
-}
+        .cart-table {
+            min-width: 1200px; /* ✅ Ensures full width so no columns are cut off */
+            width: 100%;
+        }
 
-/* ✅ Fix Image Sizes */
-.cart-item-img {
-    max-width: 80px;
-    height: auto;
-}
+        /* ✅ Fix Image Sizes */
+        .cart-item-img {
+            max-width: 80px;
+            height: auto;
+        }
 
-/* ✅ Adjust for Small Screens */
-@media screen and (max-width: 768px) {
-    .cart-container {
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-    .cart-table {
-        min-width: 100%;
-        overflow-x: scroll;
-    }
-    .cart-item-img {
-        max-width: 50px;
-    }
-}
-
+        /* ✅ Small Screens Fix */
+        @media screen and (max-width: 768px) {
+            .cart-container {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            .cart-table {
+                min-width: 1200px; /* ✅ Ensure full width */
+            }
+            .cart-item-img {
+                max-width: 50px;
+            }
+        }
 /*-------------------------------------
     Ensure Warehouse Section Layout is Clean
 --------------------------------------*/
