@@ -5,9 +5,9 @@ import { API_BASE_URL } from "./config.js";
 /* ✅ Process Venmo Payment */
 async function payWithVenmo() {
     const userEmail = localStorage.getItem("userEmail");
-    let pendingOrder = localStorage.getItem("pendingOrder"); // ✅ Retrieve order data
+    let orderId = localStorage.getItem("orderId") || document.cookie.split('; ').find(row => row.startsWith('orderId='))?.split('=')[1];
 
-    if (!userEmail || !pendingOrder) {
+    if (!userEmail || !orderId) {
         alert("⚠️ No order found. Please confirm your order first.");
         return;
     }
@@ -16,18 +16,18 @@ async function payWithVenmo() {
         const response = await fetch(`${API_BASE_URL}/api/payment/venmo`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ userEmail })
+            body: JSON.stringify({ userEmail, orderId })
         });
 
         const data = await response.json();
 
         document.getElementById("paymentStatus").innerHTML = `
-        <h11>📲 Open Venmo and send payment to: <b>${data.venmoUsername}</b></h11>
-        <h11>💲 Include your order number when paying</h11>
-        <h11>✅ Click "Pay & Send Order" after payment.</h11>
-    `;
+            <h11>📲 Open Venmo and send payment to: <b>${data.venmoUsername}</b></h11>
+            <h11>💲 Include your order number when paying</h11>
+            <h11>✅ Click "Pay & Send Order" after payment.</h11>
+        `;
 
-        // ✅ Show Send Order button
+        // ✅ Show Send Order button only after selecting Venmo
         document.getElementById("sendOrderButton").style.display = "block";
 
     } catch (error) {
@@ -35,6 +35,7 @@ async function payWithVenmo() {
         document.getElementById("paymentStatus").innerHTML = `<p class="text-danger">❌ Payment failed. Please try again.</p>`;
     }
 }
+
 
 
 /* ✅ Confirm Payment and Update Status */

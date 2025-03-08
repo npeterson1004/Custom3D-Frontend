@@ -102,7 +102,7 @@ async function confirmOrder() {
     };
 
     try {
-        showOrderProcessingMessage(); // ✅ Show processing message
+        showOrderProcessingMessage();
 
         const response = await fetch(`${API_BASE_URL}/api/orders`, {
             method: "POST",
@@ -119,11 +119,18 @@ async function confirmOrder() {
         }
 
         const orderResponse = await response.json();
-        localStorage.setItem("orderId", orderResponse.order._id); // ✅ Store order ID for payment
+        
+        // ✅ Save orderId in localStorage AND a session cookie for mobile reliability
+        localStorage.setItem("orderId", orderResponse.order._id);
+        document.cookie = `orderId=${orderResponse.order._id}; path=/; Secure`;
 
-        // ✅ Show "Proceed to Payment" button after confirming order
+        // ✅ Immediately verify orderId before allowing payment
+        if (!localStorage.getItem("orderId")) {
+            alert("⚠️ Failed to store order ID. Try again.");
+            return;
+        }
+
         document.getElementById("proceedToPaymentButton").style.display = "block";
-
         showOrderConfirmationMessage();
 
     } catch (error) {
@@ -145,7 +152,7 @@ window.openPaymentModal = openPaymentModal;
 
 /* ✅ Open Payment Modal */
 async function openPaymentModal() {
-    const orderId = localStorage.getItem("orderId");
+    const orderId = localStorage.getItem("orderId") || document.cookie.split('; ').find(row => row.startsWith('orderId='))?.split('=')[1];
 
     if (!orderId) {
         alert("⚠️ Please confirm your order before proceeding to payment.");
@@ -153,7 +160,6 @@ async function openPaymentModal() {
     }
 
     try {
-        // ✅ Update payment status in the database
         const response = await fetch(`${API_BASE_URL}/api/orders/${orderId}/payment-status`, {
             method: "PATCH",
             headers: { 
@@ -161,23 +167,24 @@ async function openPaymentModal() {
                 "Content-Type": "application/json"
             },
             credentials: "include",
-            body: JSON.stringify({ paymentStatus: "Processing Payment" }) // ✅ Status changed to "Processing Payment"
+            body: JSON.stringify({ paymentStatus: "Processing Payment" })
         });
 
         if (!response.ok) {
             throw new Error("❌ Failed to update payment status.");
         }
 
-        // ✅ Hide "Pay & Send Order" until a payment method is selected
-        document.getElementById("sendOrderButton").style.display = "none";
+        $("#paymentModal").modal("show");
 
-        $("#paymentModal").modal("show"); // ✅ Show the payment modal after updating status
+        // ✅ Hide the send order button initially
+        document.getElementById("sendOrderButton").style.display = "none";
 
     } catch (error) {
         console.error("❌ Error updating payment status:", error);
         alert("❌ Failed to proceed to payment. Please try again.");
     }
 }
+
 
 
 
