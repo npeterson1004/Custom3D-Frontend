@@ -933,16 +933,7 @@ font-size: 20px;
             white-space: nowrap;
         }
 
-        .cart-table {
-            min-width: 1200px; /* ✅ Ensures full width so no columns are cut off */
-            width: 100%;
-        }
 
-        /* ✅ Fix Image Sizes */
-        .cart-item-img {
-            max-width: 80px;
-            height: auto;
-        }
 
         /* ✅ Small Screens Fix */
         @media screen and (max-width: 768px) {
