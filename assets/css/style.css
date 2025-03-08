@@ -925,6 +925,23 @@ font-size: 20px;
 }
 
 
+/* ✅ Ensure cart table scrolls horizontally on small screens */
+@media screen and (max-width: 768px) {
+    .cart-container {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .cart-table {
+        width: 100%;
+        min-width: 600px; /* Ensures the table isn't too small */
+    }
+
+    .cart-item-img {
+        max-width: 60px; /* ✅ Resize images */
+        height: auto;
+    }
+}
 
 
 /*-------------------------------------
