@@ -925,24 +925,36 @@ font-size: 20px;
 }
 
 
-/* ✅ Ensure cart table scrolls horizontally on small screens */
+  /* ✅ Ensure cart table is scrollable on small screens */
+  .cart-container {
+    overflow-x: auto;
+    width: 100%;
+}
+
+/* ✅ Prevent table from shrinking too much */
+.cart-table {
+    min-width: 700px; /* Ensure table doesn't collapse on small screens */
+}
+
+/* ✅ Make images responsive */
+.cart-item-img {
+    max-width: 80px;
+    height: auto;
+}
+
+/* ✅ Fix right-side cut-off on small screens */
 @media screen and (max-width: 768px) {
     .cart-container {
         overflow-x: auto;
         white-space: nowrap;
     }
-
     .cart-table {
-        width: 100%;
-        min-width: 600px; /* Ensures the table isn't too small */
+        min-width: 100%;
     }
-
     .cart-item-img {
-        max-width: 60px; /* ✅ Resize images */
-        height: auto;
+        max-width: 50px;
     }
 }
-
 
 /*-------------------------------------
     Ensure Warehouse Section Layout is Clean
