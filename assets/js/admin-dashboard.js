@@ -199,6 +199,9 @@ async function fetchOrders() {
                 <td>${order.userEmail || "Unknown User"}</td>
                 <td>
                     ${order.items.map(item => {
+                        // ✅ Ensure item name exists
+                        const itemName = item.name || "Unnamed Item";
+
                         // ✅ Ensure color object and images exist
                         const colorName = item.color?.name || "No Color Selected";
                         const colorImages = Array.isArray(item.color?.images) ? item.color.images : [];
@@ -207,7 +210,7 @@ async function fetchOrders() {
 
                         return `
                             <div>
-                                <span class="order-quantity">${item.quantity}</span> x ${item.name || "Unnamed Item"}
+                                <span class="order-quantity">${item.quantity}</span> x ${itemName}
                                 <br>
                                 <img src="${colorImage1}" alt="${colorName}" class="tiny-color-img" style="width: 30px; height: 30px;">
                                 <img src="${colorImage2}" alt="${colorName}" class="tiny-color-img" style="width: 30px; height: 30px;">
@@ -244,6 +247,7 @@ async function fetchOrders() {
         console.error("❌ Error fetching orders:", error);
     }
 }
+
 
 
 
