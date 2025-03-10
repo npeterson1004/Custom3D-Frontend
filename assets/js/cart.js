@@ -102,12 +102,11 @@ function loadCart() {
                     <td>${item.name}</td>
                     <td> 
                     <div style="display: flex; flex-direction: column; align-items: center;">
-                    <img src="${colorImageUrl[0]}" alt="${colorName}" class="cart-color-img">
-                    <img src="${colorImageUrl[1]}" alt="${colorName}" class="cart-color-img">
+                    <img src="${item.color.images[0]}" alt="${colorName}" class="cart-color-img">
+                    <img src="${item.color.images[1]}" alt="${colorName}" class="cart-color-img">
                     </div>
                     </td>
                     <td>$${item.price.toFixed(2)}</td>
-                    <td>${colorName}</td>
                     <td>
                         <input type="number" class="form-control cart-quantity-input" min="1" value="${item.quantity}" 
                         onchange="updateCartItem(${index}, this.value)">

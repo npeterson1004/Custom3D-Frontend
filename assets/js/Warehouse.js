@@ -1,6 +1,45 @@
 // warehouse.js
 import { API_BASE_URL } from "./config.js";
 
+
+
+
+function addToCartHandler(productId, button) {
+    const productCard = button.closest(".warehouse-item");
+    if (!productCard) return;
+
+    const name = productCard.querySelector("h5").innerText;
+    const price = parseFloat(productCard.querySelector(".order-price").innerText.replace("$", ""));
+    const image = productCard.querySelector(".warehouse-img").src;
+
+    // ✅ Get selected color from the Choose Color button
+    const chooseColorButton = productCard.querySelector(".choose-color-btn");
+    const selectedColor = chooseColorButton.getAttribute("data-selected-color");
+
+    if (!selectedColor) {
+        alert("⚠️ Please select a filament color before adding to the cart.");
+        return;
+    }
+
+    const color = JSON.parse(selectedColor);
+
+    // ✅ Ensure `addToCart` is called correctly (defined in cart.js)
+    if (typeof addToCart !== "function") {
+        console.error("❌ addToCart function is not available. Make sure cart.js is loaded.");
+        return;
+    }
+
+    addToCart(name, price, image, color);
+}
+
+
+
+
+
+
+
+
+
 document.addEventListener("DOMContentLoaded", fetchWarehouseProducts);
 
 async function fetchWarehouseProducts() {
