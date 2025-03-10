@@ -44,7 +44,7 @@ async function fetchWarehouseProducts() {
         document.querySelectorAll(".choose-color-btn").forEach(button => {
             button.addEventListener("click", function () {
                 const productId = this.getAttribute("data-product-id");
-                openColorModal(productId);
+                openColorModal(productId, this);
             });
         });
 
@@ -53,8 +53,7 @@ async function fetchWarehouseProducts() {
     }
 }
 
-
-// ✅ Function to open the color selection modal with proper styling
+// ✅ Open the color selection modal with arrows to switch images
 async function openColorModal(productId, button) {
     try {
         const response = await fetch(`${API_BASE_URL}/api/filament-colors`);
@@ -67,34 +66,38 @@ async function openColorModal(productId, button) {
             const colorOption = document.createElement("div");
             colorOption.classList.add("color-option", "d-flex", "align-items-center", "m-2", "p-2", "border", "rounded");
             colorOption.style.cursor = "pointer";
-            colorOption.style.display = "flex";
-            colorOption.style.alignItems = "center";
             colorOption.style.backgroundColor = "#95d9fd"; // ✅ Light Blue Background
             colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // ✅ Smooth effect
 
             colorOption.innerHTML = `
-<div class="image-container">
-<button class="arrow-btn left-arrow" data-color-id="${color._id}">⬅</button>
-<img src="${color.images[0]}" class="color-preview" data-index="0" data-color-id="${color._id}" width="80">
-<button class="arrow-btn right-arrow" data-color-id="${color._id}">➡</button>
-</div>
-<p class="text-center">${color.name}</p>
+                <div class="image-container" style="display: flex; align-items: center;">
+                    <button class="arrow-btn left-arrow" data-color-id="${color._id}">⬅</button>
+                    <img src="${color.images[0]}" class="color-preview" data-index="0" data-color-id="${color._id}" width="80">
+                    <button class="arrow-btn right-arrow" data-color-id="${color._id}">➡</button>
+                </div>
+                <p class="text-center cart-color-text">${color.name}</p>
             `;
 
-            // ✅ Change Background and Text Color on Hover (but keep border black)
+            // ✅ Change Background and Text Color on Hover (Fixes your error)
             colorOption.addEventListener("mouseenter", () => {
                 colorOption.style.backgroundColor = "#034a92"; // ✅ Dark Blue Hover
-                colorOption.querySelector(".cart-color-text").style.color = "white"; // ✅ White Text
+                const textElement = colorOption.querySelector(".cart-color-text");
+                if (textElement) {
+                    textElement.style.color = "white"; // ✅ White Text
+                }
             });
 
             colorOption.addEventListener("mouseleave", () => {
                 colorOption.style.backgroundColor = "#7acdfa"; // ✅ Reset Background
-                colorOption.querySelector(".cart-color-text").style.color = "#080808"; // ✅ Reset Text Color
+                const textElement = colorOption.querySelector(".cart-color-text");
+                if (textElement) {
+                    textElement.style.color = "#080808"; // ✅ Reset Text Color
+                }
             });
 
             // ✅ Click Event to Select Color
             colorOption.addEventListener("click", () => {
-                button.innerHTML = `<img src="${color.image}" class="cart-color-img" 
+                button.innerHTML = `<img src="${color.images[0]}" class="cart-color-img" 
                                     style="width: 20px; height: 20px; margin-right: 5px; border: 2px solid black;"> 
                                     ${color.name}`;
                 button.setAttribute("data-selected-color", JSON.stringify(color));
@@ -102,6 +105,22 @@ async function openColorModal(productId, button) {
             });
 
             colorOptionsContainer.appendChild(colorOption);
+        });
+
+        // ✅ Attach event listeners for arrows to switch images
+        document.querySelectorAll(".arrow-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                const colorId = this.getAttribute("data-color-id");
+                const imgElement = document.querySelector(`img[data-color-id='${colorId}']`);
+                const currentIndex = parseInt(imgElement.getAttribute("data-index"), 10);
+
+                const color = colors.find(c => c._id === colorId);
+                if (!color || color.images.length < 2) return;
+
+                let newIndex = currentIndex === 0 ? 1 : 0;
+                imgElement.src = color.images[newIndex];
+                imgElement.setAttribute("data-index", newIndex);
+            });
         });
 
         $("#colorModal").modal("show"); // ✅ Show the modal
