@@ -196,17 +196,26 @@ async function fetchOrders() {
             else statusColor = "status-pending"; // Default for pending
 
             orderRow.innerHTML = `
-                <td>${order.userEmail}</td>
+                <td>${order.userEmail || "Unknown User"}</td>
                 <td>
-                    ${order.items.map(item => `
-                        <div>
-                            <span class="order-quantity">${item.quantity}</span> x ${item.name}
-                            ${item.color?.image 
-                                ? `<img src="${item.color.image}" alt="${item.color.name}" class="tiny-color-img" style="width: 20px; height: 20px;"> <span>${item.color.name}</span>`
-                                : "<span>No color selected</span>"
-                            }
-                        </div>
-                    `).join("")}
+                    ${order.items.map(item => {
+                        // ✅ Ensure color object and images exist
+                        const colorName = item.color?.name || "No Color Selected";
+                        const colorImages = Array.isArray(item.color?.images) ? item.color.images : [];
+                        const colorImage1 = colorImages.length > 0 ? colorImages[0] : "../assets/images/default-color.png";
+                        const colorImage2 = colorImages.length > 1 ? colorImages[1] : "../assets/images/default-color.png";
+
+                        return `
+                            <div>
+                                <span class="order-quantity">${item.quantity}</span> x ${item.name || "Unnamed Item"}
+                                <br>
+                                <img src="${colorImage1}" alt="${colorName}" class="tiny-color-img" style="width: 30px; height: 30px;">
+                                <img src="${colorImage2}" alt="${colorName}" class="tiny-color-img" style="width: 30px; height: 30px;">
+                                <br>
+                                <span>${colorName}</span>
+                            </div>
+                        `;
+                    }).join("")}
                 </td>
                 <td>$${order.totalAmount.toFixed(2)}</td>
                 <td>${new Date(order.orderDate).toLocaleString()}</td>

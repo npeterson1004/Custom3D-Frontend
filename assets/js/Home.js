@@ -35,16 +35,11 @@ async function fetchFeaturedProducts() {
                     <p class="order-price">$${product.price}</p>
                     
                     <button class="btn btn-secondary choose-color-btn" data-product-id="${product._id}">
-                        <img src="../assets/images/default-color.png" class="tiny-color-img" style="width: 20px; height: 20px; margin-right: 5px;"> 
                         Choose Color
                     </button>
 
                     <button class="btn btn-primary add-to-cart-btn" data-product-id="${product._id}">
                         Add to Cart
-                    </button>
-
-                    <button class="view-image-btn">
-                        View Image
                     </button>
                 </div>
             `;
@@ -63,11 +58,6 @@ async function fetchFeaturedProducts() {
                 }
                 const selectedColor = JSON.parse(colorData);
                 addToCart(product.name, product.price, product.image, selectedColor);
-            });
-
-            // ✅ Attach event listener for "View Image"
-            productCard.querySelector(".view-image-btn").addEventListener("click", () => {
-                enlargeImage(product.image.startsWith('http') ? product.image : API_BASE_URL + product.image);
             });
 
             featuredContainer.appendChild(productCard);
@@ -117,8 +107,8 @@ async function openColorModal(productId, button) {
             // ✅ Click Event to Select Color
             colorOption.addEventListener("click", () => {
                 button.innerHTML = `<img src="${color.image}" class="cart-color-img" 
-                                    style="width: 20px; height: 20px; margin-right: 5px; border: 2px solid black;"> 
-                                    ${color.name}`;
+                                        style="width: 20px; height: 20px; margin-right: 5px; border: 2px solid black;"> 
+                                        ${color.name}`;
                 button.setAttribute("data-selected-color", JSON.stringify(color));
                 $("#colorModal").modal("hide"); // Close modal
             });
