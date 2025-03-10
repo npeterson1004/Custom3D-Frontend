@@ -54,8 +54,8 @@ async function fetchWarehouseProducts() {
 }
 
 
-// ✅ Function to open the color selection modal with arrows for switching images
-async function openColorModal(productId) {
+// ✅ Function to open the color selection modal with proper styling
+async function openColorModal(productId, button) {
     try {
         const response = await fetch(`${API_BASE_URL}/api/filament-colors`);
         const colors = await response.json();
@@ -65,42 +65,53 @@ async function openColorModal(productId) {
 
         colors.forEach(color => {
             const colorOption = document.createElement("div");
-            colorOption.classList.add("color-option-container");
+            colorOption.classList.add("color-option", "d-flex", "align-items-center", "m-2", "p-2", "border", "rounded");
+            colorOption.style.cursor = "pointer";
+            colorOption.style.display = "flex";
+            colorOption.style.alignItems = "center";
+            colorOption.style.backgroundColor = "#95d9fd"; // ✅ Light Blue Background
+            colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // ✅ Smooth effect
 
             colorOption.innerHTML = `
-                <div class="image-container">
-                    <button class="arrow-btn left-arrow" data-color-id="${color._id}">⬅</button>
-                    <img src="${color.images[0]}" class="color-preview" data-index="0" data-color-id="${color._id}" width="80">
-                    <button class="arrow-btn right-arrow" data-color-id="${color._id}">➡</button>
-                </div>
-                <p class="text-center">${color.name}</p>
+<div class="image-container">
+<button class="arrow-btn left-arrow" data-color-id="${color._id}">⬅</button>
+<img src="${color.images[0]}" class="color-preview" data-index="0" data-color-id="${color._id}" width="80">
+<button class="arrow-btn right-arrow" data-color-id="${color._id}">➡</button>
+</div>
+<p class="text-center">${color.name}</p>
             `;
 
-            colorOptionsContainer.appendChild(colorOption);
-        });
-
-        // Attach event listeners for arrows
-        document.querySelectorAll(".arrow-btn").forEach(button => {
-            button.addEventListener("click", function () {
-                const colorId = this.getAttribute("data-color-id");
-                const imgElement = document.querySelector(`img[data-color-id='${colorId}']`);
-                const currentIndex = parseInt(imgElement.getAttribute("data-index"), 10);
-
-                const color = colors.find(c => c._id === colorId);
-                if (!color || color.images.length < 2) return;
-
-                let newIndex = currentIndex === 0 ? 1 : 0;
-                imgElement.src = color.images[newIndex];
-                imgElement.setAttribute("data-index", newIndex);
+            // ✅ Change Background and Text Color on Hover (but keep border black)
+            colorOption.addEventListener("mouseenter", () => {
+                colorOption.style.backgroundColor = "#034a92"; // ✅ Dark Blue Hover
+                colorOption.querySelector(".cart-color-text").style.color = "white"; // ✅ White Text
             });
+
+            colorOption.addEventListener("mouseleave", () => {
+                colorOption.style.backgroundColor = "#7acdfa"; // ✅ Reset Background
+                colorOption.querySelector(".cart-color-text").style.color = "#080808"; // ✅ Reset Text Color
+            });
+
+            // ✅ Click Event to Select Color
+            colorOption.addEventListener("click", () => {
+                button.innerHTML = `<img src="${color.image}" class="cart-color-img" 
+                                    style="width: 20px; height: 20px; margin-right: 5px; border: 2px solid black;"> 
+                                    ${color.name}`;
+                button.setAttribute("data-selected-color", JSON.stringify(color));
+                $("#colorModal").modal("hide"); // Close modal
+            });
+
+            colorOptionsContainer.appendChild(colorOption);
         });
 
         $("#colorModal").modal("show"); // ✅ Show the modal
 
     } catch (error) {
-        console.error("❌ Error fetching filament colors:", error);
+        console.error("Error fetching filament colors:", error);
     }
 }
+
+
 
 
 // Function to enlarge image in fullscreen mode & exit on click
