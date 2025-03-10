@@ -40,7 +40,7 @@ async function fetchWarehouseProducts() {
             warehouseContainer.appendChild(productCard);
         });
 
-        // Attach event listeners for Choose Color buttons
+        // ✅ Attach event listeners for Choose Color buttons
         document.querySelectorAll(".choose-color-btn").forEach(button => {
             button.addEventListener("click", function () {
                 const productId = this.getAttribute("data-product-id");
@@ -48,10 +48,19 @@ async function fetchWarehouseProducts() {
             });
         });
 
+        // ✅ Attach event listeners for Add to Cart buttons
+        document.querySelectorAll(".add-to-cart-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                const productId = this.getAttribute("data-product-id");
+                addToCartHandler(productId, this);
+            });
+        });
+
     } catch (error) {
         console.error("❌ Error fetching warehouse products:", error);
     }
 }
+
 
 // ✅ Open the color selection modal with arrows to switch images
 async function openColorModal(productId, button) {
