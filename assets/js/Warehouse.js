@@ -69,47 +69,35 @@ async function openColorModal(productId, button) {
             colorOption.style.backgroundColor = "#95d9fd"; // ✅ Light Blue Background
             colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // ✅ Smooth effect
 
+            // ✅ Separate arrow buttons so they do NOT trigger color selection
             colorOption.innerHTML = `
                 <div class="image-container" style="display: flex; align-items: center;">
                     <button class="arrow-btn left-arrow" data-color-id="${color._id}">⬅</button>
-                    <img src="${color.images[0]}" class="color-preview" data-index="0" data-color-id="${color._id}" width="80">
+                    <img src="${color.images[0]}" class="color-preview" data-index="0" data-color-id="${color._id}" width="50">
                     <button class="arrow-btn right-arrow" data-color-id="${color._id}">➡</button>
                 </div>
                 <p class="text-center cart-color-text">${color.name}</p>
             `;
 
-            // ✅ Change Background and Text Color on Hover (Fixes your error)
-            colorOption.addEventListener("mouseenter", () => {
-                colorOption.style.backgroundColor = "#034a92"; // ✅ Dark Blue Hover
-                const textElement = colorOption.querySelector(".cart-color-text");
-                if (textElement) {
-                    textElement.style.color = "white"; // ✅ White Text
+            // ✅ Only select color when clicking outside of arrows
+            colorOption.addEventListener("click", (event) => {
+                if (!event.target.classList.contains("arrow-btn")) { // ✅ Prevent arrow clicks from closing the modal
+                    button.innerHTML = `<img src="${color.images[0]}" class="cart-color-img" 
+                                        style="width: 20px; height: 20px; margin-right: 5px; border: 2px solid black;"> 
+                                        ${color.name}`;
+                    button.setAttribute("data-selected-color", JSON.stringify(color));
+                    $("#colorModal").modal("hide"); // ✅ Close modal ONLY on selection
                 }
-            });
-
-            colorOption.addEventListener("mouseleave", () => {
-                colorOption.style.backgroundColor = "#7acdfa"; // ✅ Reset Background
-                const textElement = colorOption.querySelector(".cart-color-text");
-                if (textElement) {
-                    textElement.style.color = "#080808"; // ✅ Reset Text Color
-                }
-            });
-
-            // ✅ Click Event to Select Color
-            colorOption.addEventListener("click", () => {
-                button.innerHTML = `<img src="${color.images[0]}" class="cart-color-img" 
-                                    style="width: 20px; height: 20px; margin-right: 5px; border: 2px solid black;"> 
-                                    ${color.name}`;
-                button.setAttribute("data-selected-color", JSON.stringify(color));
-                $("#colorModal").modal("hide"); // Close modal
             });
 
             colorOptionsContainer.appendChild(colorOption);
         });
 
-        // ✅ Attach event listeners for arrows to switch images
-        document.querySelectorAll(".arrow-btn").forEach(button => {
-            button.addEventListener("click", function () {
+        // ✅ Attach event listeners for arrows to switch images (Fixes your issue)
+        document.querySelectorAll(".arrow-btn").forEach(arrow => {
+            arrow.addEventListener("click", function (event) {
+                event.stopPropagation(); // ✅ Prevent modal from closing
+
                 const colorId = this.getAttribute("data-color-id");
                 const imgElement = document.querySelector(`img[data-color-id='${colorId}']`);
                 const currentIndex = parseInt(imgElement.getAttribute("data-index"), 10);
@@ -129,6 +117,7 @@ async function openColorModal(productId, button) {
         console.error("Error fetching filament colors:", error);
     }
 }
+
 
 
 
