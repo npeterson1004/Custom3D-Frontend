@@ -97,26 +97,25 @@ function loadCart() {
             let colorName = item.color ? item.color.name : "No Color Selected";
 
             cartItemsContainer.innerHTML += `
-            <tr>
-                <td><img src="${imageUrl}" alt="${item.name}" class="cart-item-img"></td>
-                <td>${item.name}</td>
-                <td>
+                <tr>
+                    <td><img src="${imageUrl}" alt="${item.name}" class="cart-item-img"></td>
+                    <td>${item.name}</td>
+                    <td> 
                     <div style="display: flex; flex-direction: column; align-items: center;">
-                        <img src="${item.color.images[0]}" alt="${item.color.name}" class="cart-color-img">
-                        <img src="${item.color.images[1]}" alt="${item.color.name}" class="cart-color-img">
+                    <img src="${colorImageUrl[0]}" alt="${colorName}" class="cart-color-img">
+                    <img src="${colorImageUrl[1]}" alt="${colorName}" class="cart-color-img">
                     </div>
-                </td>
-                <td>$${item.price.toFixed(2)}</td>
-                <td>${item.color.name}</td>
-                <td>
-                    <input type="number" class="form-control cart-quantity-input" min="1" value="${item.quantity}" 
-                    onchange="updateCartItem(${index}, this.value)">
-                </td>
-                <td>$${itemTotal.toFixed(2)}</td>
-                <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
-            </tr>
-        `;
-        
+                    </td>
+                    <td>$${item.price.toFixed(2)}</td>
+                    <td>${colorName}</td>
+                    <td>
+                        <input type="number" class="form-control cart-quantity-input" min="1" value="${item.quantity}" 
+                        onchange="updateCartItem(${index}, this.value)">
+                    </td>
+                    <td>$${itemTotal.toFixed(2)}</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
+                </tr>
+            `;
         });
     }
 
