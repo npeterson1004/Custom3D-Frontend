@@ -33,11 +33,26 @@ function addToCart(name, price, image, color) {
     // ✅ Ensure Cloudinary URLs are stored correctly
     let fixedImage = image.startsWith("http") ? image : `${API_BASE_URL}${image}`;
 
+    // ✅ Ensure color object has both images before adding to cart
+    if (!color || !color.images || color.images.length < 2) {
+        alert("⚠️ Please select a valid filament color.");
+        return;
+    }
+
     let existingItem = cart.find(item => item.name === name && item.color.name === color.name);
     if (existingItem) {
         existingItem.quantity += 1;
     } else {
-        cart.push({ name, price, image: fixedImage, quantity: 1, color });
+        cart.push({ 
+            name, 
+            price, 
+            image: fixedImage, 
+            quantity: 1, 
+            color: {
+                name: color.name,
+                images: color.images // ✅ Store both images
+            }
+        });
     }
 
     localStorage.setItem(`cart_${userEmail}`, JSON.stringify(cart));
@@ -46,6 +61,8 @@ function addToCart(name, price, image, color) {
     showNotification(`${name} in ${color.name} added to cart!`);
     loadCart();
 }
+
+
 
 // ✅ Update Cart UI to Show Selected Color
 function loadCart() {
@@ -74,27 +91,32 @@ function loadCart() {
             total += itemTotal;
 
             let imageUrl = item.image.startsWith("http") ? item.image : `${API_BASE_URL}${item.image}`;
-            // ✅ Check if color exists, otherwise show "No Color Selected"
-            let colorDisplay = item.color 
-            ? `<img src="${item.color.image}" alt="${item.color.name}" class="cart-color-img"> <br><span>${item.color.name}</span>`
-            : "<span>No Color Selected</span>";
 
+            // ✅ Ensure color exists, otherwise show default
+            let colorImageUrl = (item.color && item.color.images) ? item.color.images[0] : "../assets/images/default-color.png";
+            let colorName = item.color ? item.color.name : "No Color Selected";
 
             cartItemsContainer.innerHTML += `
-                <tr>
-                    <td><img src="${imageUrl}" alt="${item.name}" class="cart-item-img"></td>
-                    <td>${item.name}</td>
-                    <td><img src="${item.color.image}"  class="cart-item-img"></td>
-                    <td>$${item.price.toFixed(2)}</td>
-                    <td>${item.color.name}</td>
+            <tr>
+                <td><img src="${imageUrl}" alt="${item.name}" class="cart-item-img"></td>
+                <td>${item.name}</td>
+                <td>
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <img src="${item.color.images[0]}" alt="${item.color.name}" class="cart-color-img">
+                        <img src="${item.color.images[1]}" alt="${item.color.name}" class="cart-color-img">
+                    </div>
+                </td>
+                <td>$${item.price.toFixed(2)}</td>
+                <td>${item.color.name}</td>
                 <td>
                     <input type="number" class="form-control cart-quantity-input" min="1" value="${item.quantity}" 
                     onchange="updateCartItem(${index}, this.value)">
                 </td>
-                    <td>$${itemTotal.toFixed(2)}</td>
-                    <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
-                </tr>
-            `;
+                <td>$${itemTotal.toFixed(2)}</td>
+                <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
+            </tr>
+        `;
+        
         });
     }
 
@@ -102,6 +124,7 @@ function loadCart() {
         cartTotal.innerText = total.toFixed(2);
     }
 }
+
 
 
 

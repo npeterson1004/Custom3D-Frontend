@@ -62,7 +62,6 @@ async function sendOrder() {
 }
 
 
-
 // ✅ Ensure function is globally accessible
 window.sendOrder = sendOrder;
 
@@ -94,7 +93,11 @@ async function confirmOrder() {
             price: item.price,
             image: item.image,
             quantity: item.quantity,
-            color: item.color ? { name: item.color.name, image: item.color.image } : null
+            // ✅ Ensure full color object is stored (including both images)
+            color: item.color ? { 
+                name: item.color.name, 
+                images: item.color.images // ✅ Store both images
+            } : null
         })),
         totalAmount,
         paymentMethod: "Venmo",
@@ -138,6 +141,7 @@ async function confirmOrder() {
         alert("❌ Order confirmation failed. Please try again.");
     }
 }
+
 
 
 
