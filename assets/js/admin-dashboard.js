@@ -164,7 +164,6 @@ async function loadContacts() {
     }
 }
 
-/* ✅ Fetch and Display Orders */
 async function fetchOrders() {
     try {
         const token = localStorage.getItem("adminToken");
@@ -199,8 +198,9 @@ async function fetchOrders() {
                 <td>${order.userEmail || "Unknown User"}</td>
                 <td>
                     ${order.items.map(item => {
-                        // ✅ Ensure item name exists
+                        // ✅ Ensure item name and quantity exist
                         const itemName = item.name || "Unnamed Item";
+                        const itemQuantity = item.quantity || 1;
 
                         // ✅ Ensure color object and images exist
                         const colorName = item.color?.name || "No Color Selected";
@@ -210,7 +210,7 @@ async function fetchOrders() {
 
                         return `
                             <div>
-                                <span class="order-quantity">${item.quantity}</span> x ${itemName}
+                                <span class="order-quantity">${itemQuantity}</span> x ${itemName}
                                 <br>
                                 <img src="${colorImage1}" alt="${colorName}" class="tiny-color-img" style="width: 30px; height: 30px;">
                                 <img src="${colorImage2}" alt="${colorName}" class="tiny-color-img" style="width: 30px; height: 30px;">
@@ -247,6 +247,7 @@ async function fetchOrders() {
         console.error("❌ Error fetching orders:", error);
     }
 }
+
 
 
 
