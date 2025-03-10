@@ -65,6 +65,7 @@ function addToCart(name, price, image, color) {
 
 
 // ✅ Update Cart UI to Show Selected Color
+
 function loadCart() {
     let userEmail = localStorage.getItem("userEmail");
     if (!userEmail) return;
@@ -92,8 +93,10 @@ function loadCart() {
 
             let imageUrl = item.image.startsWith("http") ? item.image : `${API_BASE_URL}${item.image}`;
 
-            // ✅ Ensure color exists, otherwise show default
-            let colorImageUrl = (item.color && item.color.images) ? item.color.images[0] : "../assets/images/default-color.png";
+            // ✅ Ensure color and images exist before accessing them
+            let colorImages = item.color && Array.isArray(item.color.images) ? item.color.images : [];
+            let colorImageUrl1 = colorImages.length > 0 ? colorImages[0] : "../assets/images/default-color.png";
+            let colorImageUrl2 = colorImages.length > 1 ? colorImages[1] : "../assets/images/default-color.png";
             let colorName = item.color ? item.color.name : "No Color Selected";
 
             cartItemsContainer.innerHTML += `
@@ -101,10 +104,10 @@ function loadCart() {
                     <td><img src="${imageUrl}" alt="${item.name}" class="cart-item-img"></td>
                     <td>${item.name}</td>
                     <td> 
-                    <div style="display: flex; flex-direction: column; align-items: center;">
-                    <img src="${item.color.images[0]}" alt="${colorName}" class="cart-color-img">
-                    <img src="${item.color.images[1]}" alt="${colorName}" class="cart-color-img">
-                    </div>
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <img src="${colorImageUrl1}" alt="${colorName}" class="cart-color-img">
+                            <img src="${colorImageUrl2}" alt="${colorName}" class="cart-color-img">
+                        </div>
                     </td>
                     <td>$${item.price.toFixed(2)}</td>
                     <td>
@@ -122,6 +125,7 @@ function loadCart() {
         cartTotal.innerText = total.toFixed(2);
     }
 }
+
 
 
 
