@@ -5,7 +5,6 @@ import { API_BASE_URL } from "./config.js";
 document.addEventListener("DOMContentLoaded", function () {
     console.log("✅ FilamentColor.js Loaded");
 
-    // ✅ Ensure "Add Filament Color" Form Works
     const addFilamentForm = document.querySelector("#addFilamentColorForm");
 
     if (addFilamentForm) {
@@ -18,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("📌 Adding Filament Color...");
                 const response = await fetch(`${API_BASE_URL}/api/filament-colors`, {
                     method: "POST",
-                    headers: { "Authorization": `Bearer ${token}` },
+                    headers: { "Authorization": `Bearer ${token}` }, // ✅ FormData does NOT need 'Content-Type'
                     body: formData
                 });
 
@@ -36,10 +35,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.querySelector("#colorMessage").textContent = "❌ Failed to add filament color.";
             }
         });
-    } else {
-        console.warn("⚠️ Warning: Element #addFilamentColorForm not found!");
     }
 });
+
 
 // ✅ Load filament colors when "View Filament Colors" is clicked
 document.addEventListener("DOMContentLoaded", function () {
@@ -57,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-// ✅ Ensure function is defined globally
+// ✅ Load filament colors and allow toggling between images
 export async function loadFilamentColors() {
     try {
         console.log("📌 Fetching filament colors...");
@@ -88,23 +86,58 @@ export async function loadFilamentColors() {
         }
 
         colors.forEach(color => {
-            const row = `
-                <tr>
-                    <td>${color.name}</td>
-                    <td>${color.type}</td>
-                    <td><img src="${color.image}" alt="${color.name}" width="50"></td>
-                    <td>
-                        <button class="btn btn-danger" onclick="deleteFilamentColor('${color._id}')">Delete</button>
-                    </td>
-                </tr>
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${color.name}</td>
+                <td>${color.type}</td>
+                <td>
+                    <div class="image-container" style="display: flex; align-items: center;">
+                        <button class="arrow-btn left-arrow" data-color-id="${color._id}">⬅</button>
+                        <img src="${color.images[0]}" class="filament-image" 
+                             data-index="0" data-color-id="${color._id}" 
+                             alt="${color.name}" width="80" style="margin: 0 10px;">
+                        <button class="arrow-btn right-arrow" data-color-id="${color._id}">➡</button>
+                    </div>
+                </td>
+                <td>
+                    <button class="btn btn-danger" onclick="deleteFilamentColor('${color._id}')">Delete</button>
+                </td>
             `;
-            tableBody.innerHTML += row;
+
+            tableBody.appendChild(row);
+        });
+
+        // ✅ Attach event listeners for arrows
+        document.querySelectorAll(".arrow-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                const colorId = this.getAttribute("data-color-id");
+                const imgElement = document.querySelector(`img[data-color-id='${colorId}']`);
+                const currentIndex = parseInt(imgElement.getAttribute("data-index"), 10);
+                const color = colors.find(c => c._id === colorId);
+
+                if (!color || !color.images || color.images.length < 2) return;
+
+                let newIndex = currentIndex;
+                if (this.classList.contains("left-arrow")) {
+                    newIndex = currentIndex === 0 ? 1 : 0; // Toggle between 0 and 1
+                } else if (this.classList.contains("right-arrow")) {
+                    newIndex = currentIndex === 0 ? 1 : 0;
+                }
+
+                imgElement.src = color.images[newIndex];
+                imgElement.setAttribute("data-index", newIndex);
+            });
         });
 
     } catch (error) {
         console.error("❌ Error loading filament colors:", error);
     }
 }
+
+// ✅ Ensure function is available globally
+window.loadFilamentColors = loadFilamentColors;
+
 
 // ✅ Function to delete a filament color
 async function deleteFilamentColor(colorId) {

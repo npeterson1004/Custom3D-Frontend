@@ -9,11 +9,6 @@ async function fetchWarehouseProducts() {
         const products = await response.json();
 
         const warehouseContainer = document.getElementById("warehouseContainer");
-        if (!warehouseContainer) {
-            console.error("Error: 'warehouseContainer' element not found.");
-            return;
-        }
-
         warehouseContainer.innerHTML = ""; // Clear existing content
 
         if (products.length === 0) {
@@ -26,58 +21,55 @@ async function fetchWarehouseProducts() {
             productCard.classList.add("warehouse-item");
 
             productCard.innerHTML = `
-                <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" 
-                     class="warehouse-img" 
-                     alt="${product.name}">
+                <div class="image-container">
+                    <button class="arrow-btn left-arrow" data-product-id="${product._id}">⬅</button>
+                    <img src="${product.image}" class="product-image" data-index="0" data-product-id="${product._id}" width="120">
+                    <button class="arrow-btn right-arrow" data-product-id="${product._id}">➡</button>
+                </div>
                 <div class="warehouse-details">
                     <h5>${product.name}</h5>
                     <p>${product.description}</p>
                     <p class="order-price">$${product.price}</p>
-                    
+
                     <button class="btn btn-secondary choose-color-btn" data-product-id="${product._id}">
-                        <img src="../assets/images/default-color.png" class="tiny-color-img" style="width: 20px; height: 20px; margin-right: 5px;"> 
                         Choose Color
                     </button>
-
                     <button class="btn btn-primary add-to-cart-btn" data-product-id="${product._id}">
                         Add to Cart
-                    </button>
-
-                    <button class="view-image-btn">
-                        View Image
                     </button>
                 </div>
             `;
 
-            // ✅ Attach event listener for "Choose Color"
-            productCard.querySelector(".choose-color-btn").addEventListener("click", () => {
-                openColorModal(product._id, productCard.querySelector(".choose-color-btn"));
-            });
-
-            // ✅ Attach event listener for "Add to Cart"
-            productCard.querySelector(".add-to-cart-btn").addEventListener("click", () => {
-                const colorData = productCard.querySelector(".choose-color-btn").getAttribute("data-selected-color");
-                if (!colorData) {
-                    alert("⚠️ Please select a color before adding to cart.");
-                    return;
-                }
-                const selectedColor = JSON.parse(colorData);
-                addToCart(product.name, product.price, product.image, selectedColor);
-            });
-
-            // ✅ Attach event listener for "View Image"
-            productCard.querySelector(".view-image-btn").addEventListener("click", () => {
-                enlargeImage(product.image.startsWith('http') ? product.image : API_BASE_URL + product.image);
-            });
-
             warehouseContainer.appendChild(productCard);
+        });
+
+        // Attach event listeners for image switching
+        document.querySelectorAll(".arrow-btn").forEach(button => {
+            button.addEventListener("click", async function () {
+                const productId = this.getAttribute("data-product-id");
+                const imgElement = document.querySelector(`img[data-product-id='${productId}']`);
+                const currentIndex = parseInt(imgElement.getAttribute("data-index"), 10);
+
+                // Fetch available filament colors for this product
+                const response = await fetch(`${API_BASE_URL}/api/filament-colors`);
+                const colors = await response.json();
+
+                if (!colors || colors.length === 0) return;
+
+                let color = colors.find(c => c._id === productId);
+                if (!color || color.images.length < 2) return;
+
+                let newIndex = currentIndex === 0 ? 1 : 0;
+                imgElement.src = color.images[newIndex];
+                imgElement.setAttribute("data-index", newIndex);
+            });
         });
 
     } catch (error) {
         console.error("❌ Error fetching warehouse products:", error);
-        warehouseContainer.innerHTML = '<p class="text-center text-danger">Failed to load products.</p>';
     }
 }
+
 
 // ✅ Function to open the color selection modal with proper styling
 async function openColorModal(productId, button) {
