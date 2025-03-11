@@ -90,19 +90,27 @@ async function openColorModal(productId, button) {
         const colors = await response.json();
 
         const colorOptionsContainer = document.getElementById("colorOptions");
-        colorOptionsContainer.innerHTML = ""; // Clear previous content
+        colorOptionsContainer.innerHTML = ""; // ✅ Clear previous content
 
         colors.forEach(color => {
             const colorOption = document.createElement("div");
-            colorOption.classList.add("color-option", "d-flex", "align-items-center", "m-2", "p-2", "border", "rounded");
+            colorOption.classList.add(
+                "color-option",
+                "d-flex",
+                "align-items-center",
+                "m-2",
+                "p-2",
+                "border",
+                "rounded"
+            );
             colorOption.style.cursor = "pointer";
             colorOption.style.backgroundColor = "#95d9fd"; // ✅ Light Blue Background
-            colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // ✅ Smooth effect
+            colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease";
             colorOption.style.position = "relative"; // ✅ Ensure relative positioning
 
-            // ✅ Add Color Box and "Enlarge Image" Button
+            // ✅ Add Color Box with Image Switcher and "Enlarge Image" Button
             colorOption.innerHTML = `
-                <div class="image-container" style="display: flex; align-items: center;">
+                <div class="image-container" style="display: flex; align-items: center; justify-content: center;">
                     <button class="arrow-btn left-arrow" data-color-id="${color._id}">⬅</button>
                     <img src="${color.images[0]}" class="color-preview" data-index="0" data-color-id="${color._id}" width="50">
                     <button class="arrow-btn right-arrow" data-color-id="${color._id}">➡</button>
@@ -110,17 +118,30 @@ async function openColorModal(productId, button) {
                 <p class="text-center cart-color-text">${color.name}</p>
                 <button class="btn enlarge-color-btn" data-image="${color.images[0]}" 
                         style="
-                        background-color: #034a92; /* ✅ Darker Blue */
+                        background-color: #022c5e; /* ✅ Darker Blue */
                         color: white;
                         position: absolute; 
-                        right: 10px; /* ✅ Push to the right */
-                        bottom: 10px; /* ✅ Align to the bottom */
-                        width: 35px; /* ✅ Smaller width */
-                        height: 22px; /* ✅ Smaller height */
+                        left: 50%; /* ✅ Centered */
+                        transform: translateX(-50%);
+                        bottom: 10px; 
+                        width: 90px; /* ✅ Proper width */
+                        height: 28px; /* ✅ Proper height */
+                        font-size: 12px;
                         ">
                     Enlarge Image
                 </button>
             `;
+
+            // ✅ Change background color when hovering over color box
+            colorOption.addEventListener("mouseenter", () => {
+                colorOption.style.backgroundColor = "#034a92"; // ✅ Dark Blue Hover
+                colorOption.querySelector(".cart-color-text").style.color = "white";
+            });
+
+            colorOption.addEventListener("mouseleave", () => {
+                colorOption.style.backgroundColor = "#95d9fd"; // ✅ Reset Background
+                colorOption.querySelector(".cart-color-text").style.color = "#000";
+            });
 
             // ✅ Ensure clicking anywhere in the color box (except buttons) selects the color
             colorOption.addEventListener("click", (event) => {

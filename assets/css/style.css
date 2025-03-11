@@ -493,14 +493,19 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 /* ✅ Color Option Styling */
 .color-option {
     background-color: #95d9fd; /* Light Blue Background */
-    padding: 10px;
+    padding: 15px;
     margin: 5px;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between; /* ✅ Proper spacing */
     transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+    position: relative;
+    width: 120px; /* ✅ Adjust width for proper spacing */
+    height: 160px; /* ✅ Taller to fit content */
 }
+
 /* ✅ Ensure buttons align correctly */
 .color-details {
     display: flex;
@@ -509,21 +514,23 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     width: 100%;
 }
 
-/* ✅ Adjust Enlarge Button for Mobile */
-.enlarge-color-btn {
-    background-color: #034a92 !important; /* ✅ Dark Blue */
-    color: white !important;
-    width: 90% !important; /* ✅ Full width */
-    font-size: 14px !important;
-    padding: 5px !important;
-    margin-top: 5px !important;
-    text-align: center !important;
-    width: 35px !important; /* ✅ Smaller width */
-    height: 22px !important; /* ✅ Smaller height */
+/* ✅ Adjust Image Styling */
+.color-preview {
+    width: 60px !important;  /* ✅ Slightly larger image */
+    height: auto;
+    border-radius: 5px;
+    border: 2px solid black;
+    transition: opacity 0.3s ease-in-out;
 }
 
+/* ✅ Change "Choose Color" Button Hover to Blue */
+.choose-color-btn:hover {
+    background-color: #034a92 !important; /* ✅ Dark Blue */
+    color: white !important;
+    transition: background-color 0.3s ease;
+}
 
-/* ✅ Hover Effect */
+/* ✅ Add Hover Effect for Color Selection Box */
 .color-option:hover {
     background-color: #034a92; /* Dark Blue on Hover */
     color: white !important; /* Change Text Color on Hover */
@@ -551,6 +558,50 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     border-color: black !important; /* Keep border black */
 }
 
+/* ✅ Image Container */
+.image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+/* ✅ Arrow Button Styling */
+.arrow-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.arrow-btn:hover {
+    background-color: #ddd;
+    border-radius: 5px;
+}
+
+/* ✅ "Enlarge Image" Button (Centered & Proper Size) */
+.enlarge-color-btn {
+    background-color: #022c5e !important; /* ✅ Dark Blue */
+    color: white !important;
+    width: 90px !important; /* ✅ Fit the text properly */
+    height: 30px !important; /* ✅ Increased height for readability */
+    font-size: 12px !important; /* ✅ Proper font size */
+    padding: 5px !important;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 10px; /* ✅ Centered at the bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+/* ✅ Hover Effect for "Enlarge Image" Button */
+.enlarge-color-btn:hover {
+    background-color: #011f3f !important; /* ✅ Even darker blue */
+}
+
 /* ✅ Mobile Fix: Stack items properly */
 @media screen and (max-width: 768px) {
     .color-option {
@@ -565,8 +616,14 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 
     .enlarge-color-btn {
         width: 100% !important;
+        font-size: 12px !important;
+        height: 28px !important;
     }
 }
+
+
+
+
 
 /* ✅ Default Tab Styling */
 .nav-tabs .nav-link {
@@ -602,44 +659,7 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 
 
 
-.color-preview {
-    width: 50px !important;  /* ✅ Set smaller image size */
-    height: auto;
-    border-radius: 5px;
-    border: 2px solid black;
-    transition: opacity 0.3s ease-in-out;
-}
 
-
-
-.image-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-}
-
-.arrow-btn {
-    background: none;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.arrow-btn:hover {
-    background-color: #ddd;
-    border-radius: 5px;
-}
-
-
-/* ✅ Change "Choose Color" Button Hover to Blue */
-.choose-color-btn:hover {
-    background-color: #034a92 !important; /* ✅ Dark Blue */
-    color: white !important;
-    transition: background-color 0.3s ease;
-}
 
 
 
