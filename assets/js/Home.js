@@ -41,6 +41,10 @@ async function fetchFeaturedProducts() {
                     <button class="btn btn-primary add-to-cart-btn" data-product-id="${product._id}">
                         Add to Cart
                     </button>
+
+                    <button class="btn btn-info view-image-btn" data-image="${product.image}">
+                        View Image
+                    </button>
                 </div>
             `;
 
@@ -60,6 +64,12 @@ async function fetchFeaturedProducts() {
                 addToCart(product.name, product.price, product.image, selectedColor);
             });
 
+            // ✅ Attach event listener for "View Image"
+            productCard.querySelector(".view-image-btn").addEventListener("click", function () {
+                const imageUrl = this.getAttribute("data-image");
+                enlargeImage(imageUrl, false); // ✅ Does NOT return to color modal
+            });
+
             featuredContainer.appendChild(productCard);
         });
 
@@ -68,6 +78,7 @@ async function fetchFeaturedProducts() {
         featuredContainer.innerHTML = '<p class="text-center text-danger">Failed to load featured products.</p>';
     }
 }
+
 
 // ✅ Open the color selection modal with arrows to switch images
 async function openColorModal(productId, button) {
@@ -99,7 +110,8 @@ async function openColorModal(productId, button) {
             // ✅ Add event listener to enlarge image
             colorOption.querySelector(".enlarge-color-btn").addEventListener("click", function () {
                 const imageUrl = this.getAttribute("data-image");
-                enlargeImage(imageUrl); // ✅ Calls `enlargeImage()`
+                enlargeImage(imageUrl, true); // ✅ Now it knows to return to color modal
+                $("#colorModal").modal("hide"); // ✅ Hide modal before enlarging
             });
 
             // ✅ Only select color when clicking outside of arrows
@@ -152,8 +164,8 @@ async function openColorModal(productId, button) {
 
 
 
-// Function to enlarge image in fullscreen mode & exit on click
-function enlargeImage(imgSrc) {
+// ✅ Function to enlarge image and return to color modal if it was open
+function enlargeImage(imgSrc, isFromColorModal = false) {
     let popupImg = document.createElement("img");
     popupImg.src = imgSrc;
     popupImg.classList.add("fullscreen-img");
@@ -164,14 +176,17 @@ function enlargeImage(imgSrc) {
     fullscreenOverlay.appendChild(popupImg);
     document.body.appendChild(fullscreenOverlay);
 
+    // ✅ Close fullscreen image and reopen color modal if it was open
     fullscreenOverlay.onclick = function () {
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-        }
         fullscreenOverlay.remove();
+        if (isFromColorModal) {
+            $("#colorModal").modal("show"); // ✅ Reopen color modal
+        }
     };
 
+    // ✅ Enter fullscreen mode
     fullscreenOverlay.requestFullscreen().catch(err => {
         console.warn("Fullscreen request failed", err);
     });
 }
+
