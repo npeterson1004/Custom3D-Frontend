@@ -131,11 +131,19 @@ async function openColorModal(productId, button) {
             const colorOption = document.createElement("div");
             colorOption.classList.add("color-option", "d-flex", "flex-column", "align-items-center", "m-2", "p-3", "border", "rounded");
             colorOption.style.cursor = "pointer";
-            colorOption.style.backgroundColor = "#95d9fd"; // ✅ Light Blue Background
-            colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // ✅ Smooth effect
+            colorOption.style.backgroundColor = "#95d9fd"; // ✅ Light Blue Default
+            colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // ✅ Smooth hover effect
             colorOption.style.position = "relative"; // ✅ Ensure relative positioning
             colorOption.style.width = "100%"; // ✅ Ensure it scales properly
             colorOption.style.textAlign = "center"; // ✅ Center align content
+
+            // ✅ Change background color on hover
+            colorOption.addEventListener("mouseenter", () => {
+                colorOption.style.backgroundColor = color.images[0]; // ✅ Use first filament color image as background
+            });
+            colorOption.addEventListener("mouseleave", () => {
+                colorOption.style.backgroundColor = "#95d9fd"; // ✅ Reset to default
+            });
 
             // ✅ Add Color Box and "Enlarge Image" Button
             colorOption.innerHTML = `
@@ -151,11 +159,13 @@ async function openColorModal(productId, button) {
                         style="
                         background-color: #034a92; /* ✅ Darker Blue */
                         color: white;
-                        width: 80%;
-                        font-size: 14px;
-                        padding: 5px;
+                        width: 50px; /* ✅ Smaller Button */
+                        height: 25px;
+                        font-size: 12px;
+                        padding: 3px;
+                        text-align: center;
                         ">
-                        Enlarge Image
+                        🔍
                     </button>
                 </div>
             `;

@@ -517,6 +517,7 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     font-size: 14px !important;
     padding: 5px !important;
     margin-top: 5px !important;
+    text-align: center !important;
 }
 
 
@@ -530,6 +531,8 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 /* ✅ Ensure Text Changes Color on Hover */
 .color-option:hover .cart-color-text {
     color: white !important; /* Change text color on hover */
+    background-color: rgba(0, 0, 0, 0.1) !important; /* ✅ Semi-transparent effect */
+    transition: background-color 0.3s ease-in-out;
 }
 
 /* ✅ Add Black Border to Color Images */
@@ -635,7 +638,6 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     color: white !important;
     transition: background-color 0.3s ease;
 }
-
 
 
 
