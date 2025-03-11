@@ -208,7 +208,7 @@ async function fetchOrders() {
                                 ${productImage} 
                                 <span>${itemQuantity} x ${itemName}</span> 
                                 <br>
-                                <span style="font-size: 12px; color: gray;">(${colorName})</span>
+                                <span style="font-size: 12px; color: white;">(${colorName})</span>
                             </div>
                         `;
                     }).join("")}

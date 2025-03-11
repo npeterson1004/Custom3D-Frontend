@@ -94,7 +94,7 @@ export async function loadFilamentColors() {
                 <td>
                     <div class="image-container" style="display: flex; align-items: center;">
                         <button class="arrow-btn left-arrow" data-color-id="${color._id}">⬅</button>
-                        <img src="${color.images[0]}" class="filament-image" 
+                        <img src="${color.images[0]}" class="filament-image" style="width: 30px; height: 30px; margin-right: 5px;"
                              data-index="0" data-color-id="${color._id}" 
                              alt="${color.name}" width="80" style="margin: 0 10px;">
                         <button class="arrow-btn right-arrow" data-color-id="${color._id}">➡</button>
