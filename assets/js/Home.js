@@ -85,7 +85,7 @@ async function openColorModal(productId, button) {
             colorOption.style.backgroundColor = "#95d9fd"; // ✅ Light Blue Background
             colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // ✅ Smooth effect
 
-            // ✅ Separate arrow buttons so they do NOT trigger color selection
+            // ✅ Add "Enlarge Image" button
             colorOption.innerHTML = `
                 <div class="image-container" style="display: flex; align-items: center;">
                     <button class="arrow-btn left-arrow" data-color-id="${color._id}">⬅</button>
@@ -93,7 +93,14 @@ async function openColorModal(productId, button) {
                     <button class="arrow-btn right-arrow" data-color-id="${color._id}">➡</button>
                 </div>
                 <p class="text-center cart-color-text">${color.name}</p>
+                <button class="btn btn-info btn-sm enlarge-color-btn" data-image="${color.images[0]}">Enlarge Image</button> <!-- ✅ New Button -->
             `;
+
+            // ✅ Add event listener to enlarge image
+            colorOption.querySelector(".enlarge-color-btn").addEventListener("click", function () {
+                const imageUrl = this.getAttribute("data-image");
+                enlargeImage(imageUrl); // ✅ Calls `enlargeImage()`
+            });
 
             // ✅ Only select color when clicking outside of arrows
             colorOption.addEventListener("click", (event) => {
@@ -124,6 +131,12 @@ async function openColorModal(productId, button) {
                 let newIndex = currentIndex === 0 ? 1 : 0;
                 imgElement.src = color.images[newIndex];
                 imgElement.setAttribute("data-index", newIndex);
+
+                // ✅ Update enlarge button with new image
+                const enlargeButton = imgElement.closest(".color-option").querySelector(".enlarge-color-btn");
+                if (enlargeButton) {
+                    enlargeButton.setAttribute("data-image", color.images[newIndex]);
+                }
             });
         });
 
@@ -133,6 +146,7 @@ async function openColorModal(productId, button) {
         console.error("Error fetching filament colors:", error);
     }
 }
+
 
 
 
