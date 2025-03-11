@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", fetchFeaturedProducts);
 
 async function fetchFeaturedProducts() {
     try {
+         // ✅ Show the loading message before fetching items
+         document.getElementById("loadingMessage").style.display = "block";
         const response = await fetch(`${API_BASE_URL}/api/products/featured`);
         const products = await response.json();
 
@@ -72,7 +74,8 @@ async function fetchFeaturedProducts() {
 
             featuredContainer.appendChild(productCard);
         });
-
+        // ✅ Hide the loading message after items are loaded
+        document.getElementById("loadingMessage").style.display = "none";
     } catch (error) {
         console.error("❌ Error fetching featured products:", error);
         featuredContainer.innerHTML = '<p class="text-center text-danger">Failed to load featured products.</p>';

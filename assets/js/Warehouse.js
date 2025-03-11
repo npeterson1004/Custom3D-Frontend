@@ -44,6 +44,8 @@ document.addEventListener("DOMContentLoaded", fetchWarehouseProducts);
 
 async function fetchWarehouseProducts() {
     try {
+         // ✅ Show the loading message before fetching items
+         document.getElementById("loadingMessage").style.display = "block";
         const response = await fetch(`${API_BASE_URL}/api/products`);
         const products = await response.json();
 
@@ -106,6 +108,8 @@ async function fetchWarehouseProducts() {
                 enlargeImage(imageUrl, false); // ✅ Does NOT return to color modal
             });
         });
+         // ✅ Hide the loading message after items are loaded
+         document.getElementById("loadingMessage").style.display = "none";
 
     } catch (error) {
         console.error("❌ Error fetching warehouse products:", error);
