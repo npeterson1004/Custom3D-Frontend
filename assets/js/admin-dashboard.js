@@ -188,7 +188,12 @@ async function fetchOrders() {
         orders.forEach(order => {
             const orderRow = document.createElement("tr");
 
-            // ✅ Ensure `name` and `quantity` exist
+            // ✅ Determine the correct CSS class for the payment status dropdown
+            let statusClass = "";
+            if (order.paymentStatus === "Completed") statusClass = "status-completed";
+            else if (order.paymentStatus === "Processing Payment") statusClass = "status-processing";
+            else statusClass = "status-pending";
+
             orderRow.innerHTML = `
                 <td>${order.userEmail || "Unknown User"}</td>
                 <td>
@@ -196,7 +201,7 @@ async function fetchOrders() {
                         const itemName = item.name || "Unnamed Item";
                         const itemQuantity = item.quantity || 1;
                         const productImage = item.image ? `<img src="${item.image}" alt="${itemName}" class="tiny-product-img" style="width: 30px; height: 30px; margin-right: 5px;">` : "";
-                        const colorName = item.color?.name || "No Color Selected"; // ✅ Display only color name, not images
+                        const colorName = item.color?.name || "No Color Selected";
 
                         return `
                             <div style="display: flex; align-items: center;">
@@ -210,12 +215,17 @@ async function fetchOrders() {
                 </td>
                 <td>$${order.totalAmount.toFixed(2)}</td>
                 <td>${new Date(order.orderDate).toLocaleString()}</td>
-                <td>${order.paymentStatus}</td>
+                <td>
+                    <select class="payment-status-dropdown ${statusClass}" data-order-id="${order._id}">
+                        <option value="Pending" ${order.paymentStatus === "Pending" ? "selected" : ""}>Pending</option>
+                        <option value="Processing Payment" ${order.paymentStatus === "Processing Payment" ? "selected" : ""}>Processing Payment</option>
+                        <option value="Completed" ${order.paymentStatus === "Completed" ? "selected" : ""}>Completed</option>
+                    </select>
+                </td>
             `;
 
             ordersContainer.appendChild(orderRow);
         });
-
 
         // ✅ Attach event listeners after adding rows
         document.querySelectorAll(".payment-status-dropdown").forEach(select => {
@@ -230,6 +240,8 @@ async function fetchOrders() {
         console.error("❌ Error fetching orders:", error);
     }
 }
+
+
 
 
 
