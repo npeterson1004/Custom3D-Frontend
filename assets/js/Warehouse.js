@@ -73,13 +73,17 @@ async function fetchWarehouseProducts() {
                     <button class="btn btn-primary add-to-cart-btn" data-product-id="${product._id}">
                         Add to Cart
                     </button>
+
+                    <button class="btn btn-info view-image-btn" data-image="${product.image}">
+                        View Image
+                    </button>
                 </div>
             `;
 
             warehouseContainer.appendChild(productCard);
         });
 
-        // ✅ Attach event listeners for Choose Color buttons
+        // ✅ Attach event listeners for "Choose Color" buttons
         document.querySelectorAll(".choose-color-btn").forEach(button => {
             button.addEventListener("click", function () {
                 const productId = this.getAttribute("data-product-id");
@@ -87,11 +91,19 @@ async function fetchWarehouseProducts() {
             });
         });
 
-        // ✅ Attach event listeners for Add to Cart buttons
+        // ✅ Attach event listeners for "Add to Cart" buttons
         document.querySelectorAll(".add-to-cart-btn").forEach(button => {
             button.addEventListener("click", function () {
                 const productId = this.getAttribute("data-product-id");
                 addToCartHandler(productId, this);
+            });
+        });
+
+        // ✅ Attach event listeners for "View Image" buttons
+        document.querySelectorAll(".view-image-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                const imageUrl = this.getAttribute("data-image");
+                enlargeImage(imageUrl, false); // ✅ Does NOT return to color modal
             });
         });
 
@@ -101,7 +113,8 @@ async function fetchWarehouseProducts() {
 }
 
 
-// ✅ Open the color selection modal with arrows to switch images
+
+// ✅ Open the color selection modal with an "Enlarge Image" button
 async function openColorModal(productId, button) {
     try {
         const response = await fetch(`${API_BASE_URL}/api/filament-colors`);
@@ -116,8 +129,9 @@ async function openColorModal(productId, button) {
             colorOption.style.cursor = "pointer";
             colorOption.style.backgroundColor = "#95d9fd"; // ✅ Light Blue Background
             colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // ✅ Smooth effect
+            colorOption.style.position = "relative"; // ✅ Ensure relative positioning
 
-            // ✅ Separate arrow buttons so they do NOT trigger color selection
+            // ✅ Add "Enlarge Image" button aligned to the right
             colorOption.innerHTML = `
                 <div class="image-container" style="display: flex; align-items: center;">
                     <button class="arrow-btn left-arrow" data-color-id="${color._id}">⬅</button>
@@ -125,23 +139,29 @@ async function openColorModal(productId, button) {
                     <button class="arrow-btn right-arrow" data-color-id="${color._id}">➡</button>
                 </div>
                 <p class="text-center cart-color-text">${color.name}</p>
+                <button class="btn enlarge-color-btn" data-image="${color.images[0]}" 
+                        style="
+                        background-color: #034a92; /* ✅ Darker Blue */
+                        color: white;
+                        position: absolute; 
+                        right: 10px; /* ✅ Push to the right */
+                        bottom: 10px; /* ✅ Align to the bottom */
+                        ">
+                    Enlarge Image
+                </button>
             `;
 
-            // ✅ Only select color when clicking outside of arrows
-            colorOption.addEventListener("click", (event) => {
-                if (!event.target.classList.contains("arrow-btn")) { // ✅ Prevent arrow clicks from closing the modal
-                    button.innerHTML = `<img src="${color.images[0]}" class="cart-color-img" 
-                                        style="width: 20px; height: 20px; margin-right: 5px; border: 2px solid black;"> 
-                                        ${color.name}`;
-                    button.setAttribute("data-selected-color", JSON.stringify(color));
-                    $("#colorModal").modal("hide"); // ✅ Close modal ONLY on selection
-                }
+            // ✅ Add event listener to enlarge image (pass `true` to return to color modal)
+            colorOption.querySelector(".enlarge-color-btn").addEventListener("click", function () {
+                const imageUrl = this.getAttribute("data-image");
+                enlargeImage(imageUrl, true); // ✅ Now it knows to return to color modal
+                $("#colorModal").modal("hide"); // ✅ Hide modal before enlarging
             });
 
             colorOptionsContainer.appendChild(colorOption);
         });
 
-        // ✅ Attach event listeners for arrows to switch images (Fixes your issue)
+        // ✅ Attach event listeners for arrows to switch images
         document.querySelectorAll(".arrow-btn").forEach(arrow => {
             arrow.addEventListener("click", function (event) {
                 event.stopPropagation(); // ✅ Prevent modal from closing
@@ -156,6 +176,12 @@ async function openColorModal(productId, button) {
                 let newIndex = currentIndex === 0 ? 1 : 0;
                 imgElement.src = color.images[newIndex];
                 imgElement.setAttribute("data-index", newIndex);
+
+                // ✅ Update enlarge button with new image
+                const enlargeButton = imgElement.closest(".color-option").querySelector(".enlarge-color-btn");
+                if (enlargeButton) {
+                    enlargeButton.setAttribute("data-image", color.images[newIndex]);
+                }
             });
         });
 
@@ -170,8 +196,9 @@ async function openColorModal(productId, button) {
 
 
 
-// Function to enlarge image in fullscreen mode & exit on click
-function enlargeImage(imgSrc) {
+
+// ✅ Function to enlarge image and return to color modal if it was open
+function enlargeImage(imgSrc, isFromColorModal = false) {
     let popupImg = document.createElement("img");
     popupImg.src = imgSrc;
     popupImg.classList.add("fullscreen-img");
@@ -182,13 +209,15 @@ function enlargeImage(imgSrc) {
     fullscreenOverlay.appendChild(popupImg);
     document.body.appendChild(fullscreenOverlay);
 
+    // ✅ Close fullscreen image and reopen color modal if it was open
     fullscreenOverlay.onclick = function () {
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-        }
         fullscreenOverlay.remove();
+        if (isFromColorModal) {
+            $("#colorModal").modal("show"); // ✅ Reopen color modal
+        }
     };
 
+    // ✅ Enter fullscreen mode
     fullscreenOverlay.requestFullscreen().catch(err => {
         console.warn("Fullscreen request failed", err);
     });

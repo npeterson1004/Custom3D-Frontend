@@ -95,8 +95,9 @@ async function openColorModal(productId, button) {
             colorOption.style.cursor = "pointer";
             colorOption.style.backgroundColor = "#95d9fd"; // ✅ Light Blue Background
             colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // ✅ Smooth effect
+            colorOption.style.position = "relative"; // ✅ Ensure relative positioning
 
-            // ✅ Add "Enlarge Image" button
+            // ✅ Add "Enlarge Image" button aligned to the right
             colorOption.innerHTML = `
                 <div class="image-container" style="display: flex; align-items: center;">
                     <button class="arrow-btn left-arrow" data-color-id="${color._id}">⬅</button>
@@ -104,31 +105,29 @@ async function openColorModal(productId, button) {
                     <button class="arrow-btn right-arrow" data-color-id="${color._id}">➡</button>
                 </div>
                 <p class="text-center cart-color-text">${color.name}</p>
-                <button class="btn btn-info btn-sm enlarge-color-btn" data-image="${color.images[0]}">Enlarge Image</button> <!-- ✅ New Button -->
+                <button class="btn enlarge-color-btn" data-image="${color.images[0]}" 
+                        style="
+                        background-color: #034a92; /* ✅ Darker Blue */
+                        color: white;
+                        position: absolute; 
+                        right: 10px; /* ✅ Push to the right */
+                        bottom: 10px; /* ✅ Align to the bottom */
+                        ">
+                    Enlarge Image
+                </button>
             `;
 
-            // ✅ Add event listener to enlarge image
+            // ✅ Add event listener to enlarge image (pass `true` to return to color modal)
             colorOption.querySelector(".enlarge-color-btn").addEventListener("click", function () {
                 const imageUrl = this.getAttribute("data-image");
                 enlargeImage(imageUrl, true); // ✅ Now it knows to return to color modal
                 $("#colorModal").modal("hide"); // ✅ Hide modal before enlarging
             });
 
-            // ✅ Only select color when clicking outside of arrows
-            colorOption.addEventListener("click", (event) => {
-                if (!event.target.classList.contains("arrow-btn")) { // ✅ Prevent arrow clicks from closing the modal
-                    button.innerHTML = `<img src="${color.images[0]}" class="cart-color-img" 
-                                        style="width: 20px; height: 20px; margin-right: 5px; border: 2px solid black;"> 
-                                        ${color.name}`;
-                    button.setAttribute("data-selected-color", JSON.stringify(color));
-                    $("#colorModal").modal("hide"); // ✅ Close modal ONLY on selection
-                }
-            });
-
             colorOptionsContainer.appendChild(colorOption);
         });
 
-        // ✅ Attach event listeners for arrows to switch images (Fixes your issue)
+        // ✅ Attach event listeners for arrows to switch images
         document.querySelectorAll(".arrow-btn").forEach(arrow => {
             arrow.addEventListener("click", function (event) {
                 event.stopPropagation(); // ✅ Prevent modal from closing
