@@ -131,7 +131,7 @@ async function openColorModal(productId, button) {
             colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // ✅ Smooth effect
             colorOption.style.position = "relative"; // ✅ Ensure relative positioning
 
-            // ✅ Add "Enlarge Image" button aligned to the right
+            // ✅ Add Color Box and "Enlarge Image" Button
             colorOption.innerHTML = `
                 <div class="image-container" style="display: flex; align-items: center;">
                     <button class="arrow-btn left-arrow" data-color-id="${color._id}">⬅</button>
@@ -151,10 +151,22 @@ async function openColorModal(productId, button) {
                 </button>
             `;
 
-            // ✅ Add event listener to enlarge image (pass `true` to return to color modal)
-            colorOption.querySelector(".enlarge-color-btn").addEventListener("click", function () {
+            // ✅ Ensure clicking anywhere in the color box (except buttons) selects the color
+            colorOption.addEventListener("click", (event) => {
+                if (!event.target.classList.contains("arrow-btn") && !event.target.classList.contains("enlarge-color-btn")) {
+                    button.innerHTML = `<img src="${color.images[0]}" class="cart-color-img" 
+                                        style="width: 20px; height: 20px; margin-right: 5px; border: 2px solid black;"> 
+                                        ${color.name}`;
+                    button.setAttribute("data-selected-color", JSON.stringify(color));
+                    $("#colorModal").modal("hide"); // ✅ Close modal ONLY on selection
+                }
+            });
+
+            // ✅ Add event listener to enlarge image
+            colorOption.querySelector(".enlarge-color-btn").addEventListener("click", function (event) {
+                event.stopPropagation(); // ✅ Prevent clicking from selecting the color
                 const imageUrl = this.getAttribute("data-image");
-                enlargeImage(imageUrl, true); // ✅ Now it knows to return to color modal
+                enlargeImage(imageUrl, true); // ✅ Returns to color modal
                 $("#colorModal").modal("hide"); // ✅ Hide modal before enlarging
             });
 
@@ -191,7 +203,6 @@ async function openColorModal(productId, button) {
         console.error("Error fetching filament colors:", error);
     }
 }
-
 
 
 
