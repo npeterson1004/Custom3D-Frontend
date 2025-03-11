@@ -502,8 +502,8 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     justify-content: space-between; /* ✅ Proper spacing */
     transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
     position: relative;
-    width: 120px; /* ✅ Adjust width for proper spacing */
-    height: 160px; /* ✅ Taller to fit content */
+    width: 100%; /* ✅ Adjust width for proper spacing */
+    height: 320px; /* ✅ Taller to fit content */
 }
 
 /* ✅ Ensure buttons align correctly */
@@ -540,7 +540,6 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 /* ✅ Ensure Text Changes Color on Hover */
 .color-option:hover .cart-color-text {
     color: white !important; /* Change text color on hover */
-    background-color: rgba(0, 0, 0, 0.1) !important; /* ✅ Semi-transparent effect */
     transition: background-color 0.3s ease-in-out;
 }
 
@@ -585,15 +584,12 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 .enlarge-color-btn {
     background-color: #022c5e !important; /* ✅ Dark Blue */
     color: white !important;
-    width: 90px !important; /* ✅ Fit the text properly */
+    width: 120px !important; /* ✅ Fit the text properly */
     height: 30px !important; /* ✅ Increased height for readability */
     font-size: 12px !important; /* ✅ Proper font size */
     padding: 5px !important;
     border-radius: 5px;
-    position: absolute;
-    bottom: 10px; /* ✅ Centered at the bottom */
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
     text-align: center;
 }
 
@@ -601,6 +597,8 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 .enlarge-color-btn:hover {
     background-color: #011f3f !important; /* ✅ Even darker blue */
 }
+
+
 
 /* ✅ Mobile Fix: Stack items properly */
 @media screen and (max-width: 768px) {

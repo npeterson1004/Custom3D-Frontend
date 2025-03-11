@@ -97,38 +97,39 @@ async function openColorModal(productId, button) {
             colorOption.classList.add(
                 "color-option",
                 "d-flex",
+                "flex-column",
                 "align-items-center",
                 "m-2",
-                "p-2",
+                "p-3",
                 "border",
                 "rounded"
             );
             colorOption.style.cursor = "pointer";
             colorOption.style.backgroundColor = "#95d9fd"; // ✅ Light Blue Background
             colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease";
-            colorOption.style.position = "relative"; // ✅ Ensure relative positioning
+            colorOption.style.width = "100%"; // ✅ Full width for alignment
+            colorOption.style.maxWidth = "300px"; // ✅ Prevent overly wide boxes
+            colorOption.style.position = "relative"; // ✅ Ensure correct positioning
 
             // ✅ Add Color Box with Image Switcher and "Enlarge Image" Button
             colorOption.innerHTML = `
-                <div class="image-container" style="display: flex; align-items: center; justify-content: center;">
+                <div class="image-container" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
                     <button class="arrow-btn left-arrow" data-color-id="${color._id}">⬅</button>
-                    <img src="${color.images[0]}" class="color-preview" data-index="0" data-color-id="${color._id}" width="50">
+                    <img src="${color.images[0]}" class="color-preview" data-index="0" data-color-id="${color._id}" width="60">
                     <button class="arrow-btn right-arrow" data-color-id="${color._id}">➡</button>
                 </div>
-                <p class="text-center cart-color-text">${color.name}</p>
-                <button class="btn enlarge-color-btn" data-image="${color.images[0]}" 
+                <p class="text-center cart-color-text mt-2" style="font-size: 14px;">${color.name}</p>
+                <button class="btn enlarge-color-btn mt-2" data-image="${color.images[0]}" 
                         style="
                         background-color: #022c5e; /* ✅ Darker Blue */
                         color: white;
-                        position: absolute; 
-                        left: 50%; /* ✅ Centered */
-                        transform: translateX(-50%);
-                        bottom: 10px; 
-                        width: 90px; /* ✅ Proper width */
-                        height: 28px; /* ✅ Proper height */
+                        position: relative; 
+                        width: 120px; /* ✅ Proper width */
+                        height: 30px; /* ✅ Proper height */
                         font-size: 12px;
+                        border-radius: 5px;
                         ">
-                    Enlarge Image
+                    🔍 Enlarge Image
                 </button>
             `;
 
