@@ -911,8 +911,8 @@ body.no-scroll {
 
 /* ✅ Resize the color image inside the cart */
 .cart-color-img {
-    width: 15px; /* Adjust the size as needed */
-    height: 15px;
+    width: 25px; /* Adjust the size as needed */
+    height: 25px;
     object-fit: cover;
     border-radius: 50%; /* Makes it circular */
     border: 1px solid #ccc;
