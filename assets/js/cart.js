@@ -185,6 +185,21 @@ window.logout = function () {
     window.location.href = "login.html";
 };
 
+// ✅ Update Quantity in Cart
+function updateCartItem(index, newQuantity) {
+    let userEmail = localStorage.getItem("userEmail");
+    if (!userEmail) return;
+
+    let cart = JSON.parse(localStorage.getItem(`cart_${userEmail}`)) || [];
+    if (newQuantity < 1) newQuantity = 1; // Prevents zero or negative quantity
+
+    cart[index].quantity = parseInt(newQuantity); // ✅ Update the item quantity
+    localStorage.setItem(`cart_${userEmail}`, JSON.stringify(cart));
+    loadCart(); // ✅ Refresh cart after update
+}
+
+// ✅ Make `updateCartItem()` globally accessible
+window.updateCartItem = updateCartItem;
 
 
 // Show Notification Function

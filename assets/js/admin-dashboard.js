@@ -193,21 +193,17 @@ async function fetchOrders() {
                 <td>${order.userEmail || "Unknown User"}</td>
                 <td>
                     ${order.items.map(item => {
-                        const itemName = item.name || "Unnamed Item"; // ✅ Ensure name exists
-                        const itemQuantity = item.quantity || 1; // ✅ Ensure quantity exists
-                        const colorName = item.color?.name || "No Color Selected"; // ✅ Ensure color name exists
-                        const colorImages = Array.isArray(item.color?.images) ? item.color.images : [];
-                        const colorImage1 = colorImages.length > 0 ? colorImages[0] : "../assets/images/default-color.png";
-                        const colorImage2 = colorImages.length > 1 ? colorImages[1] : "../assets/images/default-color.png";
+                        const itemName = item.name || "Unnamed Item";
+                        const itemQuantity = item.quantity || 1;
+                        const productImage = item.image ? `<img src="${item.image}" alt="${itemName}" class="tiny-product-img" style="width: 30px; height: 30px; margin-right: 5px;">` : "";
+                        const colorName = item.color?.name || "No Color Selected"; // ✅ Display only color name, not images
 
                         return `
-                            <div>
-                                <span class="order-quantity">${itemQuantity}</span> x ${itemName}
+                            <div style="display: flex; align-items: center;">
+                                ${productImage} 
+                                <span>${itemQuantity} x ${itemName}</span> 
                                 <br>
-                                <img src="${colorImage1}" alt="${colorName}" class="tiny-color-img" style="width: 30px; height: 30px;">
-                                <img src="${colorImage2}" alt="${colorName}" class="tiny-color-img" style="width: 30px; height: 30px;">
-                                <br>
-                                <span>${colorName}</span>
+                                <span style="font-size: 12px; color: gray;">(${colorName})</span>
                             </div>
                         `;
                     }).join("")}
