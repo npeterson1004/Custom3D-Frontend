@@ -129,45 +129,32 @@ async function openColorModal(productId, button) {
 
         colors.forEach(color => {
             const colorOption = document.createElement("div");
-            colorOption.classList.add("color-option", "d-flex", "flex-column", "align-items-center", "m-2", "p-3", "border", "rounded");
+            colorOption.classList.add("color-option", "d-flex", "align-items-center", "m-2", "p-2", "border", "rounded");
             colorOption.style.cursor = "pointer";
-            colorOption.style.backgroundColor = "#95d9fd"; // ✅ Light Blue Default
-            colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // ✅ Smooth hover effect
+            colorOption.style.backgroundColor = "#95d9fd"; // ✅ Light Blue Background
+            colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // ✅ Smooth effect
             colorOption.style.position = "relative"; // ✅ Ensure relative positioning
-            colorOption.style.width = "100%"; // ✅ Ensure it scales properly
-            colorOption.style.textAlign = "center"; // ✅ Center align content
-
-            // ✅ Change background color on hover
-            colorOption.addEventListener("mouseenter", () => {
-                colorOption.style.backgroundColor = color.images[0]; // ✅ Use first filament color image as background
-            });
-            colorOption.addEventListener("mouseleave", () => {
-                colorOption.style.backgroundColor = "#95d9fd"; // ✅ Reset to default
-            });
 
             // ✅ Add Color Box and "Enlarge Image" Button
             colorOption.innerHTML = `
-                <div class="image-container d-flex align-items-center justify-content-center">
+                <div class="image-container" style="display: flex; align-items: center;">
                     <button class="arrow-btn left-arrow" data-color-id="${color._id}">⬅</button>
                     <img src="${color.images[0]}" class="color-preview" data-index="0" data-color-id="${color._id}" width="50">
                     <button class="arrow-btn right-arrow" data-color-id="${color._id}">➡</button>
                 </div>
-                <div class="color-details d-flex flex-column align-items-center mt-2">
-                    <p class="cart-color-text" style="margin: 0; font-size: 14px; font-weight: bold;">${color.name}</p>
-                    <button class="btn enlarge-color-btn mt-1"
-                        data-image="${color.images[0]}" 
+                <p class="text-center cart-color-text">${color.name}</p>
+                <button class="btn enlarge-color-btn" data-image="${color.images[0]}" 
                         style="
                         background-color: #034a92; /* ✅ Darker Blue */
                         color: white;
-                        width: 50px; /* ✅ Smaller Button */
-                        height: 25px;
-                        font-size: 12px;
-                        padding: 3px;
-                        text-align: center;
+                        position: absolute; 
+                        right: 10px; /* ✅ Push to the right */
+                        bottom: 10px; /* ✅ Align to the bottom */
+                        width: 35px; /* ✅ Smaller width */
+                        height: 22px; /* ✅ Smaller height */
                         ">
-                        🔍
-                    </button>
-                </div>
+                    Enlarge Image
+                </button>
             `;
 
             // ✅ Ensure clicking anywhere in the color box (except buttons) selects the color

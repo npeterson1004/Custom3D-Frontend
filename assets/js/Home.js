@@ -115,6 +115,8 @@ async function openColorModal(productId, button) {
                         position: absolute; 
                         right: 10px; /* ✅ Push to the right */
                         bottom: 10px; /* ✅ Align to the bottom */
+                        width: 35px; /* ✅ Smaller width */
+                        height: 22px; /* ✅ Smaller height */
                         ">
                     Enlarge Image
                 </button>

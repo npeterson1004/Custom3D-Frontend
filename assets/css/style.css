@@ -518,6 +518,8 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     padding: 5px !important;
     margin-top: 5px !important;
     text-align: center !important;
+    width: 35px !important; /* ✅ Smaller width */
+    height: 22px !important; /* ✅ Smaller height */
 }
 
 
