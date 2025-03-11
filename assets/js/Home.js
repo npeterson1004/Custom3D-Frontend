@@ -100,7 +100,7 @@ async function openColorModal(productId, button) {
                 "flex-column",
                 "align-items-center",
                 "m-2",
-                "p-3",
+                "p-2",
                 "border",
                 "rounded"
             );
@@ -108,26 +108,30 @@ async function openColorModal(productId, button) {
             colorOption.style.backgroundColor = "#95d9fd"; // ✅ Light Blue Background
             colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease";
             colorOption.style.width = "100%"; // ✅ Full width for alignment
-            colorOption.style.maxWidth = "300px"; // ✅ Prevent overly wide boxes
+            colorOption.style.maxWidth = "600px"; // ✅ Makes the color box extend fully
             colorOption.style.position = "relative"; // ✅ Ensure correct positioning
+            colorOption.style.display = "flex";
+            colorOption.style.flexDirection = "column";
+            colorOption.style.justifyContent = "center";
+            colorOption.style.alignItems = "center";
 
             // ✅ Add Color Box with Image Switcher and "Enlarge Image" Button
             colorOption.innerHTML = `
-                <div class="image-container" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                <div class="image-container d-flex align-items-center justify-content-between w-100">
                     <button class="arrow-btn left-arrow" data-color-id="${color._id}">⬅</button>
-                    <img src="${color.images[0]}" class="color-preview" data-index="0" data-color-id="${color._id}" width="60">
+                    <img src="${color.images[0]}" class="color-preview" data-index="0" data-color-id="${color._id}" width="80">
                     <button class="arrow-btn right-arrow" data-color-id="${color._id}">➡</button>
                 </div>
-                <p class="text-center cart-color-text mt-2" style="font-size: 14px;">${color.name}</p>
-                <button class="btn enlarge-color-btn mt-2" data-image="${color.images[0]}" 
+                <p class="text-center cart-color-text mt-1" style="font-size: 16px; font-weight: bold;">${color.name}</p>
+                <button class="btn enlarge-color-btn mt-1" data-image="${color.images[0]}" 
                         style="
                         background-color: #022c5e; /* ✅ Darker Blue */
                         color: white;
-                        position: relative; 
-                        width: 120px; /* ✅ Proper width */
-                        height: 30px; /* ✅ Proper height */
-                        font-size: 12px;
+                        width: 150px; /* ✅ Proper width */
+                        height: 35px; /* ✅ Proper height */
+                        font-size: 14px;
                         border-radius: 5px;
+                        margin-top: 5px;
                         ">
                     🔍 Enlarge Image
                 </button>
@@ -196,6 +200,7 @@ async function openColorModal(productId, button) {
         console.error("Error fetching filament colors:", error);
     }
 }
+
 
 
 

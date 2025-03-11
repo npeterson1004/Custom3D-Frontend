@@ -488,6 +488,8 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     background-color: #034a92; /* Dark Blue Background */
     border-radius: 10px;
     padding: 20px;
+    width: 100%;
+    max-width: 800px; /* ✅ Makes modal wider */
 }
 
 /* ✅ Color Option Styling */
@@ -503,7 +505,7 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
     transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
     position: relative;
     width: 100%; /* ✅ Adjust width for proper spacing */
-    height: 320px; /* ✅ Taller to fit content */
+    max-width: 600px;
 }
 
 /* ✅ Ensure buttons align correctly */
@@ -584,9 +586,9 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 .enlarge-color-btn {
     background-color: #022c5e !important; /* ✅ Dark Blue */
     color: white !important;
-    width: 120px !important; /* ✅ Fit the text properly */
-    height: 30px !important; /* ✅ Increased height for readability */
-    font-size: 12px !important; /* ✅ Proper font size */
+    width: 150px !important; /* ✅ Fit the text properly */
+    height: 35px !important; /* ✅ Increased height for readability */
+    font-size: 14px !important; /* ✅ Proper font size */
     padding: 5px !important;
     border-radius: 5px;
     position: relative;
