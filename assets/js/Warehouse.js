@@ -129,30 +129,35 @@ async function openColorModal(productId, button) {
 
         colors.forEach(color => {
             const colorOption = document.createElement("div");
-            colorOption.classList.add("color-option", "d-flex", "align-items-center", "m-2", "p-2", "border", "rounded");
+            colorOption.classList.add("color-option", "d-flex", "flex-column", "align-items-center", "m-2", "p-3", "border", "rounded");
             colorOption.style.cursor = "pointer";
             colorOption.style.backgroundColor = "#95d9fd"; // ✅ Light Blue Background
             colorOption.style.transition = "background-color 0.3s ease, color 0.3s ease"; // ✅ Smooth effect
             colorOption.style.position = "relative"; // ✅ Ensure relative positioning
+            colorOption.style.width = "100%"; // ✅ Ensure it scales properly
+            colorOption.style.textAlign = "center"; // ✅ Center align content
 
             // ✅ Add Color Box and "Enlarge Image" Button
             colorOption.innerHTML = `
-                <div class="image-container" style="display: flex; align-items: center;">
+                <div class="image-container d-flex align-items-center justify-content-center">
                     <button class="arrow-btn left-arrow" data-color-id="${color._id}">⬅</button>
                     <img src="${color.images[0]}" class="color-preview" data-index="0" data-color-id="${color._id}" width="50">
                     <button class="arrow-btn right-arrow" data-color-id="${color._id}">➡</button>
                 </div>
-                <p class="text-center cart-color-text">${color.name}</p>
-                <button class="btn enlarge-color-btn" data-image="${color.images[0]}" 
+                <div class="color-details d-flex flex-column align-items-center mt-2">
+                    <p class="cart-color-text" style="margin: 0; font-size: 14px; font-weight: bold;">${color.name}</p>
+                    <button class="btn enlarge-color-btn mt-1"
+                        data-image="${color.images[0]}" 
                         style="
                         background-color: #034a92; /* ✅ Darker Blue */
                         color: white;
-                        position: absolute; 
-                        right: 10px; /* ✅ Push to the right */
-                        bottom: 10px; /* ✅ Align to the bottom */
+                        width: 80%;
+                        font-size: 14px;
+                        padding: 5px;
                         ">
-                    Enlarge Image
-                </button>
+                        Enlarge Image
+                    </button>
+                </div>
             `;
 
             // ✅ Ensure clicking anywhere in the color box (except buttons) selects the color
