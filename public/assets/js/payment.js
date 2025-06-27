@@ -25,6 +25,7 @@ async function payWithVenmo() {
             <h11>📲 Open Venmo and send payment to: <b>${data.venmoUsername}</b></h11>
             <h11>💲 Include your order number when paying</h11>
             <h11>✅ Click "Pay & Send Order" after payment.</h11>
+            <h11><strong>🧾 Order Number:</strong> ${data.orderNumber}</h11>
         `;
 
         // ✅ Show Send Order button only after selecting Venmo

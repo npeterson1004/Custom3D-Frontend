@@ -26,7 +26,7 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
 
         localStorage.setItem("token", data.token);
         localStorage.setItem("userEmail", data.user.email);
-        localStorage.setItem("username", data.user.username);
+        
 
         setTimeout(() => {
             const storedToken = localStorage.getItem("token");
