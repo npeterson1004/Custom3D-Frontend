@@ -195,6 +195,7 @@ async function fetchOrders() {
             else statusClass = "status-pending";
 
             orderRow.innerHTML = `
+                <td>${order.username || "Unknown User"}</td>
                 <td>${order.userEmail || "Unknown User"}</td>
                 <td>
                     ${order.items.map(item => {

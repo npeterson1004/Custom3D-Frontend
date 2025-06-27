@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // ✅ Add Item to Cart
 function addToCart(name, price, image, color) {
     let userEmail = localStorage.getItem("userEmail");
+ 
     if (!userEmail) {
         alert("⚠️ You must log in to add items to the cart.");
         return;
@@ -68,6 +69,7 @@ function addToCart(name, price, image, color) {
 
 function loadCart() {
     let userEmail = localStorage.getItem("userEmail");
+ 
     if (!userEmail) return;
 
     const cartItemsContainer = document.getElementById("cart-items");

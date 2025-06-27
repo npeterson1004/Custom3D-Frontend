@@ -71,6 +71,7 @@ window.sendOrder = sendOrder;
 /* ✅ Confirm Order (Creates Order in Database) */
 async function confirmOrder() {
     let userEmail = localStorage.getItem("userEmail");
+    let username = localStorage.getItem("username");
 
     if (!userEmail) {
         alert("⚠️ Please log in to place an order.");
@@ -87,6 +88,7 @@ async function confirmOrder() {
     const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     const orderData = {
+        username,
         userEmail,
         items: cart.map(item => ({
             name: item.name,
