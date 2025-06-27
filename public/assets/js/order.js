@@ -66,6 +66,10 @@ async function sendOrder() {
 window.sendOrder = sendOrder;
 
 
+function generateOrderNumber() {
+    const now = new Date();
+    return `ORD-${now.getFullYear()}${(now.getMonth()+1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}-${Math.floor(1000 + Math.random() * 9000)}`;
+}
 
 
 /* ✅ Confirm Order (Creates Order in Database) */
@@ -102,7 +106,8 @@ async function confirmOrder() {
         })),
         totalAmount,
         paymentMethod: "Venmo",
-        paymentStatus: "Pending"
+        paymentStatus: "Pending",
+        orderNumber: generateOrderNumber()
     };
 
     try {
