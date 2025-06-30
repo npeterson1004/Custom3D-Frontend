@@ -19,23 +19,6 @@ async function logout() {
 }
 
 
-/* ✅ Ensure Admin is Authenticated Before Loading Dashboard */
-document.addEventListener("DOMContentLoaded", function () {
-    console.log("🔍 Checking Admin Token on Page Load...");
-
-    setTimeout(() => {  
-        const token = localStorage.getItem("adminToken");
-        console.log("🔍 Retrieved Admin Token:", token);
-
-        if (!token) {
-            console.log("🚨 No admin token found. Redirecting to login.");
-            window.location.href = "admin-login.html";
-        } else {
-            checkAdminAuth(); // ✅ Verify token before loading dashboard
-        }
-    }, 300);
-});
-
 
 /* --------------------------------
    ✅ Authentication & Initialization
@@ -272,19 +255,58 @@ async function updatePaymentStatus(orderId, newStatus) {
 
 /* ✅ Handle Product Submission */
 function setupProductFormHandler() {
-  const form = document.getElementById("addProductForm");
-  if (form) {
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      // Handle product submission
+    const form = document.getElementById("addProductForm");
+    if (!form) return;
+
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+
+        // Debug: log form data
+        for (let pair of formData.entries()) {
+            console.log(pair[0] + ": " + pair[1]);
+        }
+
+        try {
+            const token = localStorage.getItem("adminToken");
+
+            const response = await fetch(`${API_BASE_URL}/api/products`, {
+                method: "POST",
+                headers: { "Authorization": `Bearer ${token}` },
+                body: formData
+            });
+
+            const result = await response.json();
+            document.getElementById("message").textContent = result.message;
+
+            if (response.ok) this.reset(); // Clear the form on success
+        } catch (error) {
+            console.error("Error adding product:", error);
+            document.getElementById("message").textContent = "❌ Failed to add product.";
+        }
     });
-  }
 }
 
-/* Setup tab click listeners */
+
 function setupTabNavigation() {
+    // Remove 'active' class from the first tab on load
+    const firstTab = document.querySelector(".nav-tabs .nav-item:first-child .nav-link");
+    if (firstTab?.classList.contains("active")) {
+        firstTab.classList.remove("active");
+    }
+
+    // Activate clicked tab
+    document.querySelectorAll(".nav-tabs .nav-link").forEach(tab => {
+        tab.addEventListener("click", function () {
+            document.querySelectorAll(".nav-tabs .nav-link").forEach(t => t.classList.remove("active"));
+            this.classList.add("active");
+        });
+    });
+
+    // Tab click logic
     document.getElementById("view-contacts-tab")?.addEventListener("click", loadContacts);
-    document.getElementById("view-filament-colors-tab")?.addEventListener("click", loadFilamentColors);
+    document.getElementById("view-filament-colors-tab")?.addEventListener("click", loadFilamentColors); // define this elsewhere
 }
 
 /* --------------------------------
