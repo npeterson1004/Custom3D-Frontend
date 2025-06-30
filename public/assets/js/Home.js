@@ -78,7 +78,7 @@ async function fetchFeaturedProducts() {
         document.getElementById("loadingMessage").style.display = "none";
     } catch (error) {
         console.error("❌ Error fetching featured products:", error);
-        featuredContainer.innerHTML = '<p class="text-center text-danger">Failed to load featured products.</p>';
+        //featuredContainer.innerHTML = '<p class="text-center text-danger">Failed to load featured products.</p>';
     }
 }
 
