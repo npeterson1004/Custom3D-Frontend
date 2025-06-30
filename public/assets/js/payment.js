@@ -65,6 +65,7 @@ async function confirmPayment() {
         document.getElementById("paymentStatus").innerHTML += `<p class="text-success">✅ Payment Confirmed. Order is being processed.</p>`;
         localStorage.removeItem(`cart_${userEmail}`);
         updateCartCount();
+        localStorage.setItem("orderNumber", orderResponse.order.orderNumber);
 
     } catch (error) {
         console.error("❌ Error confirming payment:", error);
