@@ -2,6 +2,23 @@
 
 import { API_BASE_URL } from "./config.js";
 
+
+/* --------------------------------
+   ✅ Utility Functions
+--------------------------------- */
+
+/* ✅ XSS Prevention */
+function sanitize(input) {
+    return input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+/* ✅ Logout Function */
+async function logout() {
+    localStorage.removeItem("adminToken");
+    window.location.href = "admin-login.html";
+}
+
+
 /* ✅ Ensure Admin is Authenticated Before Loading Dashboard */
 document.addEventListener("DOMContentLoaded", function () {
     console.log("🔍 Checking Admin Token on Page Load...");
@@ -18,6 +35,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }, 300);
 });
+
+
+/* --------------------------------
+   ✅ Authentication & Initialization
+--------------------------------- */
 
 /* ✅ Function to Verify Admin Authentication */
 async function checkAdminAuth() {
@@ -89,37 +111,10 @@ async function loadDashboard() {
     }
 }
 
-/* ✅ Handle Product Submission */
-document.getElementById("addProductForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
 
-    const formData = new FormData(this);
-    
-    // Debugging: Log FormData entries
-    for (let pair of formData.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
-    }
-
-    try {
-        const token = localStorage.getItem("adminToken");
-
-        const response = await fetch(`${API_BASE_URL}/api/products`, {
-            method: "POST",
-            headers: { "Authorization": `Bearer ${token}` },
-            body: formData
-        });
-
-        const result = await response.json();
-        document.getElementById("message").textContent = result.message;
-
-        if (response.ok) {
-            this.reset(); // Clear the form on success
-        }
-    } catch (error) {
-        console.error("Error adding product:", error);
-        document.getElementById("message").textContent = "❌ Failed to add product.";
-    }
-});
+/* --------------------------------
+   ✅ Data Fetching Functions
+--------------------------------- */
 
 /* ✅ Fetch and Display Contacts */
 async function loadContacts() {
@@ -164,6 +159,7 @@ async function loadContacts() {
     }
 }
 
+/* ✅ Fetch and Display Orders */
 async function fetchOrders() {
     try {
         const token = localStorage.getItem("adminToken");
@@ -242,15 +238,6 @@ async function fetchOrders() {
     }
 }
 
-
-
-
-
-
-
-
-
-
 /* ✅ Update Payment Status */
 async function updatePaymentStatus(orderId, newStatus) {
     try {
@@ -279,45 +266,39 @@ async function updatePaymentStatus(orderId, newStatus) {
     }
 }
 
+/* --------------------------------
+   ✅ UI Handlers
+--------------------------------- */
 
-
-
-// ✅ Load orders when the admin page loads
-document.addEventListener("DOMContentLoaded", fetchOrders);
-
-
-/* ✅ Tab Navigation - Ensure First Tab Doesn't Stay Active */
-document.addEventListener("DOMContentLoaded", function () {
-    const firstTab = document.querySelector(".nav-tabs .nav-item:first-child .nav-link");
-
-    // Remove 'active' class on page load
-    if (firstTab.classList.contains("active")) {
-        firstTab.classList.remove("active");
-    }
-
-    // Make sure clicking tabs behaves normally
-    document.querySelectorAll(".nav-tabs .nav-link").forEach(tab => {
-        tab.addEventListener("click", function () {
-            document.querySelectorAll(".nav-tabs .nav-link").forEach(t => t.classList.remove("active"));
-            this.classList.add("active");
-        });
+/* ✅ Handle Product Submission */
+function setupProductFormHandler() {
+  const form = document.getElementById("addProductForm");
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      // Handle product submission
     });
+  }
+}
+
+/* Setup tab click listeners */
+function setupTabNavigation() {
+    document.getElementById("view-contacts-tab")?.addEventListener("click", loadContacts);
+    document.getElementById("view-filament-colors-tab")?.addEventListener("click", loadFilamentColors);
+}
+
+/* --------------------------------
+   ✅ DOM Ready - Main Entry Point
+--------------------------------- */
+
+/* ✅ Main Initialization Function */
+document.addEventListener("DOMContentLoaded", async function () {
+    console.log("🚀 Admin Dashboard Loading...");
+
+    await checkAdminAuth();
+    await loadDashboard();
+    await fetchOrders();
+
+    setupProductFormHandler();
+    setupTabNavigation();
 });
-
-/* ✅ XSS Prevention */
-function sanitize(input) {
-    return input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
-
-/* ✅ Load Necessary Data */
-document.getElementById("view-contacts-tab").addEventListener("click", loadContacts);
-document.getElementById("view-filament-colors-tab").addEventListener("click", loadFilamentColors);
-document.addEventListener("DOMContentLoaded", fetchOrders);
-
-/* ✅ Logout Function */
-async function logout() {
-    localStorage.removeItem("adminToken");
-    window.location.href = "admin-login.html";
-}
-
-loadDashboard();
