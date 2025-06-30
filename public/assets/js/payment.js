@@ -22,11 +22,11 @@ async function payWithVenmo() {
         const data = await response.json();
 
         document.getElementById("paymentStatus").innerHTML = `
-        <p>📲 Open Venmo and send payment to: <b>${data.venmoUsername}</b></p>
-        <p>💲 Include your order number when paying</p>
-        <p>✅ Click "Pay & Send Order" after payment.</p>
-        <p><strong>🧾 Order Number:</strong> ${data.orderNumber}</p>
-        `;
+            <p style="color: black; font-weight: 500;">📲 Open Venmo and send payment to: <b>${data.venmoUsername}</b></p>
+            <p style="color: black; font-weight: 500;">💲 Include your order number when paying</p>
+            <p style="color: black; font-weight: 500;">✅ Click "Pay & Send Order" after payment.</p>
+            <p style="color: black; font-weight: 600;"><strong>🧾 Order Number:</strong> ${data.orderNumber}</p>
+            `;
 
 
         // ✅ Show Send Order button only after selecting Venmo
