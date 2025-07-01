@@ -104,7 +104,7 @@ async function confirmOrder() {
             shippingFee = 6;
         }
 
-        const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0) + shippingFee;
+        const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
         const orderData = {
             userEmail,
