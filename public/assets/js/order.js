@@ -201,16 +201,7 @@ const orderRes = await fetch(`${API_BASE_URL}/api/orders/${orderId}`, {
     }
 });
 
-if (orderRes.ok) {
-    const order = await orderRes.json();
-    const totalDue = order.totalAmount.toFixed(2);
-    document.getElementById("paymentStatus").innerHTML = `
-        <p><strong>Order Number:</strong> ${order.orderNumber}</p>
-        <p><strong>Amount Due:</strong> $${totalDue}</p>
-    `;
-} else {
-    document.getElementById("paymentStatus").innerHTML = `<p class="text-danger">⚠️ Failed to load order details.</p>`;
-}
+
 
         // ✅ Hide the send order button initially
         document.getElementById("sendOrderButton").style.display = "none";

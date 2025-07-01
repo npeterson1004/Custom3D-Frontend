@@ -118,23 +118,29 @@
     <!-- ✅ Delivery Method Modal -->
 <div id="deliveryModal" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content" style="background-color: #f8f9fa;">
       <div class="modal-header">
-        <h4 class="modal-title text-dark">Select Delivery Option</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color: #212529;">Select Delivery Option</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span style="color: #212529;" aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <div class="modal-body text-dark bg-light">
-        <p><strong>Note:</strong> Delivery incurs a $6 shipping fee.</p>
+      <div class="modal-body">
+        <p style="color: #212529;"><strong>Note:</strong> Delivery incurs a $6 shipping fee.</p>
         <div class="form-check">
           <input class="form-check-input" type="radio" name="deliveryOption" id="deliveryOptionDelivery" value="Delivery" checked>
-          <label class="form-check-label" for="deliveryOptionDelivery">Delivery ($6 fee)</label>
+          <label class="form-check-label" for="deliveryOptionDelivery" style="color: #212529;">
+            Delivery ($6 fee)
+          </label>
         </div>
         <div class="form-check">
           <input class="form-check-input" type="radio" name="deliveryOption" id="deliveryOptionSkip" value="Skipped">
-          <label class="form-check-label" for="deliveryOptionSkip">Skip (hand delivery or other confirmed method)</label>
+          <label class="form-check-label" for="deliveryOptionSkip" style="color: #212529;">
+            Skip (hand delivery or other confirmed method)
+          </label>
         </div>
         <div id="addressInput" class="form-group mt-3">
-          <label for="shippingAddress">Enter Shipping Address:</label>
+          <label for="shippingAddress" style="color: #212529;">Enter Shipping Address:</label>
           <textarea class="form-control" id="shippingAddress" rows="3" placeholder="123 Main St, City, ZIP"></textarea>
         </div>
       </div>
@@ -144,6 +150,7 @@
     </div>
   </div>
 </div>
+
 
 
 
