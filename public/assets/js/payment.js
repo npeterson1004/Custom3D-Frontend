@@ -26,7 +26,7 @@ async function payWithVenmo() {
             <p style="color: black; font-weight: 500;">💲 Include your order number when paying</p>
             <p style="color: black; font-weight: 500;">✅ Click "Pay & Send Order" after payment.</p>
             <p style="color: black; font-weight: 600;"><strong>🧾 Order Number:</strong> ${data.orderNumber}</p>
-            <p style="color: black; font-weight: 600;"><strong>🧾 Order Total:</strong> ${data.totalAmount}</p>
+            <p style="color: black; font-weight: 600;"><strong>🧾 Order Total:</strong>  ${data.totalAmount.toFixed(2)}</p>
             `;
 
 
