@@ -74,78 +74,85 @@ function generateOrderNumber() {
 
 /* ✅ Confirm Order (Creates Order in Database) */
 async function confirmOrder() {
-    let userEmail = localStorage.getItem("userEmail");
-  
-
+    const userEmail = localStorage.getItem("userEmail");
     if (!userEmail) {
         alert("⚠️ Please log in to place an order.");
         window.location.href = "login.html";
         return;
     }
 
-    let cart = JSON.parse(localStorage.getItem(`cart_${userEmail}`)) || [];
+    const cart = JSON.parse(localStorage.getItem(`cart_${userEmail}`)) || [];
     if (cart.length === 0) {
         alert("⚠️ Your cart is empty.");
         return;
     }
 
-    const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    // ✅ Show Delivery Modal
+    $("#deliveryModal").modal("show");
 
-    const orderData = {
-        userEmail,
-        items: cart.map(item => ({
-            name: item.name,
-            price: item.price,
-            image: item.image,
-            quantity: item.quantity,
-            // ✅ Ensure full color object is stored (including both images)
-            color: item.color ? { 
-                name: item.color.name, 
-                images: item.color.images // ✅ Store both images
-            } : null
-        })),
-        totalAmount,
-        paymentMethod: "Venmo",
-        paymentStatus: "Pending",
-        orderNumber: generateOrderNumber()
+    // Handle "Continue" from modal
+    document.getElementById("submitDeliveryChoice").onclick = async function () {
+        const selectedOption = document.querySelector('input[name="deliveryOption"]:checked').value;
+        const address = document.getElementById("shippingAddress").value.trim();
+        let shippingFee = 0;
+
+        if (selectedOption === "Delivery") {
+            if (!address) {
+                alert("📬 Please enter a shipping address.");
+                return;
+            }
+            shippingFee = 6;
+        }
+
+        const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0) + shippingFee;
+
+        const orderData = {
+            userEmail,
+            items: cart.map(item => ({
+                name: item.name,
+                price: item.price,
+                image: item.image,
+                quantity: item.quantity,
+                color: item.color ? {
+                    name: item.color.name,
+                    images: item.color.images
+                } : null
+            })),
+            totalAmount,
+            paymentMethod: "Venmo",
+            paymentStatus: "Pending",
+            orderNumber: generateOrderNumber(),
+            deliveryMethod: selectedOption,
+            shippingAddress: selectedOption === "Delivery" ? address : "Skipped"
+        };
+
+        try {
+            showOrderProcessingMessage();
+
+            const response = await fetch(`${API_BASE_URL}/api/orders`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify(orderData)
+            });
+
+            if (!response.ok) throw new Error("❌ Order failed to create.");
+            const orderResponse = await response.json();
+
+            localStorage.setItem("orderId", orderResponse.order._id);
+            document.cookie = `orderId=${orderResponse.order._id}; path=/; Secure`;
+
+            $("#deliveryModal").modal("hide");
+            document.getElementById("proceedToPaymentButton").style.display = "block";
+            showOrderConfirmationMessage();
+        } catch (error) {
+            console.error("❌ Error confirming order:", error);
+            alert("❌ Order confirmation failed. Please try again.");
+        }
     };
-
-    try {
-        showOrderProcessingMessage();
-
-        const response = await fetch(`${API_BASE_URL}/api/orders`, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`,
-                "Content-Type": "application/json"
-            },
-            credentials: "include",
-            body: JSON.stringify(orderData)
-        });
-
-        if (!response.ok) {
-            throw new Error("❌ Order failed to create.");
-        }
-
-        const orderResponse = await response.json();
-        
-        // ✅ Save orderId in localStorage AND a session cookie for mobile reliability
-        localStorage.setItem("orderId", orderResponse.order._id);
-        document.cookie = `orderId=${orderResponse.order._id}; path=/; Secure`;
-
-        // ✅ Immediately verify orderId before allowing payment
-        if (!localStorage.getItem("orderId")) {
-            alert("⚠️ Failed to store order ID. Try again.");
-            return;
-        }
-
-        document.getElementById("proceedToPaymentButton").style.display = "block";
-        showOrderConfirmationMessage();
-
-    } catch (error) {
-        console.error("❌ Error confirming order:", error);
-        alert("❌ Order confirmation failed. Please try again.");
-    }
 }
 
 
@@ -169,6 +176,7 @@ async function openPaymentModal() {
         return;
     }
 
+
     try {
         const response = await fetch(`${API_BASE_URL}/api/orders/${orderId}/payment-status`, {
             method: "PATCH",
@@ -185,6 +193,24 @@ async function openPaymentModal() {
         }
 
         $("#paymentModal").modal("show");
+        // ✅ NEW: Fetch order and display amount due
+const orderRes = await fetch(`${API_BASE_URL}/api/orders/${orderId}`, {
+    method: "GET",
+    headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+    }
+});
+
+if (orderRes.ok) {
+    const order = await orderRes.json();
+    const totalDue = order.totalAmount.toFixed(2);
+    document.getElementById("paymentStatus").innerHTML = `
+        <p><strong>Order Number:</strong> ${order.orderNumber}</p>
+        <p><strong>Amount Due:</strong> $${totalDue}</p>
+    `;
+} else {
+    document.getElementById("paymentStatus").innerHTML = `<p class="text-danger">⚠️ Failed to load order details.</p>`;
+}
 
         // ✅ Hide the send order button initially
         document.getElementById("sendOrderButton").style.display = "none";

@@ -115,6 +115,40 @@
         </div>
     </div>
 
+    <!-- ✅ Delivery Method Modal -->
+<div id="deliveryModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Select Delivery Option</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Note:</strong> Delivery incurs a $6 shipping fee.</p>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="deliveryOption" id="deliveryOptionDelivery" value="Delivery" checked>
+          <label class="form-check-label" for="deliveryOptionDelivery">Delivery ($6 fee)</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="deliveryOption" id="deliveryOptionSkip" value="Skipped">
+          <label class="form-check-label" for="deliveryOptionSkip">Skip (hand delivery or other confirmed method)</label>
+        </div>
+        <div id="addressInput" class="form-group mt-3">
+          <label for="shippingAddress">Enter Shipping Address:</label>
+          <textarea class="form-control" id="shippingAddress" rows="3" placeholder="123 Main St, City, ZIP"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="submitDeliveryChoice" class="btn btn-primary">Continue</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
 
         <!-- Blank Space -->
         <div style="height: 80px;"></div>

@@ -195,6 +195,8 @@ async function fetchOrders() {
                 </td>
                 <td>$${order.totalAmount.toFixed(2)}</td>
                 <td>${new Date(order.orderDate).toLocaleString()}</td>
+                <td>${order.deliveryMethod || "Skipped"}</td>
+                <td>${order.shippingAddress || "Skipped"}</td>
                 <td>
                     <select class="payment-status-dropdown ${statusClass}" data-order-id="${order._id}">
                         <option value="Pending" ${order.paymentStatus === "Pending" ? "selected" : ""}>Pending</option>
