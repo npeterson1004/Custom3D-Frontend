@@ -103,7 +103,7 @@ function loadCart() {
 
             cartItemsContainer.innerHTML += `
                 <tr>
-                    <td><img src="${imageUrl}" alt="${item.name}" class="cart-item-img enlarge-click"></td>
+                    <td><img src="${imageUrl}" alt="${item.name}" class="cart-item-img enlarge-click data-image="${product.image}" alt="${product.name}"></td>
                     <td>${item.name}</td>
                     <td> 
                         <div style="display: flex; flex-direction: column; align-items: center;">
