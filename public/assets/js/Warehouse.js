@@ -237,6 +237,8 @@ async function openColorModal(productId, button) {
 
 // ✅ Function to enlarge image and return to color modal if it was open
 function enlargeImage(imgSrc, isFromColorModal = false) {
+    const scrollY = window.scrollY; // ✅ Save current scroll position
+
     let popupImg = document.createElement("img");
     popupImg.src = imgSrc;
     popupImg.classList.add("fullscreen-img");
@@ -247,11 +249,14 @@ function enlargeImage(imgSrc, isFromColorModal = false) {
     fullscreenOverlay.appendChild(popupImg);
     document.body.appendChild(fullscreenOverlay);
 
-    // ✅ Close fullscreen image and reopen color modal if it was open
     fullscreenOverlay.onclick = function () {
         fullscreenOverlay.remove();
+
+        // ✅ Restore scroll position after closing
+        window.scrollTo({ top: scrollY, behavior: "instant" });
+
         if (isFromColorModal) {
-            $("#colorModal").modal("show"); // ✅ Reopen color modal
+            $("#colorModal").modal("show");
         }
     };
 
@@ -260,3 +265,4 @@ function enlargeImage(imgSrc, isFromColorModal = false) {
         console.warn("Fullscreen request failed", err);
     });
 }
+
