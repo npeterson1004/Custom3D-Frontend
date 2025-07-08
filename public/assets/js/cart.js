@@ -103,7 +103,8 @@ function loadCart() {
 
             cartItemsContainer.innerHTML += `
                 <tr>
-                    <td><img src="${imageUrl}" alt="${item.name}" class="cart-item-img enlarge-click data-image="${product.image}" alt="${product.name}"></td>
+                    <td><img src="${imageUrl}" alt="${item.name}" class="cart-item-img enlarge-click" data-image="${imageUrl}"></td>
+
                     <td>${item.name}</td>
                     <td> 
                         <div style="display: flex; flex-direction: column; align-items: center;">
@@ -120,13 +121,14 @@ function loadCart() {
                     <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
                 </tr>
             `;
-             // ✅ Attach image click handlers
+             });
+
+        // ✅ ⬇ Place this here — after all DOM is rendered
         document.querySelectorAll(".enlarge-click").forEach(img => {
             img.addEventListener("click", function () {
                 const imageUrl = this.getAttribute("data-image");
                 enlargeImage(imageUrl, false);
             });
-        });
         });
     }
 
