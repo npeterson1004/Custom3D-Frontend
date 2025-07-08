@@ -103,7 +103,7 @@ function loadCart() {
 
             cartItemsContainer.innerHTML += `
                 <tr>
-                    <td><img src="${imageUrl}" alt="${item.name}" class="cart-item-img"></td>
+                    <td><img src="${imageUrl}" alt="${item.name}" class="cart-item-img enlarge-click"></td>
                     <td>${item.name}</td>
                     <td> 
                         <div style="display: flex; flex-direction: column; align-items: center;">
@@ -120,6 +120,13 @@ function loadCart() {
                     <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
                 </tr>
             `;
+             // ✅ Attach image click handlers
+        document.querySelectorAll(".enlarge-click").forEach(img => {
+            img.addEventListener("click", function () {
+                const imageUrl = this.getAttribute("data-image");
+                enlargeImage(imageUrl, false);
+            });
+        });
         });
     }
 
@@ -248,6 +255,37 @@ styles.innerHTML = `
     }
 `;
 document.head.appendChild(styles);
+
+// ✅ Function to enlarge image and return to color modal if it was open
+function enlargeImage(imgSrc, isFromColorModal = false) {
+    const scrollY = window.scrollY; // ✅ Save current scroll position
+
+    let popupImg = document.createElement("img");
+    popupImg.src = imgSrc;
+    popupImg.classList.add("fullscreen-img");
+
+    let fullscreenOverlay = document.createElement("div");
+    fullscreenOverlay.classList.add("fullscreen-overlay");
+
+    fullscreenOverlay.appendChild(popupImg);
+    document.body.appendChild(fullscreenOverlay);
+
+    fullscreenOverlay.onclick = function () {
+        fullscreenOverlay.remove();
+
+        // ✅ Restore scroll position after closing
+        window.scrollTo({ top: scrollY, behavior: "instant" });
+
+        if (isFromColorModal) {
+            $("#colorModal").modal("show");
+        }
+    };
+
+    // ✅ Enter fullscreen mode
+    fullscreenOverlay.requestFullscreen().catch(err => {
+        console.warn("Fullscreen request failed", err);
+    });
+}
 
 
 
