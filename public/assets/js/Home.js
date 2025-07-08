@@ -27,26 +27,25 @@ async function fetchFeaturedProducts() {
             const productCard = document.createElement("div");
             productCard.classList.add("warehouse-item"); // ✅ Use the same class as warehouse
 
-            productCard.innerHTML = `
-                <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" 
-                     class="warehouse-img" 
-                     data-image="${product.image}"
-                     alt="${product.name}">
-                <div class="warehouse-details">
-                    <h5>${product.name}</h5>
-                    <p>${product.description}</p>
-                    <p class="order-price">$${product.price}</p>
-                    
-                    <button class="btn btn-secondary choose-color-btn" data-product-id="${product._id}">
-                        Choose Color
-                    </button>
+           productCard.innerHTML = `
+    <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" 
+         class="warehouse-img enlarge-click" 
+         data-image="${product.image}" 
+         alt="${product.name}">
+    <div class="warehouse-details">
+        <h5>${product.name}</h5>
+        <p>${product.description}</p>
+        <p class="order-price">$${product.price}</p>
 
-                    <button class="btn btn-primary add-to-cart-btn" data-product-id="${product._id}">
-                        Add to Cart
-                    </button>
+        <button class="btn btn-secondary choose-color-btn" data-product-id="${product._id}">
+            Choose Color
+        </button>
 
-                </div>
-            `;
+        <button class="btn btn-primary add-to-cart-btn" data-product-id="${product._id}">
+            Add to Cart
+        </button>
+    </div>
+`;
 
 
   // ✅ Attach event listener for "Choose Color"
