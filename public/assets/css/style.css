@@ -228,7 +228,7 @@ nav.navbar.bootsnav {
 .navbar-header a.navbar-brand,.navbar-header a.navbar-brand:hover,.navbar-header a.navbar-brand:focus{
     display: inline-block;
     color: #fffdfd;
-    font-size: 24px;
+    font-size: 28px;
     letter-spacing: 3px;
     font-family: 'Rufina', serif;
     font-weight: 700;
@@ -289,6 +289,16 @@ nav.navbar.bootsnav .navbar-toggle {
 }
 nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 /*.navbar-toggle */
+
+
+/*styles for smaller screen */
+@media (max-width: 767px) {
+    .navbar-header a.navbar-brand {
+        font-size: 18px;      /* Smaller font on mobile */
+        padding: 20px 0px;    /* Reduce padding for tighter layout */
+    }
+}
+
 
 /*-------------------------------------
         3.  Welcome-hero

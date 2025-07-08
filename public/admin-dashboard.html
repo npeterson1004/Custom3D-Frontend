@@ -32,32 +32,41 @@
 </head>
 
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-default bootsnav navbar-sticky navbar-scrollspy" data-minus-value-desktop="70"
-    data-minus-value-mobile="55" data-speed="1000">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
-                    <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand" href="index.html">Nates Custom 3D Shop</a>
-                <p id="admin-message"></p>
+    <!-- ✅ Improved Navbar for Mobile -->
+<nav class="navbar navbar-default bootsnav navbar-sticky navbar-scrollspy" data-minus-value-desktop="70"
+data-minus-value-mobile="55" data-speed="1000">
+<div class="container">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-menu">
+            <i class="fa fa-bars"></i>
+        </button>
+        <a class="navbar-brand" href="index.html">Nates Custom 3D Shop</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-menu">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="#home">Home</a></li>
+            <li><a href="#featured-prints">Featured Prints</a></li>
+            <li><a href="warehouse.html">3D Warehouse</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li id="admin-nav-item"><a href="admin-login.html">Admin</a></li>
+            <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+            <li><button onclick="logout()" class="btn btn-danger">Logout</button></li>
+        </ul>
+    </div>
+</div>
+</nav>
 
 
-
-            </div>
-            <div class="collapse navbar-collapse" id="navbar-menu">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="index.html">Home</a></li>
-                    <li><a href="index.html#featured-prints">Featured Prints</a></li>
-                    <li><a href="warehouse.html">3D Warehouse</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
-                    <li><button onclick="logout()" class="btn btn-danger">Logout</button></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const adminToken = localStorage.getItem("adminToken");
+    
+            if (adminToken) {
+                document.getElementById("admin-nav-item").innerHTML = '<a href="admin-dashboard.html">Admin Dashboard</a>';
+            }
+        });
+    </script>
     
     <div class="container mt-5">
         <div style="height: 20px;"></div>
