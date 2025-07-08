@@ -61,7 +61,7 @@ async function fetchWarehouseProducts() {
                 <div class="warehouse-details">
                     <h5>${product.name}</h5>
                     <p>${product.description}</p>
-                    <p class="order-price">$${product.price}</p>
+                    <p style="font-size: 24px; color: #fffefe;">$${product.price}</p>
 
                     <button class="btn btn-secondary choose-color-btn" data-product-id="${product._id}">
                         Choose Color
