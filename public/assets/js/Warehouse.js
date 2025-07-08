@@ -61,7 +61,7 @@ async function fetchWarehouseProducts() {
                 <div class="warehouse-details">
                     <h5>${product.name}</h5>
                     <p>${product.description}</p>
-                    <p style="font-size: 24px; color: #fffefe;">$${product.price}</p>
+                    <p style="font-size: 20px; color: #fffefe;">$${product.price}</p>
 
                     <button class="btn btn-secondary choose-color-btn" data-product-id="${product._id}">
                         Choose Color
@@ -74,39 +74,37 @@ async function fetchWarehouseProducts() {
                  
                 </div>
             `;
+ productCard.querySelector(".choose-color-btn").addEventListener("click", () => {
+                openColorModal(product._id, productCard.querySelector(".choose-color-btn"));
+            });
 
-            warehouseContainer.appendChild(productCard);
+            // ✅ Attach event listener for "Add to Cart"
+            productCard.querySelector(".add-to-cart-btn").addEventListener("click", () => {
+                const colorData = productCard.querySelector(".choose-color-btn").getAttribute("data-selected-color");
+                if (!colorData) {
+                    alert("⚠️ Please select a color before adding to cart.");
+                    return;
+                }
+                const selectedColor = JSON.parse(colorData);
+                addToCart(product.name, product.price, product.image, selectedColor);
+            });
+
+            featuredContainer.appendChild(productCard);
         });
-        
+
+        // ✅ Attach image click handlers
         document.querySelectorAll(".enlarge-click").forEach(img => {
-    img.addEventListener("click", function () {
-        const imageUrl = this.getAttribute("data-image");
-        enlargeImage(imageUrl, false); // ✅ open fullscreen image
-    });
-    });
-
-        // ✅ Attach event listeners for "Choose Color" buttons
-        document.querySelectorAll(".choose-color-btn").forEach(button => {
-            button.addEventListener("click", function () {
-                const productId = this.getAttribute("data-product-id");
-                openColorModal(productId, this);
+            img.addEventListener("click", function () {
+                const imageUrl = this.getAttribute("data-image");
+                enlargeImage(imageUrl, false);
             });
         });
 
-        // ✅ Attach event listeners for "Add to Cart" buttons
-        document.querySelectorAll(".add-to-cart-btn").forEach(button => {
-            button.addEventListener("click", function () {
-                const productId = this.getAttribute("data-product-id");
-                addToCartHandler(productId, this);
-            });
-        });
-
-        
-         // ✅ Hide the loading message after items are loaded
-         document.getElementById("loadingMessage").style.display = "none";
-
+        // ✅ Hide the loading message after items are loaded
+        document.getElementById("loadingMessage").style.display = "none";
     } catch (error) {
-        console.error("❌ Error fetching warehouse products:", error);
+        console.error("❌ Error fetching featured products:", error);
+        //featuredContainer.innerHTML = '<p class="text-center text-danger">Failed to load featured products.</p>';
     }
 }
 
