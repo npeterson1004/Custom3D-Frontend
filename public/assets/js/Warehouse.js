@@ -74,7 +74,8 @@ async function fetchWarehouseProducts() {
                  
                 </div>
             `;
- productCard.querySelector(".choose-color-btn").addEventListener("click", () => {
+
+                productCard.querySelector(".choose-color-btn").addEventListener("click", () => {
                 openColorModal(product._id, productCard.querySelector(".choose-color-btn"));
             });
 
@@ -89,7 +90,7 @@ async function fetchWarehouseProducts() {
                 addToCart(product.name, product.price, product.image, selectedColor);
             });
 
-            featuredContainer.appendChild(productCard);
+            warehouseContainer.appendChild(productCard);
         });
 
         // ✅ Attach image click handlers
@@ -103,8 +104,8 @@ async function fetchWarehouseProducts() {
         // ✅ Hide the loading message after items are loaded
         document.getElementById("loadingMessage").style.display = "none";
     } catch (error) {
-        console.error("❌ Error fetching featured products:", error);
-        //featuredContainer.innerHTML = '<p class="text-center text-danger">Failed to load featured products.</p>';
+        console.error("❌ Error fetching warehouse products:", error);
+        
     }
 }
 
