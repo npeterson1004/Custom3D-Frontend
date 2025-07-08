@@ -827,112 +827,108 @@ body.no-scroll {
 }
 
 /*-------------------------------------
-    Mobile & Desktop Responsive Adjustments
+    Responsive Layout Adjustments
 --------------------------------------*/
-/* ✅ Mobile Adjustments */
+
+/* ✅ Mobile: One card per row, better readability */
 @media (max-width: 768px) {
     .warehouse-item, .featured-item {
-        flex: 1 1 100%; /* ✅ One item per row on mobile */
+        flex: 1 1 100%;
         max-width: 100%;
-        margin-bottom: 30px; /* ✅ Balanced spacing */
-        min-height: 420px;
+        min-height: auto;
+        padding: 10px;
+    }
+
+    .warehouse-img, .featured-img {
+        max-height: 200px; /* Smaller image height on mobile */
+    }
+
+    .warehouse-details h5, .featured-details h5 {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        word-wrap: break-word;
+        text-align: center;
+    }
+
+    .warehouse-details p, .featured-details p {
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .add-to-cart-btn,
+    .view-image-btn {
+        font-size: 13px;
+        padding: 6px 12px;
+        width: 100%;
+        margin-top: 6px;
+    }
+
+    .warehouse-details button,
+    .featured-details button {
+        display: block;
+        width: 100%;
+        margin: 5px 0;
     }
 }
 
-/* ✅ Adjusts warehouse & featured item layout for tablets */
-@media (min-width: 768px) {
+/* ✅ Tablet: Two items per row */
+@media (min-width: 768px) and (max-width: 1023px) {
     .warehouse-item, .featured-item {
-        flex: 1 1 calc(50% - 10px); /* ✅ Two items per row */
+        flex: 1 1 calc(50% - 10px);
         max-width: calc(50% - 10px);
-        margin-bottom: 50px;
         min-height: 440px;
+        margin-bottom: 30px;
+    }
+
+    .warehouse-details h5, .featured-details h5 {
+        font-size: 22px;
     }
 }
 
-/* ✅ Adjusts warehouse & featured item layout for desktops */
+/* ✅ Desktop: Three items per row */
 @media (min-width: 1024px) {
     .warehouse-item, .featured-item {
-        flex: 1 1 calc(33.333% - 10px); /* ✅ Three items per row */
+        flex: 1 1 calc(33.333% - 10px);
         max-width: calc(33.333% - 10px);
+        min-height: 440px;
         margin-bottom: 50px;
     }
-}
-
-
-
-/* ✅ Mobile Adjustments */
-@media (max-width: 768px) {
-    .warehouse-details h5, .featured-details h5 {
-        font-size: 33px; /* ✅ Increased for better visibility on small screens */
-        font-weight: bold; /* ✅ Makes it stand out */
     }
-}
-
-/* ✅ Adjust for tablets */
-@media (min-width: 768px) and (max-width: 1024px) {
-    .warehouse-details h5, .featured-details h5 {
-        font-size: 25px; /* ✅ Slightly larger for tablets */
-    }
-}
-/* ✅ Mobile Adjustments */
-@media (max-width: 768px) {
-    .featured-grid .featured-details h5 {
-        font-size: 24px !important; /* ✅ Bigger for mobile readability */
-        font-weight: bold;
-    }
-}
-
-/* ✅ Adjust for tablets */
-@media (min-width: 768px) and (max-width: 1024px) {
-    .featured-grid .featured-details h5 {
-        font-size: 22px !important; /* ✅ Slightly larger for tablets */
-    }
-}
-
 
 /*-------------------------------------
     Text Styling & Alignment
 --------------------------------------*/
 
-
-/* ✅ Fix buttons not staying at the bottom */
+/* ✅ Details wrapper */
 .warehouse-details, .featured-details {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between; /* ✅ Ensures buttons always stay at the bottom */
-    flex-grow: 1; /* ✅ Fills available space */
+    justify-content: space-between;
+    flex-grow: 1;
     width: 100%;
+    padding: 10px 0;
 }
-/* ✅ Ensure Titles are Centered */
+
+/* ✅ Headings */
 .warehouse-details h5, .featured-details h5 {
-	color:#b3d5f7;
+    color: #b3d5f7;
     font-size: 25px;
     font-weight: 500;
     text-transform: capitalize;
     margin-bottom: 6px;
-    width: 100%; /* ✅ Ensures full width for proper centering */
+    width: 100%;
     text-align: center;
 }
 
-
-.featured-grid .featured-details h5 {
-    font-size: 22px !important; /* ✅ Forces correct size */
-    font-weight: bold; /* ✅ Ensures visibility */
-    text-align: center;
-    margin-bottom: 6px;
-}
-
-
-
-/* ✅ Ensure Paragraphs are Centered */
+/* ✅ Paragraphs */
 .warehouse-details p, .featured-details p {
     font-size: 16px;
     margin-bottom: 6px;
     width: 100%;
     text-align: center;
 }
-
 
 
 
@@ -1383,36 +1379,23 @@ body {
         font-size: 13px;
     }
 
-    /* ✅ Featured Prints Mobile Grid */
-    .featured-item {
-        width: 100%;
-        max-height: 300px;
-        font-size: 14px;
-    }
 
-    .featured-img {
-        height: 150px;
-    }
 
-    .featured-details h5 {
-        font-size: 14px;
-    }
+
+    
+
+   
 
     .add-to-cart-btn {
         padding: 5px 10px;
         font-size: 12px;
     }
 
-    /* ✅ Adjust Warehouse Grid */
-    .warehouse-item {
-        width: 100%;
-        max-height: 300px;
-    }
+   
 
-    .warehouse-img {
-        height: 150px;
-    }
+   
 
+  
     /* ✅ Footer Adjustments */
     .footer {
         padding: 10px 0;
