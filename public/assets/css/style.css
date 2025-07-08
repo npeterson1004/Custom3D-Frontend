@@ -487,6 +487,13 @@ nav.navbar.bootsnav .navbar-toggle i{color: #094886;}
 
 /*.single-model-search*/
 
+
+
+
+
+
+
+
 /*====================================
         5. Item Card Styles
 ====================================*/
@@ -739,42 +746,56 @@ body.no-scroll {
 
 
 /* ✅ "View Image" button styling */
-.view-image-btn {
-    background-color: #008CBA; /* ✅ Blue button */
+.view-image-btn,
+.add-to-cart-btn,
+.choose-color-btn {
+    background-color: #0044cc; /* Unified blue */
     color: white;
     font-weight: bold;
-    border-radius: 6px;
-    padding: 8px 14px;
+     border-radius: 6px;
     font-size: 14px;
     border: none;
     cursor: pointer;
-    transition: background 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out;
     margin-top: 10px;
-}
-
-/* ✅ "View Image" button hover effect */
-.view-image-btn:hover {
-    background-color: #005f75;
-}
-
-
-
-.add-to-cart-btn {
-    background-color: #0044cc;
-    color: white;
-    font-weight: bold;
-    border-radius: 6px;
     padding: 8px 14px;
-    font-size: 16px;
-    transition: background 0.3s;
-}
+    width: 85%; /* Slightly smaller than full width */
+    max-width: 250px;
+    text-align: center;
+ }
 
-.add-to-cart-btn:hover {
+/* Hover effect for all action buttons */
+.view-image-btn:hover,
+.add-to-cart-btn:hover,
+.choose-color-btn:hover {
     background-color: #002288;
 }
 
+/*-------------------------------------
+    Special Styling for Choose Color Button
+--------------------------------------*/
 
+.choose-color-btn {
+    font-size: 13px;
+    padding: 6px 10px;
+    width: 70%; /* Smaller button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 6px;
+}
 
+/* Color preview circle inside button */
+.choose-color-btn .color-indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #000;
+    display: inline-block;
+    }
+
+   
 /*-------------------------------------
    Warehouse & Featured Items Grid
 --------------------------------------*/
@@ -896,6 +917,32 @@ body.no-scroll {
     }
     }
 
+
+    @media screen and (max-width: 768px) {
+    .view-image-btn,
+    .add-to-cart-btn,
+    .choose-color-btn {
+        width: 90%; /* A bit wider on mobile */
+        font-size: 13px;
+    }
+
+    .choose-color-btn {
+        width: 75%;
+    }
+
+    .choose-color-btn .color-indicator {
+        width: 14px;
+        height: 14px;
+    }
+
+    .order-price {
+        font-size: 17px;
+    }
+
+    .warehouse-details p, .featured-details p {
+        font-size: 14px;
+    }
+}
 /*-------------------------------------
     Text Styling & Alignment
 --------------------------------------*/
@@ -924,12 +971,12 @@ body.no-scroll {
 
 /* ✅ Paragraphs */
 .warehouse-details p, .featured-details p {
-    font-size: 16px;
+    font-size: 15px;
+    color: #f2f3f5;
     margin-bottom: 6px;
     width: 100%;
     text-align: center;
-}
-
+ }
 
 
 /*-------------------------------------
@@ -938,12 +985,13 @@ body.no-scroll {
 
 
 .order-price {
-	margin: 0;
-	color:#fffdfd;
-    font-size: 20px;
-    font-weight: 500;
-    text-transform: capitalize;
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 8px 0 4px;
+    text-align: center;
 }
+
 
 /* ✅ Styles the cart quantity input */
 .cart-quantity-input {
@@ -978,7 +1026,7 @@ body.no-scroll {
     height: 25px;
     object-fit: cover;
     border-radius: 50%; /* Makes it circular */
-    border: 1px solid #ccc;
+    border: 1px solid #000;
     display: inline-block;
     margin-bottom: 5px;
 
@@ -1386,12 +1434,7 @@ body {
 
    
 
-    .add-to-cart-btn {
-        padding: 5px 10px;
-        font-size: 12px;
-    }
 
-   
 
    
 
