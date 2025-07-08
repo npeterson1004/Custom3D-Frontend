@@ -30,6 +30,7 @@ async function fetchFeaturedProducts() {
             productCard.innerHTML = `
                 <img src="${product.image.startsWith('http') ? product.image : API_BASE_URL + product.image}" 
                      class="warehouse-img" 
+                     data-image="${product.image}"
                      alt="${product.name}">
                 <div class="warehouse-details">
                     <h5>${product.name}</h5>
@@ -44,13 +45,11 @@ async function fetchFeaturedProducts() {
                         Add to Cart
                     </button>
 
-                    <button class="btn btn-info view-image-btn" data-image="${product.image}">
-                        View Image
-                    </button>
                 </div>
             `;
 
-            // ✅ Attach event listener for "Choose Color"
+
+  // ✅ Attach event listener for "Choose Color"
             productCard.querySelector(".choose-color-btn").addEventListener("click", () => {
                 openColorModal(product._id, productCard.querySelector(".choose-color-btn"));
             });
@@ -66,14 +65,17 @@ async function fetchFeaturedProducts() {
                 addToCart(product.name, product.price, product.image, selectedColor);
             });
 
-            // ✅ Attach event listener for "View Image"
-            productCard.querySelector(".view-image-btn").addEventListener("click", function () {
-                const imageUrl = this.getAttribute("data-image");
-                enlargeImage(imageUrl, false); // ✅ Does NOT return to color modal
-            });
-
             featuredContainer.appendChild(productCard);
         });
+
+        // ✅ Attach image click handlers
+        document.querySelectorAll(".enlarge-click").forEach(img => {
+            img.addEventListener("click", function () {
+                const imageUrl = this.getAttribute("data-image");
+                enlargeImage(imageUrl, false);
+            });
+        });
+
         // ✅ Hide the loading message after items are loaded
         document.getElementById("loadingMessage").style.display = "none";
     } catch (error) {

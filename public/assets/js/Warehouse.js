@@ -35,11 +35,6 @@ function addToCartHandler(productId, button) {
 
 
 
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", fetchWarehouseProducts);
 
 async function fetchWarehouseProducts() {
@@ -62,7 +57,7 @@ async function fetchWarehouseProducts() {
             productCard.classList.add("warehouse-item");
 
             productCard.innerHTML = `
-                <img src="${product.image}" class="warehouse-img" alt="${product.name}" width="150">
+                <img src="${product.image}" class="warehouse-img enlarge-click" data-image="${product.image}" alt="${product.name}">
                 <div class="warehouse-details">
                     <h5>${product.name}</h5>
                     <p>${product.description}</p>
@@ -76,14 +71,19 @@ async function fetchWarehouseProducts() {
                         Add to Cart
                     </button>
 
-                    <button class="btn btn-info view-image-btn" data-image="${product.image}">
-                        View Image
-                    </button>
+                 
                 </div>
             `;
 
             warehouseContainer.appendChild(productCard);
         });
+        
+        document.querySelectorAll(".enlarge-click").forEach(img => {
+    img.addEventListener("click", function () {
+        const imageUrl = this.getAttribute("data-image");
+        enlargeImage(imageUrl, false); // ✅ open fullscreen image
+    });
+    });
 
         // ✅ Attach event listeners for "Choose Color" buttons
         document.querySelectorAll(".choose-color-btn").forEach(button => {
@@ -101,13 +101,7 @@ async function fetchWarehouseProducts() {
             });
         });
 
-        // ✅ Attach event listeners for "View Image" buttons
-        document.querySelectorAll(".view-image-btn").forEach(button => {
-            button.addEventListener("click", function () {
-                const imageUrl = this.getAttribute("data-image");
-                enlargeImage(imageUrl, false); // ✅ Does NOT return to color modal
-            });
-        });
+        
          // ✅ Hide the loading message after items are loaded
          document.getElementById("loadingMessage").style.display = "none";
 
